@@ -4,7 +4,7 @@ from constants import *
 
 # Window Management
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Game")
+pygame.display.set_caption("Maze Generator")
 
 
 def main(window):
