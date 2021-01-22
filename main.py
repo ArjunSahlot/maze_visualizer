@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from maze import Maze
 
 
 # Window Management
