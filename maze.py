@@ -7,10 +7,10 @@ class Maze:
         self.x, self.y, self.width, self.height = x, y, width, height
         self.rows, self.cols = height // 15, width // 15
         self.cells = [[Cell(row, col, 15) for col in range(self.cols)] for row in range(self.rows)]
-    
+
     def update(self, window, events):
         self.draw(window)
-    
+
     def draw(self, window):
         for row in self.cells:
             for cell in row:
@@ -26,7 +26,7 @@ class Cell:
     def __init__(self, row, col, width):
         self.row, self.col, self.width = row, col, width
         self.state = randint(1, 2) == 1
-    
+
     def draw(self, window, x_off, y_off):
         x = x_off + self.col*self.width
         y = y_off + self.row*self.width
