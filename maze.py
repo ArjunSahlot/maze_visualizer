@@ -8,29 +8,31 @@ class Maze:
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
+        self.active = True
 
     def update(self, window, events):
         self.draw(window)
 
-        mx, my = pygame.mouse.get_pos()
-        rel = pygame.mouse.get_rel()
-        if self.x < mx < self.x + self.width and self.y < my < self.y + self.height:
-            mouse_pressed = pygame.mouse.get_pressed()
-            if any(mouse_pressed):
-                row = (my - self.y) // self.cell_size
-                col = (mx - self.x) // self.cell_size
-                cell = self.cells[row][col]
-                if mouse_pressed[0]:
-                    cell.block()
-                if mouse_pressed[2]:
-                    if sum(map(abs, rel)) > 80:
-                        for r in (row-1, row, row+1):
-                            for c in (col-1, col, col+1):
-                                r = min(max(r, 0), self.rows-1)
-                                c = min(max(c, 0), self.cols-1)
-                                self.cells[r][c].free()
-                    else:
-                        cell.free()
+        if self.active:
+            mx, my = pygame.mouse.get_pos()
+            rel = pygame.mouse.get_rel()
+            if self.x < mx < self.x + self.width and self.y < my < self.y + self.height:
+                mouse_pressed = pygame.mouse.get_pressed()
+                if any(mouse_pressed):
+                    row = (my - self.y) // self.cell_size
+                    col = (mx - self.x) // self.cell_size
+                    cell = self.cells[row][col]
+                    if mouse_pressed[0]:
+                        cell.block()
+                    if mouse_pressed[2]:
+                        if sum(map(abs, rel)) > 80:
+                            for r in (row-1, row, row+1):
+                                for c in (col-1, col, col+1):
+                                    r = min(max(r, 0), self.rows-1)
+                                    c = min(max(c, 0), self.cols-1)
+                                    self.cells[r][c].free()
+                        else:
+                            cell.free()
 
     def draw(self, window):
         for row in self.cells:
