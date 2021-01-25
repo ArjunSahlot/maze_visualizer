@@ -10,7 +10,7 @@ class Maze:
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
         self.active = True
 
-    def update(self, window, events):
+    def update(self, window):
         self.draw(window)
 
         if self.active:

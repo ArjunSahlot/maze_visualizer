@@ -19,7 +19,7 @@ def main(window):
         events = pygame.event.get()
         keys = pygame.key.get_pressed()
         ctrl_pressed = keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]
-        maze.update(window, events)
+        maze.update(window)
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
