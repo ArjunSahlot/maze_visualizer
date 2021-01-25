@@ -11,7 +11,7 @@ pygame.display.set_caption("Maze Generator")
 def main(window):
     pygame.init()
     clock = pygame.time.Clock()
-    maze = Maze(0, 200, WIDTH, HEIGHT-200, 200)
+    maze = Maze(0, 200, WIDTH, HEIGHT-200, 100)
 
     while True:
         clock.tick(FPS)

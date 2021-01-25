@@ -34,7 +34,7 @@ class Maze:
                         if cell not in ("start", "end"):
                             cell.block()
                     if mouse_pressed[2]:
-                        if sum(map(abs, rel)) > 80:
+                        if sum(map(abs, rel)) > 70:
                             for r in (row-1, row, row+1):
                                 for c in (col-1, col, col+1):
                                     r = min(max(r, 0), self.rows-1)
