@@ -1,7 +1,7 @@
 import pygame
 
 
-class Silder:
+class Slider:
     pass
 
 
