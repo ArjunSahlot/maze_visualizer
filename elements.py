@@ -18,7 +18,7 @@ class Slider:
     def __init__(self, x, y, width, height=40, init_val=80, val_range=(1, 100), label="Slider", only_int=True):
         self.x, self.y = x, y
         self.width, self.height = width, height
-        self.font = pygame.font.SysFont("comicsans", height - 5)
+        self.font = pygame.font.SysFont("comicsans", height - 15)
         self.label = label
         self.range = val_range
         self.value = init_val
@@ -87,6 +87,15 @@ class Button:
 
     def __init__(self, x, y, width, height=50, text="Button", border=0):
         self.x, self.y, self.width, self.height = x, y, width, height
+        self.text = text
+        self.font = pygame.font.SysFont("comicsans", height-10)
+        self.border = border
+
+    def update(self, window, events):
+        self.draw(window)
+
+    def draw(self, window):
+        pass
 
 
 class Dropdown:
