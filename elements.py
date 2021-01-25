@@ -91,7 +91,7 @@ class Button:
         self.font = pygame.font.SysFont("comicsans", height-10)
         self.border = border
 
-    def update(self, window, events):
+    def update(self, window, events=None):
         self.draw(window)
 
     def clicked(self):
