@@ -227,18 +227,3 @@ class Dropdown:
             text = self.font.render(text, 1, self.color)
             self.surf.blit(text, (self.textbox_size[0]//2 - text.get_width()//2, y + self.textbox_size[1]//2 - text.get_height()//2))
         window.blit(self.surf, self.pop_loc)
-
-
-
-window = pygame.display.set_mode((400, 400))
-a = Dropdown((20, 20), (200, 50), (200, 200))
-while True:
-    window.fill((10, 120, 148))
-    events = pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-
-    a.update(window, events)
-    pygame.display.update()
