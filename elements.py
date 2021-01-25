@@ -78,18 +78,3 @@ class Button:
 
 class Dropdown:
     pass
-
-
-
-window = pygame.display.set_mode((400, 400))
-a = Slider(20, 20, 200)
-while True:
-    window.fill((10, 120, 148))
-    events = pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-
-    a.update(window, events)
-    pygame.display.update()
