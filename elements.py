@@ -119,7 +119,7 @@ class Dropdown:
                 pop_size,
                 bg_col=(255, 255, 255),
                 initial_text="Select",
-                choices=[],
+                choices=["A", "B", "C", "D", "E", "F"],
                 font=pygame.font.SysFont("comicsans", 35),
                 color=(0, 0, 0),
                 hightlight_col=(80, 80, 255),
@@ -160,7 +160,6 @@ class Dropdown:
         self.draw(window)
         mx, my = pygame.mouse.get_pos()
         if pygame.Rect(*self.loc, *self.size).collidepoint(mx, my):
-            pygame.draw.rect(window, self.hightlight_col, (*self.loc, *self.size), border_radius=self.rounding)
             for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
@@ -192,13 +191,16 @@ class Dropdown:
 
     def draw(self, window):
         left = self.tri_rect[0]
-        middle = self.tri_rect[0] + self.tri_rect[2]/2
         right = self.tri_rect[0] + self.tri_rect[2]
+        middle = self.tri_rect[0] + self.tri_rect[2]/2
         top = self.tri_rect[1]
         bottom = self.tri_rect[1] + self.tri_rect[3]
 
         if self.popped: self.draw_surf(window)
-        pygame.draw.rect(window, self.bg_col, (*self.loc, *self.size), border_radius=self.rounding)
+        if pygame.Rect(*self.loc, *self.size).collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(window, self.hightlight_col, (*self.loc, *self.size), border_radius=self.rounding)
+        else:
+            pygame.draw.rect(window, self.bg_col, (*self.loc, *self.size), border_radius=self.rounding)
 
         pygame.draw.rect(window, self.border_col, (*self.loc, *self.size), self.border, border_top_left_radius=self.rounding, border_top_right_radius=self.rounding)
         text = self.font.render(self.selected, 1, self.color)
@@ -215,7 +217,8 @@ class Dropdown:
         return self.selected
 
     def draw_surf(self, window):
-        self.surf.fill(self.bg_col)
+        self.surf.fill((0, 0, 0, 0))
+        pygame.draw.rect(self.surf, self.bg_col, (0, 0, *self.pop_size), border_radius=self.rounding)
         mx, my = pygame.mouse.get_pos()
         for i, text in enumerate(self.choices):
             y = i * self.textbox_size[1] + self.slider_y
