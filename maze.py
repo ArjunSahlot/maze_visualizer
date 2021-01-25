@@ -68,3 +68,6 @@ class Cell:
 
     def get_pos(self):
         return (self.row, self.col)
+
+    def __eq__(self, other):
+        return self.state == other
