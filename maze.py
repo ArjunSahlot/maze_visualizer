@@ -80,10 +80,10 @@ class Cell:
 
     def block(self):
         self.state = "block"
-    
+
     def start(self):
         self.state = "start"
-    
+
     def end(self):
         self.state = "end"
 
