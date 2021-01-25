@@ -18,7 +18,7 @@ class Maze:
         if self.active:
             mx, my = pygame.mouse.get_pos()
             rel = pygame.mouse.get_rel()
-            if self.x < mx < self.x + self.width and self.y < my < self.y + self.height:
+            if self.x < mx < self.x + self.cols*self.cell_size and self.y < my < self.y + self.rows*self.cell_size:
                 mouse_pressed = pygame.mouse.get_pressed()
                 if any(mouse_pressed):
                     row = (my - self.y) // self.cell_size
@@ -34,7 +34,7 @@ class Maze:
                         if cell not in ("start", "end"):
                             cell.block()
                     if mouse_pressed[2]:
-                        if sum(map(abs, rel)) > 70:
+                        if sum(map(abs, rel)) > 60:
                             for r in (row-1, row, row+1):
                                 for c in (col-1, col, col+1):
                                     r = min(max(r, 0), self.rows-1)
