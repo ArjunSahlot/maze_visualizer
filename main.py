@@ -13,7 +13,7 @@ def main(window):
     pygame.init()
     clock = pygame.time.Clock()
     interface = Interface(200)
-    maze = Maze(0, 200, WIDTH, HEIGHT-200, 80)
+    maze = Maze(0, interface.height, WIDTH, HEIGHT-interface.height, 80)
 
     while True:
         clock.tick(FPS)
