@@ -25,13 +25,13 @@ class Maze:
                     col = (mx - self.x) // self.cell_size
                     cell = self.cells[row][col]
                     if mouse_pressed[0]:
-                        if self.start is None:
+                        if self.start is None and cell != "end":
                             cell.start()
                             self.start = cell
-                        if self.end is None:
+                        if self.end is None and cell != "start":
                             cell.end()
                             self.end = cell
-                        else:
+                        if cell not in ("start", "end"):
                             cell.block()
                     if mouse_pressed[2]:
                         if sum(map(abs, rel)) > 80:
@@ -39,14 +39,14 @@ class Maze:
                                 for c in (col-1, col, col+1):
                                     r = min(max(r, 0), self.rows-1)
                                     c = min(max(c, 0), self.cols-1)
-                                    cell = self.cells[r][c]
-                                    if cell == "start":
-                                        self.start = None
-                                    elif cell == "end":
-                                        self.end = None
-
-                                    cell.free()
+                                    if (cell := self.cells[r][c]) not in ("start", "end"):
+                                        cell.free()
                         else:
+                            if cell == "start":
+                                self.start = None
+                            elif cell == "end":
+                                self.end = None
+
                             cell.free()
 
     def draw(self, window):
