@@ -8,6 +8,8 @@ class Maze:
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
+        self.start = None
+        self.end = None
         self.active = True
 
     def update(self, window):
@@ -23,14 +25,27 @@ class Maze:
                     col = (mx - self.x) // self.cell_size
                     cell = self.cells[row][col]
                     if mouse_pressed[0]:
-                        cell.block()
+                        if self.start is None:
+                            cell.start()
+                            self.start = cell
+                        if self.end is None:
+                            cell.end()
+                            self.end = cell
+                        else:
+                            cell.block()
                     if mouse_pressed[2]:
                         if sum(map(abs, rel)) > 80:
                             for r in (row-1, row, row+1):
                                 for c in (col-1, col, col+1):
                                     r = min(max(r, 0), self.rows-1)
                                     c = min(max(c, 0), self.cols-1)
-                                    self.cells[r][c].free()
+                                    cell = self.cells[r][c]
+                                    if cell == "start":
+                                        self.start = None
+                                    elif cell == "end":
+                                        self.end = None
+
+                                    cell.free()
                         else:
                             cell.free()
 
