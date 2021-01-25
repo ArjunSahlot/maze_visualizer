@@ -87,6 +87,9 @@ class Cell:
     def end(self):
         self.state = "end"
 
+    def path(self):
+        self.state = "path"
+
     def get_pos(self):
         return (self.row, self.col)
 
