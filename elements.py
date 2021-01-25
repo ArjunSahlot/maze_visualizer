@@ -78,7 +78,15 @@ class Slider:
 
 
 class Button:
-    pass
+    colors = {
+        "bg": (0,) * 3,
+        "border": (255,) * 3,
+        "text": (255,) * 3,
+        "highlight": (190,) * 3,
+    }
+
+    def __init__(self, x, y, width, height=50, text="Button", border=0):
+        self.x, self.y, self.width, self.height = x, y, width, height
 
 
 class Dropdown:
