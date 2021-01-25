@@ -94,6 +94,10 @@ class Button:
     def update(self, window, events):
         self.draw(window)
 
+    def clicked(self):
+        if self.hovered():
+            return pygame.MOUSEBUTTONDOWN in [event.type for event in events]
+
     def draw(self, window):
         surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         pygame.draw.rect(surf, self.colors["highlight" if self.hovered() else "bg"], (0, 0, self.width, self.height))
