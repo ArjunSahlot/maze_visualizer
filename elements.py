@@ -29,12 +29,13 @@ class Slider:
     def create_surfs(self):
         self.left.fill(self.colors["boxes"])
         self.right.fill(self.colors["boxes"])
-        pad = 3
-        l = pad
-        r = self.height - pad
-        t = pad
+        xpad = 8
+        ypad = 5
+        l = xpad
+        r = self.height - xpad
+        t = ypad
         m = self.height/2
-        b = self.height - pad
+        b = self.height - ypad
         pygame.draw.polygon(self.left, self.colors["arrows"], ((r, t), (l, m), (r, b)))
         pygame.draw.polygon(self.right, self.colors["arrows"], ((l, t), (r, m), (l, b)))
 
@@ -43,23 +44,32 @@ class Slider:
         mx, my = pygame.mouse.get_pos()
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.x <= mx <= self.x + self.width and self.y <= my <= self.y + self.height:
-                    self.dragging = True
+                self.dragging = (self.x + self.height <= mx <= self.x + self.width - self.height and self.y <= my <= self.y + self.height)
+                if self.x <= mx <= self.x + self.height:
+                    self.value = max(self.value - 1, self.range[0])
+                elif self.x + self.width - self.height <= mx <= self.x + self.width:
+                    self.value = min(self.value + 1, self.range[1])
             if event.type == pygame.MOUSEBUTTONUP:
                 self.dragging = False
 
+        if self.dragging:
+            self.loc_to_value()
+
     def draw(self, window):
         pygame.draw.rect(window, self.colors["slider"], (self.x, self.y, self.width, self.height))
-        pygame.draw.rect(window, self.colors["cursor"], (self.value_to_loc(), self.y, self.height, self.height))
+        pygame.draw.rect(window, self.colors["cursor"], (self.value_to_loc() - self.height/2, self.y, self.height, self.height))
         window.blit(self.left, (self.x, self.y))
         window.blit(self.right, (self.x + self.width - self.height, self.y))
         text = self.font.render(f"{self.label}: {self.value}", 1, self.colors["text"])
         text_loc = (self.x + (self.width-text.get_width()) // 2, self.y + self.height + 5)
         window.blit(text, text_loc)
 
+    def loc_to_value(self):
+        val = np.interp(pygame.mouse.get_pos()[0], (self.x + self.height*1.5, self.x + self.width - self.height*1.5), self.range)
+        self.value = int(val) if self.to_int else val
+
     def value_to_loc(self):
-        val = np.interp(self.value, self.range, (self.x + self.height, self.x + self.width - self.height*2))
-        return int(val) if self.to_int else val
+        return np.interp(self.value, self.range, (self.x + self.height*1.5, self.x + self.width - self.height*1.5))
 
 
 class Button:
