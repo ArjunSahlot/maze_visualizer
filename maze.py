@@ -65,3 +65,6 @@ class Cell:
 
     def block(self):
         self.state = "block"
+
+    def get_pos(self):
+        return (self.row, self.col)
