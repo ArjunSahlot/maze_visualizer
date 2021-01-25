@@ -12,6 +12,8 @@ class Slider:
         "boxes": (80,) * 3,
         "highlighted_boxes": (120,) * 3,
     }
+    tri_padx = 8
+    tri_pady = 5
 
     def __init__(self, x, y, width, height=40, init_val=80, val_range=(1, 100), label="Slider", only_int=True):
         self.x, self.y = x, y
@@ -26,20 +28,18 @@ class Slider:
     def draw_arrows(self):
         left = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
         right = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
-        mx = pygame.mouse.get_pos()[0]
-        colliding = self.x <= mx <= self.x + self.height
+        mx, my = pygame.mouse.get_pos()
+        colliding = self.x <= mx <= self.x + self.height and self.y <= my <= self.y + self.height
         color = self.colors["highlighted_boxes"] if colliding else self.colors["boxes"]
         left.fill(color)
-        colliding = self.x + self.width - self.height <= mx <= self.x + self.width
+        colliding = self.x + self.width - self.height <= mx <= self.x + self.width and self.y <= my <= self.y + self.height
         color = self.colors["highlighted_boxes"] if colliding else self.colors["boxes"]
         right.fill(color)
-        xpad = 8
-        ypad = 5
-        l = xpad
-        r = self.height - xpad
-        t = ypad
+        l = self.tri_padx
+        r = self.height - self.tri_padx
+        t = self.tri_pady
         m = self.height/2
-        b = self.height - ypad
+        b = self.height - self.tri_pady
         pygame.draw.polygon(left, self.colors["arrows"], ((r, t), (l, m), (r, b)))
         pygame.draw.polygon(right, self.colors["arrows"], ((l, t), (r, m), (l, b)))
         window.blit(left, (self.x, self.y))
