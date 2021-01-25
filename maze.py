@@ -80,6 +80,12 @@ class Cell:
 
     def block(self):
         self.state = "block"
+    
+    def start(self):
+        self.state = "start"
+    
+    def end(self):
+        self.state = "end"
 
     def get_pos(self):
         return (self.row, self.col)
