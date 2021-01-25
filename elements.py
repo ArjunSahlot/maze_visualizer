@@ -22,13 +22,17 @@ class Slider:
         self.value = init_val
         self.dragging = False
         self.to_int = only_int
-        self.left = pygame.Surface((height,)*2, pygame.SRCALPHA)
-        self.right = pygame.Surface((height,)*2, pygame.SRCALPHA)
-        self.create_surfs()
 
-    def create_surfs(self):
-        self.left.fill(self.colors["boxes"])
-        self.right.fill(self.colors["boxes"])
+    def draw_arrows(self):
+        left = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
+        right = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
+        mx = pygame.mouse.get_pos()[0]
+        colliding = self.x <= mx <= self.x + self.height
+        color = self.colors["highlighted_boxes"] if colliding else self.colors["boxes"]
+        left.fill(color)
+        colliding = self.x + self.width - self.height <= mx <= self.x + self.width
+        color = self.colors["highlighted_boxes"] if colliding else self.colors["boxes"]
+        right.fill(color)
         xpad = 8
         ypad = 5
         l = xpad
@@ -36,8 +40,10 @@ class Slider:
         t = ypad
         m = self.height/2
         b = self.height - ypad
-        pygame.draw.polygon(self.left, self.colors["arrows"], ((r, t), (l, m), (r, b)))
-        pygame.draw.polygon(self.right, self.colors["arrows"], ((l, t), (r, m), (l, b)))
+        pygame.draw.polygon(left, self.colors["arrows"], ((r, t), (l, m), (r, b)))
+        pygame.draw.polygon(right, self.colors["arrows"], ((l, t), (r, m), (l, b)))
+        window.blit(left, (self.x, self.y))
+        window.blit(right, (self.x + self.width - self.height, self.y))
 
     def update(self, window, events):
         self.draw(window)
@@ -58,8 +64,7 @@ class Slider:
     def draw(self, window):
         pygame.draw.rect(window, self.colors["slider"], (self.x, self.y, self.width, self.height))
         pygame.draw.rect(window, self.colors["cursor"], (self.value_to_loc() - self.height/2, self.y, self.height, self.height))
-        window.blit(self.left, (self.x, self.y))
-        window.blit(self.right, (self.x + self.width - self.height, self.y))
+        self.draw_arrows()
         text = self.font.render(f"{self.label}: {self.value}", 1, self.colors["text"])
         text_loc = (self.x + (self.width-text.get_width()) // 2, self.y + self.height + 5)
         window.blit(text, text_loc)
