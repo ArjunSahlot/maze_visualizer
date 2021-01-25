@@ -82,7 +82,7 @@ class Button:
         "bg": (0,) * 3,
         "border": (255,) * 3,
         "text": (255,) * 3,
-        "highlight": (190,) * 3,
+        "highlight": (255, 255, 255, 100),
     }
 
     def __init__(self, x, y, width, height=50, text="Button", border=0):
@@ -95,7 +95,17 @@ class Button:
         self.draw(window)
 
     def draw(self, window):
-        pass
+        surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        pygame.draw.rect(surf, self.colors["highlight" if self.hovered() else "bg"], (0, 0, self.width, self.height))
+        if self.border: pygame.draw.rect(surf, self.colors["border"], (0, 0, self.width, self.height), self.border)
+        text = self.font.render(self.text, 1, self.colors["text"])
+        loc = (self.width/2 - text.get_width()/2, self.height/2 - text.get_height()/2)
+        surf.blit(text, loc)
+        window.blit(surf, (self.x, self.y))
+
+    def hovered(self):
+        mx, my = pygame.mouse.get_pos()
+        return self.x <= mx <= self.x + self.width and self.y <= my <= self.y + self.height
 
 
 class Dropdown:
@@ -104,7 +114,7 @@ class Dropdown:
 
 
 window = pygame.display.set_mode((400, 400))
-a = Slider(20, 20, 200)
+a = Button(20, 20, 200, border=5)
 while True:
     window.fill((10, 120, 148))
     events = pygame.event.get()
