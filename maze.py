@@ -21,7 +21,7 @@ class Maze:
     def visualize(self, alg):
         getattr(self, self.algs[alg])()
 
-    def recursive_backtrack():
+    def recursive_backtrack(self):
         pass
 
     def kruskal(self):
