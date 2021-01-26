@@ -25,7 +25,7 @@ class Slider:
         self.dragging = False
         self.to_int = only_int
 
-    def draw_arrows(self):
+    def draw_arrows(self, window):
         left = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
         right = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
         mx, my = pygame.mouse.get_pos()
@@ -64,7 +64,7 @@ class Slider:
     def draw(self, window):
         pygame.draw.rect(window, self.colors["slider"], (self.x, self.y, self.width, self.height))
         pygame.draw.rect(window, self.colors["cursor"], (self.value_to_loc() - self.height/2, self.y, self.height, self.height))
-        self.draw_arrows()
+        self.draw_arrows(window)
         text = self.font.render(f"{self.label}: {self.value}", 1, self.colors["text"])
         text_loc = (self.x + (self.width-text.get_width()) // 2, self.y + self.height + 5)
         window.blit(text, text_loc)
