@@ -26,8 +26,8 @@ class Slider:
         self.to_int = only_int
 
     def draw_arrows(self, window):
-        left = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
-        right = pygame.Surface((self.height,)*2, pygame.SRCALPHA)
+        left = pygame.Surface((self.height,)*2)
+        right = pygame.Surface((self.height,)*2)
         mx, my = pygame.mouse.get_pos()
         colliding = self.x <= mx <= self.x + self.height and self.y <= my <= self.y + self.height
         color = self.colors["highlighted_boxes"] if colliding else self.colors["boxes"]
@@ -83,7 +83,7 @@ class Button:
         "bg": (0,) * 3,
         "border": (255,) * 3,
         "text": (255,) * 3,
-        "highlight": (255, 255, 255, 100),
+        "highlight": (100, 100, 100),
     }
 
     def __init__(self, x, y, width, height=50, text="Button", border=0):
@@ -100,13 +100,11 @@ class Button:
             return pygame.MOUSEBUTTONDOWN in [event.type for event in events]
 
     def draw(self, window):
-        surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        pygame.draw.rect(surf, self.colors["highlight" if self.hovered() else "bg"], (0, 0, self.width, self.height))
-        if self.border: pygame.draw.rect(surf, self.colors["border"], (0, 0, self.width, self.height), self.border)
+        pygame.draw.rect(window, self.colors["highlight" if self.hovered() else "bg"], (self.x, self.y, self.width, self.height))
+        if self.border: pygame.draw.rect(window, self.colors["border"], (self.x, self.y, self.width, self.height), self.border, border_radius=1)
         text = self.font.render(self.text, 1, self.colors["text"])
-        loc = (self.width/2 - text.get_width()/2, self.height/2 - text.get_height()/2)
-        surf.blit(text, loc)
-        window.blit(surf, (self.x, self.y))
+        loc = (self.x + self.width/2 - text.get_width()/2, self.y + self.height/2 - text.get_height()/2)
+        window.blit(text, loc)
 
     def hovered(self):
         mx, my = pygame.mouse.get_pos()
