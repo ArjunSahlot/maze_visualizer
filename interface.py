@@ -1,10 +1,15 @@
-import pygame
 from elements import *
 from constants import *
 from maze import Maze
+from tkinter import messagebox
+from tkinter import Tk
+Tk().withdraw()
 
 
 class Interface:
+    maze_drop_text = "Maze Gen Algs"
+    find_drop_text = "Path Finding Algs"
+
     def __init__(self, height):
         self.height = height
         self.gen = Button(
@@ -38,7 +43,7 @@ class Interface:
             (300, 50),
             (300, 140),
             BLACK,
-            "Path Finding Algs",
+            self.find_drop_text,
             highlight_col=(100, 100, 100),
             color=(255,)*3,
             border_col=(255,)*3
@@ -49,7 +54,7 @@ class Interface:
             self.find_drop.size,
             self.find_drop.pop_size,
             BLACK,
-            "Maze Gen Algs",
+            self.maze_drop_text,
             highlight_col=self.find_drop.highlight_col,
             color=self.find_drop.color,
             border_col=self.find_drop.border_col
@@ -64,3 +69,15 @@ class Interface:
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
         self.maze.update(window, events)
+
+        if self.gen.clicked(events):
+            if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
+                messagebox.showerror("Maze Generator", "Please choose a algorithm before generating maze.")
+            else:
+                self.maze.generate(selected)
+
+        elif self.find.clicked(events):
+            if (selected := self.find_drop.get_selection()) == self.find_drop_text:
+                messagebox.showerror("Maze Generator", "Please choose a algorithm before generating maze.")
+            else:
+                self.maze.find(selected)
