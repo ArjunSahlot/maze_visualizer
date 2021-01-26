@@ -95,7 +95,7 @@ class Button:
     def update(self, window, events=None):
         self.draw(window)
 
-    def clicked(self):
+    def clicked(self, events):
         if self.hovered():
             return pygame.MOUSEBUTTONDOWN in [event.type for event in events]
 
