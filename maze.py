@@ -1,5 +1,8 @@
 import pygame
 from constants import *
+import threading
+import random
+from random_utils.datatypes import Stack
 
 
 class Maze:
@@ -18,16 +21,16 @@ class Maze:
         self.end = None
         self.active = True
 
-    def visualize(self, alg):
-        getattr(self, self.algs[alg])()
+    def visualize(self, alg, speed):
+        threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
 
-    def recursive_backtrack(self):
+    def recursive_backtrack(self, speed):
         pass
 
-    def kruskal(self):
+    def kruskal(self, speed):
         pass
 
-    def astar(self):
+    def astar(self, speed):
         pass
 
     def update(self, window, events=None):
