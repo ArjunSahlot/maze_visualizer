@@ -17,7 +17,7 @@ def main(window):
 
     while True:
         clock.tick(FPS)
-        window.fill(GREY)
+        window.fill(BLACK)
         events = pygame.event.get()
         keys = pygame.key.get_pressed()
         ctrl_pressed = keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]
