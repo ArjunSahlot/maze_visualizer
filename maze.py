@@ -33,7 +33,7 @@ class Maze:
         while path:
             print(path)
             cell = path.pop()
-            if (neighbors := random.shuffle((self.get_neighbors(*cell.get_pos())))) is not None:
+            if (neighbors := random.shuffle((self.get_generation_neighbors(*cell.get_pos())))) is not None:
                 for row, col in neighbors:
                     if (row, col) not in visited:
                         neighbor = self.cells[row][col]
@@ -92,16 +92,16 @@ class Maze:
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
     
-    def get_neighbors(self, row, col):
+    def get_generation_neighbors(self, row, col):
         neighbors = []
-        if row > 0 and (cell := self.cells[row - 1][col]) == "block":
-            neighbors.append(cell.get_pos())
-        if row < self.rows - 1 and (cell := self.cells[row + 1][col]) == "block":
-            neighbors.append(cell.get_pos())
-        if col > 0 and (cell := self.cells[row][col - 1]) == "block":
-            neighbors.append(cell.get_pos())
-        if col < self.cols - 1 and (cell := self.cells[row][col + 1]) == "block":
-            neighbors.append(cell.get_pos())
+        if row > 0:
+            neighbors.append((row - 1, col))
+        if row < self.rows - 1:
+            neighbors.append((row + 1, col))
+        if col > 0:
+            neighbors.append((row, col - 1))
+        if col < self.cols - 1:
+            neighbors.append((row, col + 1))
 
         return neighbors
 
