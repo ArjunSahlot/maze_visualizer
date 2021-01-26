@@ -80,7 +80,19 @@ class Maze:
                 cell.draw(window, self.x, self.y)
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
+    
+    def get_neighbors(self, row, col):
+        neighbors = []
+        if row > 0 and (cell := self.cells[row - 1][col]) == "block":
+            neighbors.append(cell)
+        if row < self.rows - 1 and (cell := self.cells[row + 1][col]) == "block":
+            neighbors.append(cell)
+        if col > 0 and (cell := self.cells[row][col - 1]) == "block":
+            neighbors.append(cell)
+        if col < self.cols - 1 and (cell := self.cells[row][col + 1]) == "block":
+            neighbors.append(cell)
 
+        return neighbors
 
 class Cell:
     colors = {
