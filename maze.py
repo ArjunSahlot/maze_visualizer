@@ -1,8 +1,14 @@
+from numpy.lib.function_base import _parse_input_dimensions
 import pygame
 from constants import *
 
 
 class Maze:
+    algs = {
+        "Recursive Backtracker": "recursive_backtrack",
+        "Kruskal's": "kruskal",
+    }
+
     def __init__(self, x, y, width, height, cell_size):
         self.x, self.y, self.width, self.height = x, y, width, height
         self.cell_size = cell_size
@@ -11,6 +17,12 @@ class Maze:
         self.start = None
         self.end = None
         self.active = True
+
+    def generate(self, alg):
+        getattr(self, self.algs[alg])()
+
+    def find(self, alg):
+        pass
 
     def update(self, window, events=None):
         self.draw(window)
