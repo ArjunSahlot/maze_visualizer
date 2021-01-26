@@ -7,6 +7,7 @@ class Maze:
     algs = {
         "Recursive Backtracker": "recursive_backtrack",
         "Kruskal's": "kruskal",
+        "Alphastar": "astar"
     }
 
     def __init__(self, x, y, width, height, cell_size):
@@ -18,11 +19,8 @@ class Maze:
         self.end = None
         self.active = True
 
-    def generate(self, alg):
+    def visualize(self, alg):
         getattr(self, self.algs[alg])()
-
-    def find(self, alg):
-        pass
 
     def update(self, window, events=None):
         self.draw(window)
