@@ -44,6 +44,7 @@ class Interface:
             (300, 140),
             BLACK,
             self.find_drop_text,
+            ["Alphastar"],
             highlight_col=(100, 100, 100),
             color=(255,)*3,
             border_col=(255,)*3
@@ -55,6 +56,7 @@ class Interface:
             self.find_drop.pop_size,
             BLACK,
             self.maze_drop_text,
+            ["Recursive Backtracker", "Kruskal's"],
             highlight_col=self.find_drop.highlight_col,
             color=self.find_drop.color,
             border_col=self.find_drop.border_col
