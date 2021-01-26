@@ -29,7 +29,6 @@ class Interface:
             self.find.x,
             self.find.y + self.find.height + 10,
             self.find.width,
-            50,
             label="Speed"
         )
 
