@@ -33,7 +33,7 @@ class Interface:
 
         self.speed = Slider(
             self.find.x,
-            self.find.y + self.find.height + 10,
+            self.find.y + self.find.height + 5,
             self.find.width,
             label="Speed"
         )
