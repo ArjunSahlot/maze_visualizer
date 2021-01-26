@@ -1,6 +1,7 @@
 import pygame
 from elements import *
 from constants import *
+from maze import Maze
 
 
 class Interface:
@@ -54,9 +55,12 @@ class Interface:
             border_col=self.find_drop.border_col
         )
 
+        self.maze = Maze(0, interface.height, WIDTH, HEIGHT-interface.height, 80)
+
     def update(self, window, events):
         self.gen.update(window, events)
         self.find.update(window, events)
         self.speed.update(window, events)
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
+        self.maze.update(window, events)

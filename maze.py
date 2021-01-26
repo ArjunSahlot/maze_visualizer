@@ -12,7 +12,7 @@ class Maze:
         self.end = None
         self.active = True
 
-    def update(self, window):
+    def update(self, window, events=None):
         self.draw(window)
 
         if self.active:
