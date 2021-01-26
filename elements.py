@@ -123,7 +123,7 @@ class Dropdown:
                 choices=["A", "B", "C", "D", "E", "F"],
                 font=pygame.font.SysFont("comicsans", 35),
                 color=(0, 0, 0),
-                hightlight_col=(80, 80, 255),
+                highlight_col=(80, 80, 255),
                 border_col=(0, 0, 0),
                 border = 5,
                 pop_border = 3,
@@ -142,7 +142,7 @@ class Dropdown:
         self.font = font
         self.color = color
         self.bg_col = bg_col
-        self.hightlight_col = hightlight_col
+        self.highlight_col = highlight_col
         self.tri_padding = tri_padding
         self.border = border
         self.pop_border = pop_border
@@ -199,7 +199,7 @@ class Dropdown:
 
         if self.popped: self.draw_surf(window)
         if pygame.Rect(*self.loc, *self.size).collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(window, self.hightlight_col, (*self.loc, *self.size), border_radius=self.rounding)
+            pygame.draw.rect(window, self.highlight_col, (*self.loc, *self.size), border_radius=self.rounding)
         else:
             pygame.draw.rect(window, self.bg_col, (*self.loc, *self.size), border_radius=self.rounding)
 
@@ -224,7 +224,7 @@ class Dropdown:
         for i, text in enumerate(self.choices):
             y = i * self.textbox_size[1] + self.slider_y
             if pygame.Rect(self.pop_loc[0], y + self.pop_loc[1], *self.textbox_size).collidepoint(mx, my) or self.choices[i] == self.selected:
-                pygame.draw.rect(self.surf, self.hightlight_col, (self.textbox_padding/2, y + self.textbox_padding/2, self.textbox_size[0] - self.textbox_padding, self.textbox_size[1] - self.textbox_padding), border_radius=self.rounding)
+                pygame.draw.rect(self.surf, self.highlight_col, (self.textbox_padding/2, y + self.textbox_padding/2, self.textbox_size[0] - self.textbox_padding, self.textbox_size[1] - self.textbox_padding), border_radius=self.rounding)
             text = self.font.render(text, 1, self.color)
             self.surf.blit(text, (self.textbox_size[0]//2 - text.get_width()//2, y + self.textbox_size[1]//2 - text.get_height()//2))
         window.blit(self.surf, self.pop_loc)
