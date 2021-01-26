@@ -12,7 +12,7 @@ class Interface:
             250,
             60,
             "Generate",
-            5
+            4
         )
 
         self.find = Button(
