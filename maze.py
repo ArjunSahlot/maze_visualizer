@@ -1,4 +1,3 @@
-from numpy.lib.function_base import _parse_input_dimensions
 import pygame
 from constants import *
 
@@ -21,6 +20,15 @@ class Maze:
 
     def visualize(self, alg):
         getattr(self, self.algs[alg])()
+
+    def recursive_backtrack():
+        pass
+
+    def kruskal(self):
+        pass
+
+    def astar(self):
+        pass
 
     def update(self, window, events=None):
         self.draw(window)
