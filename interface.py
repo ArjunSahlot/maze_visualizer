@@ -72,12 +72,12 @@ class Interface:
 
         if self.gen.clicked(events):
             if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
-                messagebox.showerror("Maze Generator", "Please choose a algorithm before generating maze.")
+                messagebox.showerror("Maze Generator", "Please choose an algorithm before generating maze.")
             else:
                 self.maze.visualize(selected)
 
         elif self.find.clicked(events):
             if (selected := self.find_drop.get_selection()) == self.find_drop_text:
-                messagebox.showerror("Maze Generator", "Please choose a algorithm before generating maze.")
+                messagebox.showerror("Maze Generator", "Please choose an algorithm before path finding.")
             else:
                 self.maze.visualize(selected)
