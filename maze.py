@@ -18,7 +18,9 @@ class Maze:
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
         self.start = self.cells[0][0]
+        self.start.start()
         self.end = self.cells[0][1]
+        self.end.end()
         self.active = True
 
     def visualize(self, alg, speed):
@@ -26,10 +28,19 @@ class Maze:
 
     def recursive_backtrack(self, speed):
         cell = self.start
-        visited = [cell]
-        path = Stack()
+        visited = [cell.get_pos()]
+        path = Stack(cell)
         while path:
-            pass
+            print(path)
+            cell = path.pop()
+            if (neighbors := random.shuffle((self.get_neighbors(*cell.get_pos())))) is not None:
+                for row, col in neighbors:
+                    if (row, col) not in visited:
+                        neighbor = self.cells[row][col]
+                        path.push(cell)
+                        neighbor.free()
+                        visited.append((row, col))
+                        path.push(neighbor)
 
     def kruskal(self, speed):
         pass
@@ -84,13 +95,13 @@ class Maze:
     def get_neighbors(self, row, col):
         neighbors = []
         if row > 0 and (cell := self.cells[row - 1][col]) == "block":
-            neighbors.append(cell)
+            neighbors.append(cell.get_pos())
         if row < self.rows - 1 and (cell := self.cells[row + 1][col]) == "block":
-            neighbors.append(cell)
+            neighbors.append(cell.get_pos())
         if col > 0 and (cell := self.cells[row][col - 1]) == "block":
-            neighbors.append(cell)
+            neighbors.append(cell.get_pos())
         if col < self.cols - 1 and (cell := self.cells[row][col + 1]) == "block":
-            neighbors.append(cell)
+            neighbors.append(cell.get_pos())
 
         return neighbors
 
