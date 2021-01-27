@@ -31,11 +31,11 @@ class Maze:
         visited = [cell.get_pos()]
         path = Stack(cell)
         clock = pygame.time.Clock()
+        self.active = False
         while path:
             clock.tick(speed.value)
             cell = path.pop()
             neighbors = self.get_generation_neighbors(*cell.get_pos())
-            random.shuffle(neighbors)
             if neighbors:
                 for row, col in neighbors:
                     if (row, col) not in visited:
@@ -45,6 +45,8 @@ class Maze:
                         visited.append((row, col))
                         path.push(neighbor)
                         break
+        
+        self.active = True
 
     def kruskal(self, speed):
         pass
@@ -106,6 +108,8 @@ class Maze:
             neighbors.append((row, col - 1))
         if col < self.cols - 1:
             neighbors.append((row, col + 1))
+
+        random.shuffle(neighbors)
 
         return neighbors
 
