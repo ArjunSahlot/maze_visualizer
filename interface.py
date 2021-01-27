@@ -1,9 +1,11 @@
+import pygame
 from elements import *
 from constants import *
 from maze import Maze
 from tkinter import messagebox
 from tkinter import Tk
 Tk().withdraw()
+pygame.init()
 
 
 class Interface:
@@ -12,8 +14,21 @@ class Interface:
 
     def __init__(self, height):
         self.height = height
+
+        self.stop = Button(
+            WIDTH - 180 - 5,
+            height/2 - 90,
+            180,
+            180,
+            "Stop",
+            4
+        )
+        self.stop.colors["border"] = (255, 0, 0)
+        self.stop.colors["text"] = (255, 0, 0)
+        self.stop.font = pygame.font.SysFont("comicsans", 80)
+
         self.gen = Button(
-            WIDTH - 250 - 5,
+            self.stop.x - 250 - 5,
             5,
             250,
             60,
@@ -65,6 +80,7 @@ class Interface:
         self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
 
     def update(self, window, events):
+        self.stop.update(window, events)
         self.gen.update(window, events)
         self.find.update(window, events)
         self.speed.update(window, events)
@@ -83,3 +99,6 @@ class Interface:
                 messagebox.showerror("Maze Generator", "Please choose an algorithm before path finding.")
             else:
                 self.maze.visualize(selected, self.speed)
+        
+        elif self.stop.click(events):
+            self.maze.stop()

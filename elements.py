@@ -79,14 +79,14 @@ class Slider:
 
 
 class Button:
-    colors = {
-        "bg": (0,) * 3,
-        "border": (255,) * 3,
-        "text": (255,) * 3,
-        "highlight": (100, 100, 100),
-    }
 
     def __init__(self, x, y, width, height=50, text="Button", border=0):
+        self.colors = {
+            "bg": (0,) * 3,
+            "border": (255,) * 3,
+            "text": (255,) * 3,
+            "highlight": (100, 100, 100),
+        }
         self.x, self.y, self.width, self.height = x, y, width, height
         self.text = text
         self.font = pygame.font.SysFont("comicsans", height-10)
