@@ -35,6 +35,7 @@ class Maze:
         while path:
             clock.tick(speed.value)
             cell = path.pop()
+            cell.current()
             neighbors = self.get_generation_neighbors(*cell.get_pos())
             if neighbors:
                 for row, col in neighbors:
@@ -42,6 +43,7 @@ class Maze:
                         neighbor = self.cells[row][col]
                         path.push(cell)
                         neighbor.free()
+                        self.cells[(cell.get_pos()[0] + row)//2][(cell.get_pos()[1] + col)//2].free()
                         visited.append((row, col))
                         path.push(neighbor)
                         break
@@ -100,14 +102,23 @@ class Maze:
     
     def get_generation_neighbors(self, row, col):
         neighbors = []
-        if row > 0:
-            neighbors.append((row - 1, col))
-        if row < self.rows - 1:
-            neighbors.append((row + 1, col))
-        if col > 0:
-            neighbors.append((row, col - 1))
-        if col < self.cols - 1:
-            neighbors.append((row, col + 1))
+        # if row > 0:
+        #     neighbors.append((row - 1, col))
+        # if row < self.rows - 1:
+        #     neighbors.append((row + 1, col))
+        # if col > 0:
+        #     neighbors.append((row, col - 1))
+        # if col < self.cols - 1:
+        #     neighbors.append((row, col + 1))
+        
+        if row > 1 and self.cells[row - 2][col] == "block":
+            neighbors.append((row - 2, col))
+        if row < self.rows - 2 and self.cells[row + 2][col] == "block":
+            neighbors.append((row + 2, col))
+        if col > 1 and self.cells[row][col - 2] == "block":
+            neighbors.append((row, col - 2))
+        if col < self.cols - 2 and self.cells[row][col + 2] == "block":
+            neighbors.append((row, col + 2))
 
         random.shuffle(neighbors)
 
@@ -119,18 +130,19 @@ class Cell:
         "block": (0,) * 3,
         "start": (0, 255, 0),
         "end": (255, 0, 0),
-        "path": (0, 255, 0),
+        "path": (0, 0, 255),
     }
 
     def __init__(self, row, col, width):
         self.row, self.col, self.width = row, col, width
+        self.prev = None
         self.state = "block"
 
     def draw(self, window, x_off, y_off):
         x = x_off + self.col*self.width
         y = y_off + self.row*self.width
         pygame.draw.rect(window, self.colors[self.state], (x, y, self.width, self.width))
-
+    
     def free(self):
         self.state = "free"
 
