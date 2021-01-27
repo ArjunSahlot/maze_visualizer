@@ -100,5 +100,5 @@ class Interface:
             else:
                 self.maze.visualize(selected, self.speed)
         
-        elif self.stop.click(events):
+        elif self.stop.clicked(events):
             self.maze.stop()

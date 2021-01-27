@@ -55,6 +55,8 @@ class Maze:
                             visited.append((row, col))
                             path.push(neighbor)
                             break
+            else:
+                break
 
         self.active = True
 
