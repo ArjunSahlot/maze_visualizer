@@ -15,13 +15,24 @@ class Interface:
     def __init__(self, height):
         self.height = height
 
-        self.stop = Button(
+        self.clear = Button(
             WIDTH - 180 - 5,
             height/3 - 30,
             180,
             60,
-            "Stop",
+            "Clear",
             4
+        )
+        self.clear.colors["border"] = (255, 140, 70)
+        self.clear.colors["text"] = (255, 140, 70)
+
+        self.stop = Button(
+            self.clear.x,
+            height*2/3 - self.clear.height/2,
+            self.clear.width,
+            self.clear.height,
+            "Stop",
+            self.clear.border
         )
         self.stop.colors["border"] = (255, 0, 0)
         self.stop.colors["text"] = (255, 0, 0)
@@ -32,7 +43,7 @@ class Interface:
             250,
             60,
             "Generate",
-            4
+            self.stop.border
         )
 
         self.find = Button(
@@ -79,6 +90,7 @@ class Interface:
         self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
 
     def update(self, window, events):
+        self.clear.update(window, events)
         self.stop.update(window, events)
         self.gen.update(window, events)
         self.find.update(window, events)
@@ -101,3 +113,6 @@ class Interface:
         
         elif self.stop.clicked(events):
             self.maze.stop()
+        
+        elif self.clear.clicked(events):
+            self.maze.clear()
