@@ -141,14 +141,14 @@ class Maze:
         #     neighbors.append((row, col - 1))
         # if col < self.cols - 1:
         #     neighbors.append((row, col + 1))
-        
-        if row > 1 and self.cells[row - 2][col] in ("block", "end"):
+
+        if row > 1 and self.cells[row - 2][col] == "block":
             neighbors.append((row - 2, col))
-        if row < self.rows - 2 and self.cells[row + 2][col] in ("block", "end"):
+        if row < self.rows - 2 and self.cells[row + 2][col] == "block":
             neighbors.append((row + 2, col))
-        if col > 1 and self.cells[row][col - 2] in ("block", "end"):
+        if col > 1 and self.cells[row][col - 2] == "block":
             neighbors.append((row, col - 2))
-        if col < self.cols - 2 and self.cells[row][col + 2] in ("block", "end"):
+        if col < self.cols - 2 and self.cells[row][col + 2] == "block":
             neighbors.append((row, col + 2))
 
         random.shuffle(neighbors)
