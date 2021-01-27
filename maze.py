@@ -41,9 +41,10 @@ class Maze:
         path = Stack(cell)
         clock = pygame.time.Clock()
         self.active = False
+        self.end = None
         for row in self.cells:
             for cell in row:
-                if cell not in ("start", "end"):
+                if cell != "start":
                     cell.block()
 
         while path:
