@@ -47,7 +47,7 @@ class Maze:
 
         while path:
             if not self.active:
-                clock.tick(speed.value)
+                clock.tick(speed.value*3)
                 cell = path.pop()
                 neighbors = self.get_generation_neighbors(*cell.get_pos())
                 if neighbors:
@@ -141,13 +141,13 @@ class Maze:
         # if col < self.cols - 1:
         #     neighbors.append((row, col + 1))
         
-        if row > 1 and self.cells[row - 2][col] == "block":
+        if row > 1 and self.cells[row - 2][col] in ("block", "end"):
             neighbors.append((row - 2, col))
-        if row < self.rows - 2 and self.cells[row + 2][col] == "block":
+        if row < self.rows - 2 and self.cells[row + 2][col] in ("block", "end"):
             neighbors.append((row + 2, col))
-        if col > 1 and self.cells[row][col - 2] == "block":
+        if col > 1 and self.cells[row][col - 2] in ("block", "end"):
             neighbors.append((row, col - 2))
-        if col < self.cols - 2 and self.cells[row][col + 2] == "block":
+        if col < self.cols - 2 and self.cells[row][col + 2] in ("block", "end"):
             neighbors.append((row, col + 2))
 
         random.shuffle(neighbors)
