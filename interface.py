@@ -61,7 +61,7 @@ class Interface:
             self.find.y + self.find.height + 5,
             self.find.width + (self.find.x + self.find.width - self.clear.x) + self.clear.width,
             label="Speed",
-            init_val=150,
+            init_val=100,
             val_range=(1, 200)
         )
 
