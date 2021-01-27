@@ -26,7 +26,8 @@ class Maze:
     def clear(self):
         for row in self.cells:
             for cell in row:
-                cell.free()
+                if cell not in ("start", "end"):
+                    cell.free()
 
     def stop(self):
         self.active = True

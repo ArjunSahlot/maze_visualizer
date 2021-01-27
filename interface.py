@@ -116,3 +116,6 @@ class Interface:
         
         elif self.clear.clicked(events):
             self.maze.clear()
+
+    def quit(self):
+        self.maze.stop()

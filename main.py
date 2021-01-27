@@ -22,10 +22,12 @@ def main(window):
         interface.update(window, events)
         for event in events:
             if event.type == pygame.QUIT:
+                interface.quit()
                 pygame.quit()
                 return
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q and ctrl_pressed:
+                    interface.quit()
                     pygame.quit()
                     return
         pygame.display.update()
