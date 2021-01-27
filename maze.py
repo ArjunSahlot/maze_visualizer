@@ -23,6 +23,9 @@ class Maze:
         self.end.end()
         self.active = True
 
+    def stop(self):
+        self.active = True
+
     def visualize(self, alg, speed):
         threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
 
