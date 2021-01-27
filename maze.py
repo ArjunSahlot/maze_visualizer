@@ -21,6 +21,7 @@ class Maze:
         self.start.start()
         self.end = self.cells[0][1]
         self.end.end()
+        self.state = "READY"
         self.active = True
     
     def clear(self):
@@ -63,12 +64,56 @@ class Maze:
                             path.push(neighbor)
                             break
             else:
-                break
+                return
 
         self.active = True
 
     def kruskal(self, speed):
-        pass
+        forest = []
+        for row in range(self.rows):
+            for col in range(self.cols):
+                self.cells[row][col].block()
+                forest.append([(row, col)])
+
+        self.active = False
+        edges = []
+        clock = pygame.time.Clock()
+        edges.extend([])
+        for row in range(2, self.rows - 1, 2):
+            for col in range(1, self.cols - 1, 2):
+                edges.append((row, col))
+        for row in range(1, self.rows - 1, 2):
+            for col in range(2, self.cols - 1, 2):
+                edges.append((row, col))
+
+        random.shuffle(edges)
+
+        while len(forest) > 1:
+            if not self.active:
+                clock.tick(speed.value*100)
+                row, col = edges.pop(0)
+
+                tree1 = tree2 = -1
+
+                enum_forest = enumerate(forest)
+
+                if row % 2:
+                    tree1 = sum([i if (row, col - 1) in t else 0 for i, t in enum_forest])
+                    tree2 = sum([i if (row, col + 1) in t else 0 for i, t in enum_forest])
+                else:
+                    tree1 = sum([i if (row - 1, col) in t else 0 for i, t in enum_forest])
+                    tree2 = sum([i if (row + 1, col) in t else 0 for i, t in enum_forest])
+
+                if tree1 != tree2:
+                    t1, t2 = forest[tree1], forest[tree2]
+                    tree = t1 + t2
+                    forest = [x for x in forest if x not in (t1, t2)]
+                    forest.append(tree)
+                    self.cells[row][col].free()
+            else:
+                break
+
+        self.active = True
 
     def astar(self, speed):
         pass
