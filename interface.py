@@ -62,7 +62,7 @@ class Interface:
             border_col=self.find_drop.border_col
         )
 
-        self.maze = Maze(0, height, WIDTH, HEIGHT-height, 80)
+        self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
 
     def update(self, window, events):
         self.gen.update(window, events)
