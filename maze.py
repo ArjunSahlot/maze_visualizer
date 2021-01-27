@@ -93,9 +93,24 @@ class Maze:
                         if cell not in ("start", "end"):
                             cell.block()
                     if mouse_pressed[2]:
-                        if sum(map(abs, rel)) > 45:
-                            for r in (row-1, row, row+1):
-                                for c in (col-1, col, col+1):
+                        diff = sum(map(abs, rel))
+                        if diff > 100:
+                            for r in range(row-3, row+4):
+                                for c in range(col-3, col+4):
+                                    r = min(max(r, 0), self.rows-1)
+                                    c = min(max(c, 0), self.cols-1)
+                                    if (cell := self.cells[r][c]) not in ("start", "end"):
+                                        cell.free()
+                        elif diff > 70:
+                            for r in range(row-2, row+3):
+                                for c in range(col-2, col+3):
+                                    r = min(max(r, 0), self.rows-1)
+                                    c = min(max(c, 0), self.cols-1)
+                                    if (cell := self.cells[r][c]) not in ("start", "end"):
+                                        cell.free()
+                        elif diff > 45:
+                            for r in range(row-1, row+2):
+                                for c in range(col-1, col+2):
                                     r = min(max(r, 0), self.rows-1)
                                     c = min(max(c, 0), self.cols-1)
                                     if (cell := self.cells[r][c]) not in ("start", "end"):
