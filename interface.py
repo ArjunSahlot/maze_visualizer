@@ -17,15 +17,14 @@ class Interface:
 
         self.stop = Button(
             WIDTH - 180 - 5,
-            height/2 - 90,
+            height/3 - 30,
             180,
-            180,
+            60,
             "Stop",
             4
         )
         self.stop.colors["border"] = (255, 0, 0)
         self.stop.colors["text"] = (255, 0, 0)
-        self.stop.font = pygame.font.SysFont("comicsans", 80)
 
         self.gen = Button(
             self.stop.x - 250 - 5,
