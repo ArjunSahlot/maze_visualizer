@@ -78,14 +78,8 @@ class Maze:
         self.active = False
         edges = []
         clock = pygame.time.Clock()
-        edges.extend([])
-        for row in range(2, self.rows - 1, 2):
-            for col in range(1, self.cols - 1, 2):
-                edges.append((row, col))
-        for row in range(1, self.rows - 1, 2):
-            for col in range(2, self.cols - 1, 2):
-                edges.append((row, col))
-
+        edges.extend([(row, col) for row in range(2, self.rows - 1, 2) for col in range(1, self.cols - 1, 2)])
+        edges.extend([(row, col) for row in range(1, self.rows - 1, 2) for col in range(2, self.cols - 1, 2)])
         random.shuffle(edges)
 
         while len(forest) > 1:
