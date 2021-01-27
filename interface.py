@@ -39,9 +39,9 @@ class Interface:
         )
 
         self.find_drop = Dropdown(
-            (self.gen.x - 20 - 300, 5),
-            (300, 50),
-            (300, 140),
+            (self.gen.x - 20 - 350, 5),
+            (350, 50),
+            (350, 140),
             BLACK,
             self.find_drop_text,
             ["Alphastar"],
