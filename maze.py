@@ -49,7 +49,7 @@ class Maze:
 
         while path:
             if not self.active:
-                clock.tick(speed.value*3)
+                clock.tick(speed.value*10)
                 cell = path.pop()
                 neighbors = self.get_generation_neighbors(*cell.get_pos())
                 if neighbors:

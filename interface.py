@@ -17,7 +17,7 @@ class Interface:
 
         self.clear = Button(
             WIDTH - 180 - 5,
-            height/3 - 30,
+            5,
             180,
             60,
             "Clear",
@@ -28,7 +28,7 @@ class Interface:
 
         self.stop = Button(
             self.clear.x,
-            height*2/3 - self.clear.height/2,
+            self.clear.y + self.clear.height + 5,
             self.clear.width,
             self.clear.height,
             "Stop",
@@ -59,8 +59,10 @@ class Interface:
         self.speed = Slider(
             self.find.x,
             self.find.y + self.find.height + 5,
-            self.find.width,
-            label="Speed"
+            self.find.width + (self.find.x + self.find.width - self.clear.x) + self.clear.width,
+            label="Speed",
+            init_val=150,
+            val_range=(1, 200)
         )
 
         self.find_drop = Dropdown(
