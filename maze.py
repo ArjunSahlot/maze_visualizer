@@ -22,6 +22,11 @@ class Maze:
         self.end = self.cells[0][1]
         self.end.end()
         self.active = True
+    
+    def clear(self):
+        for row in self.cells:
+            for cell in row:
+                cell.free()
 
     def stop(self):
         self.active = True
