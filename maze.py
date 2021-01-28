@@ -44,12 +44,17 @@ class Maze:
                 if cell != "start":
                     cell.block()
         self.end = None
+        self.start = self.start if self.start is not None else self.cells[0][0]
 
         clock = pygame.time.Clock()
-        self.start = self.start if self.start is not None else self.cells[0][0]
-        walls = self.get_generation_neighbors(*self.start.get_pos())
+        cell = self.start
+
+        neighbors = self.get_generation_neighbors(*cell.get_pos(), "free")
+
+        visited = 1
         self.active = False
-        while walls:
+        total = (self.rows - 1)//2 + (self.cols - 1)//2
+        while visited < total:
             if not self.active:
                 clock.tick(speed.value*100)
                 n = random.randrange(len(neighbors))
