@@ -25,6 +25,7 @@ class Maze:
         self.active = True
     
     def clear(self):
+        self.stop()
         for row in self.cells:
             for cell in row:
                 if cell not in ("start", "end"):
@@ -37,6 +38,7 @@ class Maze:
         threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
 
     def recursive_backtrack(self, speed):
+        self.start = self.start if self.start is not None else self.cells[0][0]
         cell = self.start
         visited = [cell.get_pos()]
         path = Stack(cell)
@@ -76,7 +78,11 @@ class Maze:
         self.start = self.end = None
 
         clock = pygame.time.Clock()
-        trees = [[(row, col)] for col in range(1, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)]
+        trees = []
+        for row in range(1, self.rows - 1, 2):
+            for col in range(1, self.cols - 1, 2):
+                trees.append([(row, col)])
+                self.cells[row][col].free()
         self.active = False
         edges = []
         edges.extend([(row, col) for col in range(1, self.cols - 1, 2) for row in range(2, self.rows - 1, 2)])
@@ -90,19 +96,18 @@ class Maze:
 
                 enum_trees = enumerate(trees)
 
-                if row % 2:
-                    tree1 = sum([i if (row, col - 1) in t else 0 for i, t in enum_trees])
-                    tree2 = sum([i if (row, col + 1) in t else 0 for i, t in enum_trees])
-                else:
+                if not row % 2:
                     tree1 = sum([i if (row - 1, col) in t else 0 for i, t in enum_trees])
                     tree2 = sum([i if (row + 1, col) in t else 0 for i, t in enum_trees])
+                else:
+                    tree1 = sum([i if (row, col - 1) in t else 0 for i, t in enum_trees])
+                    tree2 = sum([i if (row, col + 1) in t else 0 for i, t in enum_trees])
 
                 if tree1 != tree2:
                     t1, t2 = trees[tree1], trees[tree2]
-                    tree = t1 + t2
                     trees.remove(t1)
                     trees.remove(t2)
-                    trees.append(tree)
+                    trees.append(t1 + t2)
                     self.cells[row][col].free()
             else:
                 break
