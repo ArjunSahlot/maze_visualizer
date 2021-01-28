@@ -42,7 +42,7 @@ class Maze:
         for row in self.cells:
             for cell in row:
                 if cell != "start":
-                    cell.block()
+                    cell.free()
         self.end = None
         self.start = self.start if self.start is not None else self.cells[0][0]
 
@@ -61,11 +61,11 @@ class Maze:
                 n = neighbors[n_i]
                 cell = self.cells[n[0]][n[1]]
                 visited += 1
-                cell.free()
+                cell.block()
                 neighbors = neighbors[:n_i] + neighbors[n_i + 1:]
                 pos = cell.get_pos()
                 near_n0, near_n1 = self.get_generation_neighbors(*pos)[0]
-                self.cells[(pos[0] + near_n0) // 2][(pos[1] + near_n1) // 2] = 0
+                self.cells[(pos[0] + near_n0) // 2][(pos[1] + near_n1) // 2].block()
 
                 unvisited = self.get_generation_neighbors(*pos, "free")
                 neighbors = list(set(neighbors + unvisited))
