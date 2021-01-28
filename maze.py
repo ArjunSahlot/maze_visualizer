@@ -49,11 +49,11 @@ class Maze:
         clock = pygame.time.Clock()
         cell = self.start
 
-        neighbors = self.get_generation_neighbors(*cell.get_pos(), "free")
+        neighbors = self.get_generation_neighbors(*cell.get_pos(), ("free",))
 
         visited = 1
         self.active = False
-        total = (self.rows - 1)//2 + (self.cols - 1)//2
+        total = self.rows*self.cols/4
         while visited < total:
             if not self.active:
                 clock.tick(speed.value*100)
@@ -64,10 +64,10 @@ class Maze:
                 cell.block()
                 neighbors = neighbors[:n_i] + neighbors[n_i + 1:]
                 pos = cell.get_pos()
-                near_n0, near_n1 = self.get_generation_neighbors(*pos)[0]
+                near_n0, near_n1 = self.get_generation_neighbors(*pos, ("block", "start"))[0]
                 self.cells[(pos[0] + near_n0) // 2][(pos[1] + near_n1) // 2].block()
 
-                unvisited = self.get_generation_neighbors(*pos, "free")
+                unvisited = self.get_generation_neighbors(*pos, ("free",))
                 neighbors = list(set(neighbors + unvisited))
             else:
                 return
