@@ -9,7 +9,7 @@ class Maze:
     algs = {
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
-        "Randomized Prims's": "prim",
+        "Randomized Prim's": "prim",
         "Alphastar": "astar"
     }
 
@@ -39,7 +39,28 @@ class Maze:
         threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
 
     def prim(self, speed):
-        pass
+        for row in self.cells:
+            for cell in row:
+                if cell != "start":
+                    cell.block()
+        self.end = None
+
+        clock = pygame.time.Clock()
+        self.start = self.start if self.start is not None else self.cells[0][0]
+        walls = self.get_generation_neighbors(*self.start.get_pos())
+        self.active = False
+        while walls:
+            if not self.active:
+                clock.tick(speed.value*100)
+                wall = random.choice(walls)
+                if self.cells[wall[0]][wall[1]] != "block":
+                    self.cells[(cell.get_pos()[0] + wall[0])//2][(cell.get_pos()[1] + wall[1])//2].free()
+                walls.extend(self.get_generation_neighbors(*wall))
+                walls.remove(wall)
+            else:
+                return
+
+        self.active = True
 
     def recursive_backtrack(self, speed):
         self.start = self.start if self.start is not None else self.cells[0][0]
