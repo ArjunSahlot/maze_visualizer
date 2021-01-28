@@ -279,3 +279,6 @@ class Cell:
 
     def __ne__(self, other):
         return self.state != other
+
+    def __repr__(self):
+        return f"{self.state} at {self.row, self.col}"
