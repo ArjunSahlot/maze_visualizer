@@ -215,15 +215,6 @@ class Maze:
     
     def get_generation_neighbors(self, row, col, types=("block",)):
         neighbors = []
-        # if row > 0:
-        #     neighbors.append((row - 1, col))
-        # if row < self.rows - 1:
-        #     neighbors.append((row + 1, col))
-        # if col > 0:
-        #     neighbors.append((row, col - 1))
-        # if col < self.cols - 1:
-        #     neighbors.append((row, col + 1))
-
         if row > 1 and self.cells[row - 2][col] in types:
             neighbors.append((row - 2, col))
         if row < self.rows - 2 and self.cells[row + 2][col] in types:
