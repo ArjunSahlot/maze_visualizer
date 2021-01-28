@@ -225,7 +225,7 @@ class Maze:
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
     
-    def get_generation_neighbors(self, row, col, type="block"):
+    def get_generation_neighbors(self, row, col, types=("block",)):
         neighbors = []
         # if row > 0:
         #     neighbors.append((row - 1, col))
@@ -236,13 +236,13 @@ class Maze:
         # if col < self.cols - 1:
         #     neighbors.append((row, col + 1))
 
-        if row > 1 and self.cells[row - 2][col] == type:
+        if row > 1 and self.cells[row - 2][col] in types:
             neighbors.append((row - 2, col))
-        if row < self.rows - 2 and self.cells[row + 2][col] == type:
+        if row < self.rows - 2 and self.cells[row + 2][col] in types:
             neighbors.append((row + 2, col))
-        if col > 1 and self.cells[row][col - 2] == type:
+        if col > 1 and self.cells[row][col - 2] in types:
             neighbors.append((row, col - 2))
-        if col < self.cols - 2 and self.cells[row][col + 2] == type:
+        if col < self.cols - 2 and self.cells[row][col + 2] in types:
             neighbors.append((row, col + 2))
 
         random.shuffle(neighbors)
