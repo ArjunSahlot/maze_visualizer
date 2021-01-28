@@ -69,15 +69,14 @@ class Maze:
         self.active = True
 
     def kruskal(self, speed):
-        trees = []
         for row in range(self.rows):
             for col in range(self.cols):
                 self.cells[row][col].block()
-                trees.append([(row, col)])
 
+        clock = pygame.time.Clock()
+        trees = [[(row, col)] for col in range(1, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)]
         self.active = False
         edges = []
-        clock = pygame.time.Clock()
         edges.extend([(row, col) for row in range(2, self.rows - 1, 2) for col in range(1, self.cols - 1, 2)])
         edges.extend([(row, col) for row in range(1, self.rows - 1, 2) for col in range(2, self.cols - 1, 2)])
         random.shuffle(edges)
@@ -86,8 +85,6 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 row, col = edges.pop(0)
-
-                tree1 = tree2 = -1
 
                 enum_trees = enumerate(trees)
 
@@ -101,7 +98,8 @@ class Maze:
                 if tree1 != tree2:
                     t1, t2 = trees[tree1], trees[tree2]
                     tree = t1 + t2
-                    trees = [x for x in trees if x not in (t1, t2)]
+                    trees.remove(t1)
+                    trees.remove(t2)
                     trees.append(tree)
                     self.cells[row][col].free()
             else:
