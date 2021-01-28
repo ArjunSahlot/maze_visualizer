@@ -57,15 +57,15 @@ class Maze:
         while visited < total:
             if not self.active:
                 clock.tick(speed.value*100)
-                n = random.randrange(len(neighbors))
-                neighbor = neighbors[n]
-                cell = self.cells[neighbor[0]][neighbor[1]]
+                n_i = random.randrange(len(neighbors))
+                n = neighbors[n_i]
+                cell = self.cells[n[0]][n[1]]
                 visited += 1
                 cell.free()
-                neighbors = neighbors[:n] + neighbors[n + 1:]
+                neighbors = neighbors[:n_i] + neighbors[n_i + 1:]
                 pos = cell.get_pos()
-                nearest_n0, nearest_n1 = self.get_generation_neighbors(*pos)[0]
-                self.cells[(pos[0] + nearest_n0) // 2][(pos[1] + nearest_n1) // 2] = 0
+                near_n0, near_n1 = self.get_generation_neighbors(*pos)[0]
+                self.cells[(pos[0] + near_n0) // 2][(pos[1] + near_n1) // 2] = 0
 
                 unvisited = self.get_generation_neighbors(*pos, "free")
                 neighbors = list(set(neighbors + unvisited))
