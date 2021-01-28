@@ -71,18 +71,6 @@ class Maze:
                 neighbors = list(set(neighbors + unvisited))
             else:
                 return
-        # walls = self.get_generation_neighbors(*self.start.get_pos())
-        # self.active = False
-        # while walls:
-        #     if not self.active:
-        #         clock.tick(speed.value*100)
-        #         wall = random.choice(walls)
-        #         if self.cells[wall[0]][wall[1]] != "block":
-        #             self.cells[(cell.get_pos()[0] + wall[0])//2][(cell.get_pos()[1] + wall[1])//2].free()
-        #         walls.extend(self.get_generation_neighbors(*wall))
-        #         walls.remove(wall)
-        #     else:
-        #         return
 
         self.active = True
 
