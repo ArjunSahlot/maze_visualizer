@@ -9,6 +9,7 @@ class Maze:
     algs = {
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
+        "Randomized Prims's": "prim",
         "Alphastar": "astar"
     }
 
@@ -36,6 +37,9 @@ class Maze:
 
     def visualize(self, alg, speed):
         threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
+
+    def prim(self, speed):
+        pass
 
     def recursive_backtrack(self, speed):
         self.start = self.start if self.start is not None else self.cells[0][0]
