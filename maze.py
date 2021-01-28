@@ -8,7 +8,7 @@ from random_utils.datatypes import Stack
 class Maze:
     algs = {
         "Recursive Backtracker": "recursive_backtrack",
-        "Kruskal's": "kruskal",
+        "Randomized Kruskal's": "kruskal",
         "Alphastar": "astar"
     }
 

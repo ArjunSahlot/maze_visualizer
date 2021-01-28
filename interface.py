@@ -83,7 +83,7 @@ class Interface:
             self.find_drop.pop_size,
             BLACK,
             self.maze_drop_text,
-            ["Recursive Backtracker", "Kruskal's"],
+            ["Recursive Backtracker", "Randomized Kruskal's"],
             highlight_col=self.find_drop.highlight_col,
             color=self.find_drop.color,
             border_col=self.find_drop.border_col
