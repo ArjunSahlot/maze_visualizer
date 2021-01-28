@@ -72,6 +72,8 @@ class Maze:
         for row in range(self.rows):
             for col in range(self.cols):
                 self.cells[row][col].block()
+        
+        self.start = self.end = None
 
         clock = pygame.time.Clock()
         trees = [[(row, col)] for col in range(1, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)]
