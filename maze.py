@@ -77,8 +77,8 @@ class Maze:
         trees = [[(row, col)] for col in range(1, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)]
         self.active = False
         edges = []
-        edges.extend([(row, col) for row in range(2, self.rows - 1, 2) for col in range(1, self.cols - 1, 2)])
-        edges.extend([(row, col) for row in range(1, self.rows - 1, 2) for col in range(2, self.cols - 1, 2)])
+        edges.extend([(row, col) for col in range(1, self.cols - 1, 2) for row in range(2, self.rows - 1, 2)])
+        edges.extend([(row, col) for col in range(2, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)])
         random.shuffle(edges)
 
         while len(trees) > 1:
