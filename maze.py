@@ -52,11 +52,18 @@ class Maze:
         while walls:
             if not self.active:
                 clock.tick(speed.value*100)
-                wall = random.choice(walls)
-                if self.cells[wall[0]][wall[1]] != "block":
-                    self.cells[(cell.get_pos()[0] + wall[0])//2][(cell.get_pos()[1] + wall[1])//2].free()
-                walls.extend(self.get_generation_neighbors(*wall))
-                walls.remove(wall)
+                n = random.randrange(len(neighbors))
+                neighbor = neighbors[n]
+                cell = self.cells[neighbor[0]][neighbor[1]]
+                visited += 1
+                cell.free()
+                neighbors = neighbors[:n] + neighbors[n + 1:]
+                pos = cell.get_pos()
+                nearest_n0, nearest_n1 = self.get_generation_neighbors(*pos)[0]
+                self.cells[(pos[0] + nearest_n0) // 2][(pos[1] + nearest_n1) // 2] = 0
+
+                unvisited = self.get_generation_neighbors(*pos, "free")
+                neighbors = list(set(neighbors + unvisited))
             else:
                 return
 
@@ -201,7 +208,7 @@ class Maze:
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
     
-    def get_generation_neighbors(self, row, col):
+    def get_generation_neighbors(self, row, col, type="block"):
         neighbors = []
         # if row > 0:
         #     neighbors.append((row - 1, col))
@@ -212,13 +219,13 @@ class Maze:
         # if col < self.cols - 1:
         #     neighbors.append((row, col + 1))
 
-        if row > 1 and self.cells[row - 2][col] == "block":
+        if row > 1 and self.cells[row - 2][col] == type:
             neighbors.append((row - 2, col))
-        if row < self.rows - 2 and self.cells[row + 2][col] == "block":
+        if row < self.rows - 2 and self.cells[row + 2][col] == type:
             neighbors.append((row + 2, col))
-        if col > 1 and self.cells[row][col - 2] == "block":
+        if col > 1 and self.cells[row][col - 2] == type:
             neighbors.append((row, col - 2))
-        if col < self.cols - 2 and self.cells[row][col + 2] == "block":
+        if col < self.cols - 2 and self.cells[row][col + 2] == type:
             neighbors.append((row, col + 2))
 
         random.shuffle(neighbors)
