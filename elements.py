@@ -97,7 +97,9 @@ class Button:
 
     def clicked(self, events):
         if self.hovered():
-            return pygame.MOUSEBUTTONDOWN in [event.type for event in events]
+            for event in events:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    return event.button == 1
 
     def draw(self, window):
         pygame.draw.rect(window, self.colors["highlight" if self.hovered() else "bg"], (self.x, self.y, self.width, self.height))
