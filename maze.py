@@ -167,6 +167,7 @@ class Maze:
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
         g_score[self.start] = 0
+        print(g_score)
 
         f_score = {cell: float("inf") for row in self.cells for cell in row}
         f_score[self.start] = self.heuristic(self.start)
@@ -176,6 +177,8 @@ class Maze:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
                     self.reconstruct_path(path)
+                    self.status = "PATH FOUND"
+                    break
 
                 for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
                     temp_g = g_score[curr] + 1
@@ -184,10 +187,16 @@ class Maze:
                         g_score[neighbor] = temp_g
                         f_score[neighbor] = temp_g + self.heuristic(neighbor)
                         if not any(neighbor == item[2] for item in open.queue):
-                            open.put(neighbor)
+                            count += 1
+                            open.put((f_score[neighbor], count, neighbor))
+                            neighbor.close()
+                
+                if curr != self.start:
+                    curr.open()
             else:
                 return
 
+        self.status = "NO POSSIBLE PATH"
         self.active = True
 
     def reconstruct_path(self, path):
@@ -334,6 +343,9 @@ class Cell:
 
     def get_pos(self):
         return (self.row, self.col)
+
+    def __hash__(self):
+        return hash((self.row, self.col, self.width, self.state))
 
     def __eq__(self, other):
         return self.state == other
