@@ -2,8 +2,7 @@ import pygame
 from elements import *
 from constants import *
 from maze import Maze
-from tkinter import messagebox
-from tkinter import Tk
+from tkinter import messagebox, Tk
 Tk().withdraw()
 pygame.init()
 
