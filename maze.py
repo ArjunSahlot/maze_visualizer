@@ -154,7 +154,9 @@ class Maze:
         self.active = True
 
     def astar(self, speed):
-        pass
+        if self.start is None or self.end is None:
+            messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
+            return
 
     def update(self, window, events=None):
         self.draw(window)
