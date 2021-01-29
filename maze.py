@@ -175,7 +175,7 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
-                    self.reconstruct_path(path)
+                    self.reconstruct_path(path, speed)
                     self.end.end()
                     self.status = "PATH FOUND"
                     break
@@ -199,9 +199,11 @@ class Maze:
         self.status = "NO POSSIBLE PATH"
         self.active = True
 
-    def reconstruct_path(self, path):
+    def reconstruct_path(self, path, speed):
         curr = self.end
+        clock = pygame.time.Clock()
         while curr in path:
+            clock.tick(speed.value*3)
             curr = path[curr]
             if curr != self.start:
                 curr.path()
