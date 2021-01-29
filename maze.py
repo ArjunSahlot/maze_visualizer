@@ -191,7 +191,11 @@ class Maze:
         self.active = True
 
     def reconstruct_path(self, path):
-        pass
+        curr = self.end
+        while curr in path:
+            curr = path[curr]
+            if curr != self.start:
+                curr.path()
 
     def update(self, window, events=None):
         self.draw(window)
