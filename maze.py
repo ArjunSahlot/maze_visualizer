@@ -13,7 +13,8 @@ class Maze:
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
         "Randomized Prim's": "prim",
-        "A* (Astar)": "astar"
+        "A* (Astar)": "astar",
+        "Dijkstra's": "dijkstra",
     }
 
     def __init__(self, x, y, width, height, cell_size):
