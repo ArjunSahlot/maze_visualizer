@@ -3,6 +3,7 @@ from constants import *
 import threading
 import random
 from random_utils.datatypes import Stack
+from queue import PriorityQueue
 from tkinter import Tk, messagebox
 Tk().withdraw()
 
@@ -160,7 +161,9 @@ class Maze:
 
         self.active = False
         clock = pygame.time.Clock()
-        open = [self.start]
+        count = 0
+        open = PriorityQueue()
+        open.put((0, count, self.start))
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
         g_score[self.start] = 0
@@ -171,6 +174,7 @@ class Maze:
         while open:
             if not self.active:
                 clock.tick(speed.value*100)
+                curr = 
             else:
                 return
 
