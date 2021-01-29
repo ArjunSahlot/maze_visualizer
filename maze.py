@@ -179,8 +179,8 @@ class Maze:
                     self.status = "PATH FOUND"
                     break
 
+                temp_g = g_score[curr] + 1
                 for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
-                    temp_g = g_score[curr] + 1
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
@@ -281,11 +281,11 @@ class Maze:
 
     def get_pathfind_neighbors(self, row, col):
         neighbors = []
-        if row > 0 and self.cells[row - 1][col] != "block":
+        if row and self.cells[row - 1][col] != "block":
             neighbors.append(self.cells[row - 1][col])
         if row < self.rows - 1 and self.cells[row + 1][col] != "block":
             neighbors.append(self.cells[row + 1][col])
-        if col > 0 and self.cells[row][col - 1] != "block":
+        if col and self.cells[row][col - 1] != "block":
             neighbors.append(self.cells[row][col - 1])
         if col < self.cols - 1 and self.cells[row][col + 1] != "block":
             neighbors.append(self.cells[row][col + 1])
