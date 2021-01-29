@@ -176,6 +176,7 @@ class Maze:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
                     self.reconstruct_path(path)
+                    self.end.end()
                     self.status = "PATH FOUND"
                     break
 
