@@ -158,6 +158,7 @@ class Maze:
             messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
             return
 
+        self.active = False
         open = [self.start]
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
@@ -165,6 +166,14 @@ class Maze:
 
         f_score = {cell: float("inf") for row in self.cells for cell in row}
         f_score[self.start] = self.heuristic(self.start)
+
+        while open:
+            if not self.active:
+                pass
+            else:
+                return
+
+        self.active = True
 
     def update(self, window, events=None):
         self.draw(window)
