@@ -159,6 +159,7 @@ class Maze:
             return
 
         self.active = False
+        clock = pygame.time.Clock()
         open = [self.start]
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
@@ -169,7 +170,7 @@ class Maze:
 
         while open:
             if not self.active:
-                pass
+                clock.tick(speed.value*100)
             else:
                 return
 
