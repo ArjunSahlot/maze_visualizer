@@ -87,7 +87,7 @@ class Maze:
                         frontiers.append((row, col + 1, row, col + 2))
             else:
                 return
-        
+
         self.active = True
 
     def recursive_backtrack(self, speed):
