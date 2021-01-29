@@ -55,36 +55,39 @@ class Maze:
         for row in self.cells:
             for cell in row:
                 if cell != "start":
-                    cell.free()
+                    cell.block()
         self.end = None
         self.start = self.start if self.start is not None else self.cells[0][0]
 
         clock = pygame.time.Clock()
-        cell = self.start
-
-        neighbors = self.get_generation_neighbors(*cell.get_pos(), ("free",))
-
-        visited = 1
+        frontiers = [(*self.start.get_pos(), *self.start.get_pos())]
         self.active = False
-        total = self.rows*self.cols/4
-        while visited < total:
+
+        while frontiers:
             if not self.active:
                 clock.tick(speed.value*100)
-                n_i = random.randrange(len(neighbors))
-                n = neighbors[n_i]
-                cell = self.cells[n[0]][n[1]]
-                visited += 1
-                cell.block()
-                neighbors = neighbors[:n_i] + neighbors[n_i + 1:]
-                pos = cell.get_pos()
-                near_n0, near_n1 = self.get_generation_neighbors(*pos, ("block", "start"))[0]
-                self.cells[(pos[0] + near_n0) // 2][(pos[1] + near_n1) // 2].block()
+                f = frontiers.pop(random.randrange(len(frontiers)))
+                row, col = f[2:]
+                if self.cells[row][col] in ("block", "start"):
+                    if (cell := self.cells[f[0]][f[1]]) != "start":
+                        cell.free()
+                    if (cell := self.cells[row][col]) != "start":
+                        cell.free()
 
-                unvisited = self.get_generation_neighbors(*pos, ("free",))
-                neighbors = list(set(neighbors + unvisited))
+                    if row > 1 and self.cells[row - 2][col] == "block":
+                        frontiers.append((row - 1, col, row - 2, col))
+
+                    if row < self.rows - 2 and self.cells[row + 2][col] == "block":
+                        frontiers.append((row + 1, col, row + 2, col))
+
+                    if col > 1 and self.cells[row][col - 2] == "block":
+                        frontiers.append((row, col - 1, row, col - 2))
+
+                    if col < self.cols - 2 and self.cells[row][col + 2] == "block":
+                        frontiers.append((row, col + 1, row, col + 2))
             else:
                 return
-
+        
         self.active = True
 
     def recursive_backtrack(self, speed):
@@ -237,7 +240,7 @@ class Maze:
                             count += 1
                             open.put((f_score[neighbor], count, neighbor))
                             neighbor.close()
-                
+
                 if curr != self.start:
                     curr.open()
             else:
@@ -372,14 +375,14 @@ class Maze:
 
     def get_pathfind_neighbors(self, row, col):
         neighbors = []
-        if row and self.cells[row - 1][col] != "block":
-            neighbors.append(self.cells[row - 1][col])
-        if row < self.rows - 1 and self.cells[row + 1][col] != "block":
-            neighbors.append(self.cells[row + 1][col])
-        if col and self.cells[row][col - 1] != "block":
-            neighbors.append(self.cells[row][col - 1])
-        if col < self.cols - 1 and self.cells[row][col + 1] != "block":
-            neighbors.append(self.cells[row][col + 1])
+        if row and (cell := self.cells[row - 1][col]) != "block":
+            neighbors.append(cell)
+        if row < self.rows - 1 and (cell := self.cells[row + 1][col]) != "block":
+            neighbors.append(cell)
+        if col and (cell := self.cells[row][col - 1]) != "block":
+            neighbors.append(cell)
+        if col < self.cols - 1 and (cell := self.cells[row][col + 1]) != "block":
+            neighbors.append(cell)
         
         return neighbors
 
