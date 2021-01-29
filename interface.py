@@ -54,7 +54,6 @@ class Interface:
             self.gen.border
         )
 
-
         self.speed = Slider(
             self.find.x,
             self.find.y + self.find.height + 5,
