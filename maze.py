@@ -200,6 +200,9 @@ class Maze:
         self.status = "NO POSSIBLE PATH"
         self.active = True
 
+    def dijkstra(self, speed):
+        pass
+
     def reconstruct_path(self, path, speed):
         curr = self.end
         clock = pygame.time.Clock()
