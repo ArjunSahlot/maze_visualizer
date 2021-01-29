@@ -271,6 +271,12 @@ class Cell:
     def path(self):
         self.state = "path"
 
+    def open(self):
+        self.state = "open"
+
+    def close(self):
+        self.state = "closed"
+
     def get_pos(self):
         return (self.row, self.col)
 
