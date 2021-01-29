@@ -34,5 +34,3 @@ def main(window):
 
 
 main(WINDOW)
-
-# 2 buttons for clear. 2 lines for button
