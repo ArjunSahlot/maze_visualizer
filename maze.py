@@ -174,7 +174,17 @@ class Maze:
         while open:
             if not self.active:
                 clock.tick(speed.value*100)
-                curr = 
+                if (curr := open.get()[2]) == self.end:
+                    self.reconstruct_path(path)
+
+                for neighbor in self.get_pathfind_neighbors(curr.get_pos()):
+                    temp_g = g_score[curr] + 1
+                    if temp_g < g_score[neighbor]:
+                        path[neighbor] = curr
+                        g_score[neighbor] = temp_g
+                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
+                        if not any(neighbor == item[2] for item in open.queue):
+                            open.put(neighbor)
             else:
                 return
 
