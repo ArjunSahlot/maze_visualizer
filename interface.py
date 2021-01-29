@@ -63,18 +63,6 @@ class Interface:
             val_range=(1, 200)
         )
 
-        self.find_drop = Dropdown(
-            (self.gen.x - 20 - 350, 5),
-            (350, 50),
-            (350, 140),
-            BLACK,
-            self.find_drop_text,
-            ["A* Search (Astar)", "Dijkstra's Alg", "Best First Search"],
-            highlight_col=(100, 100, 100),
-            color=(255,)*3,
-            border_col=(255,)*3
-        )
-
         self.gen_drop = Dropdown(
             (self.find_drop.loc[0] - 10 - self.find_drop.size[0], 5),
             self.find_drop.size,
@@ -88,6 +76,18 @@ class Interface:
         )
 
         self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
+
+        self.find_drop = Dropdown(
+            (self.gen.x - 20 - 350, 5),
+            (350, 50),
+            (350, 140),
+            BLACK,
+            self.find_drop_text,
+            list(self.maze.algs.keys()),
+            highlight_col=(100, 100, 100),
+            color=(255,)*3,
+            border_col=(255,)*3
+        )
 
     def update(self, window, events):
         self.clear.update(window, events)
