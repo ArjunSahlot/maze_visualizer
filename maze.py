@@ -177,7 +177,7 @@ class Maze:
                 if (curr := open.get()[2]) == self.end:
                     self.reconstruct_path(path)
 
-                for neighbor in self.get_pathfind_neighbors(curr.get_pos()):
+                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
                     temp_g = g_score[curr] + 1
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
@@ -270,6 +270,9 @@ class Maze:
         random.shuffle(neighbors)
 
         return neighbors
+
+    def get_pathfind_neighbors(self, row, col):
+        pass
 
     def heuristic(self, cell):
         x1, y1 = cell.get_pos()
