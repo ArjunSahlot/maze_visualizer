@@ -3,6 +3,8 @@ from constants import *
 import threading
 import random
 from random_utils.datatypes import Stack
+from tkinter import Tk, messagebox
+Tk().withdraw()
 
 
 class Maze:
