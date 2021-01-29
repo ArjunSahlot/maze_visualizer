@@ -203,6 +203,9 @@ class Maze:
     def dijkstra(self, speed):
         pass
 
+    def bestfirst(self, speed):
+        pass
+
     def reconstruct_path(self, path, speed):
         curr = self.end
         clock = pygame.time.Clock()
