@@ -344,7 +344,7 @@ class Cell:
         return (self.row, self.col)
 
     def __hash__(self):
-        return hash((self.row, self.col, self.width, self.state))
+        return hash(self.get_pos())
 
     def __eq__(self, other):
         return self.state == other
