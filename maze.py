@@ -228,6 +228,13 @@ class Maze:
 
         return neighbors
 
+    @staticmethod
+    def heuristic(c1, c2):
+        x1, y1 = c1.get_pos()
+        x2, y2 = c2.get_pos()
+        return abs(x2-x1) + abs(y2-y1)
+
+
 class Cell:
     colors = {
         "free": (255,) * 3,
