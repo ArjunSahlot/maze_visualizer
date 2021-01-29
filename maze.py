@@ -272,7 +272,17 @@ class Maze:
         return neighbors
 
     def get_pathfind_neighbors(self, row, col):
-        pass
+        neighbors = []
+        if row > 0 and self.cells[row - 1][col] != "block":
+            neighbors.append(self.cells[row - 1][col])
+        if row < self.rows - 1 and self.cells[row + 1][col] != "block":
+            neighbors.append(self.cells[row + 1][col])
+        if col > 0 and self.cells[row][col - 1] != "block":
+            neighbors.append(self.cells[row][col - 1])
+        if col < self.cols - 1 and self.cells[row][col + 1] != "block":
+            neighbors.append(self.cells[row][col + 1])
+        
+        return neighbors
 
     def heuristic(self, cell):
         x1, y1 = cell.get_pos()
