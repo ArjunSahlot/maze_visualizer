@@ -190,6 +190,9 @@ class Maze:
 
         self.active = True
 
+    def reconstruct_path(self, path):
+        pass
+
     def update(self, window, events=None):
         self.draw(window)
 
