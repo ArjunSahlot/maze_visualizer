@@ -167,7 +167,6 @@ class Maze:
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
         g_score[self.start] = 0
-        print(g_score)
 
         f_score = {cell: float("inf") for row in self.cells for cell in row}
         f_score[self.start] = self.heuristic(self.start)
