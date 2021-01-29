@@ -171,7 +171,7 @@ class Maze:
         f_score = {cell: float("inf") for row in self.cells for cell in row}
         f_score[self.start] = self.heuristic(self.start)
 
-        while open:
+        while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
