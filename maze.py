@@ -158,6 +158,14 @@ class Maze:
             messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
             return
 
+        open = [self.start]
+        path = {}
+        g_score = {cell: float("inf") for row in self.cells for cell in row}
+        g_score[self.start] = 0
+
+        f_score = {cell: float("inf") for row in self.cells for cell in row}
+        f_score[self.start] = Maze.heuristic(self.start, self.end)
+
     def update(self, window, events=None):
         self.draw(window)
 
