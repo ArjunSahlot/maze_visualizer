@@ -164,7 +164,7 @@ class Maze:
         g_score[self.start] = 0
 
         f_score = {cell: float("inf") for row in self.cells for cell in row}
-        f_score[self.start] = Maze.heuristic(self.start, self.end)
+        f_score[self.start] = self.heuristic(self.start)
 
     def update(self, window, events=None):
         self.draw(window)
@@ -240,10 +240,9 @@ class Maze:
 
         return neighbors
 
-    @staticmethod
-    def heuristic(c1, c2):
-        x1, y1 = c1.get_pos()
-        x2, y2 = c2.get_pos()
+    def heuristic(self, cell):
+        x1, y1 = cell.get_pos()
+        x2, y2 = self.end.get_pos()
         return abs(x2-x1) + abs(y2-y1)
 
 
