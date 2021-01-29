@@ -69,7 +69,7 @@ class Interface:
             (350, 140),
             BLACK,
             self.find_drop_text,
-            ["A* Search (Astar)", "Dijkstra's Alg"],
+            ["A* Search (Astar)", "Dijkstra's Alg", "Best First Search"],
             highlight_col=(100, 100, 100),
             color=(255,)*3,
             border_col=(255,)*3
