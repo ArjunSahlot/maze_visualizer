@@ -9,10 +9,12 @@ Tk().withdraw()
 
 
 class Maze:
-    algs = {
+    maze_algs = {
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
         "Randomized Prim's": "prim",
+    }
+    path_algs = {
         "A* Search (Astar)": "astar",
         "Dijkstra's Alg": "dijkstra",
         "Best First Search": "bestfirst",
@@ -201,10 +203,86 @@ class Maze:
         self.active = True
 
     def dijkstra(self, speed):
-        pass
+        self.active = False
+        clock = pygame.time.Clock()
+        count = 0
+        open = PriorityQueue()
+        open.put((0, count, self.start))
+        path = {}
+        g_score = {cell: float("inf") for row in self.cells for cell in row}
+        g_score[self.start] = 0
+
+        f_score = {cell: float("inf") for row in self.cells for cell in row}
+        f_score[self.start] = self.heuristic(self.start)
+
+        while not open.empty():
+            if not self.active:
+                clock.tick(speed.value*100)
+                if (curr := open.get()[2]) == self.end:
+                    self.reconstruct_path(path, speed)
+                    self.end.end()
+                    self.status = "PATH FOUND"
+                    break
+
+                temp_g = g_score[curr] + 1
+                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
+                    if temp_g < g_score[neighbor]:
+                        path[neighbor] = curr
+                        g_score[neighbor] = temp_g
+                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
+                        if not any(neighbor == item[2] for item in open.queue):
+                            count += 1
+                            open.put((f_score[neighbor], count, neighbor))
+                            neighbor.close()
+                
+                if curr != self.start:
+                    curr.open()
+            else:
+                return
+
+        self.status = "NO POSSIBLE PATH"
+        self.active = True
 
     def bestfirst(self, speed):
-        pass
+        self.active = False
+        clock = pygame.time.Clock()
+        count = 0
+        open = PriorityQueue()
+        open.put((0, count, self.start))
+        path = {}
+        g_score = {cell: float("inf") for row in self.cells for cell in row}
+        g_score[self.start] = 0
+
+        f_score = {cell: float("inf") for row in self.cells for cell in row}
+        f_score[self.start] = self.heuristic(self.start)
+
+        while not open.empty():
+            if not self.active:
+                clock.tick(speed.value*100)
+                if (curr := open.get()[2]) == self.end:
+                    self.reconstruct_path(path, speed)
+                    self.end.end()
+                    self.status = "PATH FOUND"
+                    break
+
+                temp_g = g_score[curr] + 1
+                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
+                    if temp_g < g_score[neighbor]:
+                        path[neighbor] = curr
+                        g_score[neighbor] = temp_g
+                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
+                        if not any(neighbor == item[2] for item in open.queue):
+                            count += 1
+                            open.put((f_score[neighbor], count, neighbor))
+                            neighbor.close()
+                
+                if curr != self.start:
+                    curr.open()
+            else:
+                return
+
+        self.status = "NO POSSIBLE PATH"
+        self.active = True
 
     def reconstruct_path(self, path, speed):
         curr = self.end
