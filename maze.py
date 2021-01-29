@@ -39,6 +39,9 @@ class Maze:
         self.active = True
 
     def visualize(self, alg, speed):
+        if self.start is None or self.end is None:
+            messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
+            return
         threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
 
     def prim(self, speed):
@@ -155,10 +158,6 @@ class Maze:
         self.active = True
 
     def astar(self, speed):
-        if self.start is None or self.end is None:
-            messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
-            return
-
         self.active = False
         clock = pygame.time.Clock()
         count = 0
