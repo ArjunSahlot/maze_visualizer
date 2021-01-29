@@ -43,10 +43,13 @@ class Maze:
         self.active = True
 
     def visualize(self, alg, speed):
-        if self.start is None or self.end is None:
-            messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
-            return
-        threading.Thread(target=getattr(self, self.algs[alg]), args=(speed,)).start()
+        if alg in self.path_algs:
+            if self.start is None or self.end is None:
+                messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
+                return
+            threading.Thread(target=getattr(self, self.path_algs[alg]), args=(speed,)).start()
+        else:
+            threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
 
     def prim(self, speed):
         for row in self.cells:
