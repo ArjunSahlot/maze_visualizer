@@ -167,6 +167,22 @@ class Maze:
 
         # self.active = True
 
+        clock = pygame.time.Clock()
+        self.active = False
+        sets = {cell:{cell} for row in self.cell for cell in row}
+        choices = ((cell, dir) for row in self.cells for cell in row for dir in "vb")
+        total_cells = (self.rows - 1) * (self.cols - 1)
+        while True:
+            if not self.active:
+                clock.tick(speed.value*100)
+                if all([len(cells) == total_cells for cells in sets.values()]):
+                    break
+                cell, dir = choices.pop(random.randrange(len(choices)))
+            else:
+                return
+
+        self.active = True
+
     def astar(self, speed):
         self.active = False
         clock = pygame.time.Clock()
@@ -190,7 +206,7 @@ class Maze:
                     break
 
                 temp_g = g_score[curr] + 1
-                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
+                for neighbor in self.get_pathfind_neighbors(curr):
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
@@ -228,7 +244,7 @@ class Maze:
                     break
 
                 temp_g = g_score[curr] + 1
-                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
+                for neighbor in self.get_pathfind_neighbors(curr):
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
@@ -268,7 +284,7 @@ class Maze:
                     break
 
                 temp_g = g_score[curr] + 1
-                for neighbor in self.get_pathfind_neighbors(*curr.get_pos()):
+                for neighbor in self.get_pathfind_neighbors(curr):
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
@@ -369,8 +385,9 @@ class Maze:
 
         return neighbors
 
-    def get_pathfind_neighbors(self, row, col):
+    def get_pathfind_neighbors(self, cell):
         neighbors = []
+        row, col = cell.get_pos()
         if row and (cell := self.cells[row - 1][col]) != "block":
             neighbors.append(cell)
         if row < self.rows - 1 and (cell := self.cells[row + 1][col]) != "block":
