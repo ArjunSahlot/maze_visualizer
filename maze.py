@@ -218,9 +218,6 @@ class Maze:
         g_score = {cell: float("inf") for row in self.cells for cell in row}
         g_score[self.start] = 0
 
-        f_score = {cell: float("inf") for row in self.cells for cell in row}
-        f_score[self.start] = self.heuristic(self.start)
-
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
@@ -235,10 +232,9 @@ class Maze:
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
-                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
                         if not any(neighbor == item[2] for item in open.queue):
                             count += 1
-                            open.put((f_score[neighbor], count, neighbor))
+                            open.put((g_score[neighbor], count, neighbor))
                             neighbor.close()
 
                 if curr != self.start:
@@ -276,7 +272,7 @@ class Maze:
                     if temp_g < g_score[neighbor]:
                         path[neighbor] = curr
                         g_score[neighbor] = temp_g
-                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
+                        f_score[neighbor] = self.heuristic(neighbor)
                         if not any(neighbor == item[2] for item in open.queue):
                             count += 1
                             open.put((f_score[neighbor], count, neighbor))
