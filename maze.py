@@ -383,7 +383,7 @@ class Maze:
             neighbors.append(cell)
         if col < self.cols - 1 and (cell := self.cells[row][col + 1]) != "block":
             neighbors.append(cell)
-        
+
         return neighbors
 
     def heuristic(self, cell):
