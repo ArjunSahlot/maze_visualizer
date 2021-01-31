@@ -21,7 +21,7 @@ class Maze:
     }
 
     def __init__(self, x, y, width, height, cell_size):
-        self.x, self.y, self.width, self.height = x, y, width, height
+        self.x, self.y, self.colsidth, self.height = x, y, width, height
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
@@ -201,6 +201,59 @@ class Maze:
         #         return
 
         # self.active = True
+
+        for row in self.cells:
+            for cell in row:
+                cell.block()
+
+        self.start = self.end = None
+        self.active = False
+        clock = pygame.time.Clock()
+
+        forest = []
+        for row in range(1, self.rows - 1, 2):
+            for col in range(1, self.cols - 1, 2):
+                forest.append([(row, col)])
+                self.cells[row][col].free()
+
+        edges = []
+        for row in range(2, self.rows - 1, 2):
+            for col in range(1, self.cols - 1, 2):
+                edges.append((row, col))
+        for row in range(1, self.rows - 1, 2):
+            for col in range(2, self.cols - 1, 2):
+                edges.append((row, col))
+
+        random.shuffle(edges)
+
+        while len(forest) > 1:
+            if not self.active:
+                clock.tick(speed.value*100)
+                ce_row, ce_col = edges[0]
+                edges = edges[1:]
+
+                tree1 = -1
+                tree2 = -1
+
+                if ce_row % 2 == 0:  # even-numbered row: vertical wall
+                    tree1 = sum([i if (ce_row - 1, ce_col) in j else 0 for i, j in enumerate(forest)])
+                    tree2 = sum([i if (ce_row + 1, ce_col) in j else 0 for i, j in enumerate(forest)])
+                else:  # odd-numbered row: horizontal wall
+                    tree1 = sum([i if (ce_row, ce_col - 1) in j else 0 for i, j in enumerate(forest)])
+                    tree2 = sum([i if (ce_row, ce_col + 1) in j else 0 for i, j in enumerate(forest)])
+
+                if tree1 != tree2:
+                    new_tree = forest[tree1] + forest[tree2]
+                    temp1 = list(forest[tree1])
+                    temp2 = list(forest[tree2])
+                    forest.remove(temp1)
+                    forest.remove(temp2)
+                    forest.append(new_tree)
+                    self.cells[ce_row][ce_col].free()
+            else:
+                return
+
+        self.active = True
 
     def astar(self, speed):
         self.active = False
@@ -387,7 +440,7 @@ class Maze:
             for cell in row:
                 cell.draw(window, self.x, self.y)
 
-        pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
+        pygame.draw.rect(window, BLACK, (self.x, self.y, self.colsidth, self.height), 4)
     
     def get_generation_neighbors(self, row, col, types=("block",)):
         neighbors = []
@@ -436,14 +489,14 @@ class Cell:
     }
 
     def __init__(self, row, col, width):
-        self.row, self.col, self.width = row, col, width
+        self.row, self.col, self.colsidth = row, col, width
         self.prev = None
         self.state = "free"
 
     def draw(self, window, x_off, y_off):
-        x = x_off + self.col*self.width
-        y = y_off + self.row*self.width
-        pygame.draw.rect(window, self.colors[self.state], (x, y, self.width, self.width))
+        x = x_off + self.col*self.colsidth
+        y = y_off + self.row*self.colsidth
+        pygame.draw.rect(window, self.colors[self.state], (x, y, self.colsidth, self.colsidth))
     
     def free(self):
         self.state = "free"
