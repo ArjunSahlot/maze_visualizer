@@ -167,40 +167,40 @@ class Maze:
 
         # self.active = True
 
-        clock = pygame.time.Clock()
-        self.active = False
-        sets = {cell:{cell} for row in self.cells for cell in row}
-        choices = []
-        for row in range(0, self.rows, 2):
-            for col in range(0, self.cols, 2):
-                for dir in "vh":
-                    if dir == "v":
-                        if row - 1 >= 0 and row + 1 < self.rows:
-                            choices.append((self.cells[row-1][col], self.cells[row][col], self.cells[row+1][col]))
-                    else:
-                        if col - 1 >= 0 and col + 1 < self.cols:
-                            choices.append((self.cells[row][col-1], self.cells[row][col], self.cells[row][col+1]))
+        # clock = pygame.time.Clock()
+        # self.active = False
+        # sets = {cell:{cell} for row in self.cells for cell in row}
+        # choices = []
+        # for row in range(0, self.rows, 2):
+        #     for col in range(0, self.cols, 2):
+        #         for dir in "vh":
+        #             if dir == "v":
+        #                 if row - 1 >= 0 and row + 1 < self.rows:
+        #                     choices.append((self.cells[row-1][col], self.cells[row][col], self.cells[row+1][col]))
+        #             else:
+        #                 if col - 1 >= 0 and col + 1 < self.cols:
+        #                     choices.append((self.cells[row][col-1], self.cells[row][col], self.cells[row][col+1]))
 
-        total_cells = (self.rows - 1) * (self.cols - 1)
-        while True:
-            if not self.active:
-                clock.tick(speed.value*100)
-                if all([len(cells) == total_cells for cells in sets.values()]) and not choices:
-                    break
-                c1, c2, c3 = choices.pop(random.randrange(len(choices)))
-                if sets[c1] != sets[c3]:
-                    c1.free()
-                    c2.free()
-                    c3.free()
-                    new_set = sets[c1]
-                    new_set.update(sets[c3])
-                    sets[c1] = new_set.copy()
-                    sets[c2] = new_set.copy()
-                    sets[c3] = new_set.copy()
-            else:
-                return
+        # total_cells = (self.rows - 1) * (self.cols - 1)
+        # while True:
+        #     if not self.active:
+        #         clock.tick(speed.value*100)
+        #         if all([len(cells) == total_cells for cells in sets.values()]) and not choices:
+        #             break
+        #         c1, c2, c3 = choices.pop(random.randrange(len(choices)))
+        #         if sets[c1] != sets[c3]:
+        #             c1.free()
+        #             c2.free()
+        #             c3.free()
+        #             new_set = sets[c1]
+        #             new_set.update(sets[c3])
+        #             sets[c1] = new_set.copy()
+        #             sets[c2] = new_set.copy()
+        #             sets[c3] = new_set.copy()
+        #     else:
+        #         return
 
-        self.active = True
+        # self.active = True
 
     def astar(self, speed):
         self.active = False
