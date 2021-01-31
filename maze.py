@@ -124,84 +124,6 @@ class Maze:
         self.active = True
 
     def kruskal(self, speed):
-        for row in range(self.rows):
-            for col in range(self.cols):
-                self.cells[row][col].block()
-        
-        self.start = self.end = None
-
-        # clock = pygame.time.Clock()
-        # trees = []
-        # for row in range(1, self.rows - 1, 2):
-        #     for col in range(1, self.cols - 1, 2):
-        #         trees.append([(row, col)])
-        #         self.cells[row][col].free()
-        # self.active = False
-        # edges = []
-        # edges.extend([(row, col) for col in range(1, self.cols - 1, 2) for row in range(2, self.rows - 1, 2)])
-        # edges.extend([(row, col) for col in range(2, self.cols - 1, 2) for row in range(1, self.rows - 1, 2)])
-        # random.shuffle(edges)
-
-        # while len(trees) > 1:
-        #     if not self.active:
-        #         clock.tick(speed.value*100)
-        #         row, col = edges.pop(0)
-
-        #         enum_trees = enumerate(trees)
-
-        #         if not row % 2:
-        #             tree1 = sum([i if (row - 1, col) in t else 0 for i, t in enum_trees])
-        #             tree2 = sum([i if (row + 1, col) in t else 0 for i, t in enum_trees])
-        #         else:
-        #             tree1 = sum([i if (row, col - 1) in t else 0 for i, t in enum_trees])
-        #             tree2 = sum([i if (row, col + 1) in t else 0 for i, t in enum_trees])
-
-        #         if tree1 != tree2:
-        #             t1, t2 = trees[tree1], trees[tree2]
-        #             trees.remove(t1)
-        #             trees.remove(t2)
-        #             trees.append(t1 + t2)
-        #             self.cells[row][col].free()
-        #     else:
-        #         break
-
-        # self.active = True
-
-        # clock = pygame.time.Clock()
-        # self.active = False
-        # sets = {cell:{cell} for row in self.cells for cell in row}
-        # choices = []
-        # for row in range(0, self.rows, 2):
-        #     for col in range(0, self.cols, 2):
-        #         for dir in "vh":
-        #             if dir == "v":
-        #                 if row - 1 >= 0 and row + 1 < self.rows:
-        #                     choices.append((self.cells[row-1][col], self.cells[row][col], self.cells[row+1][col]))
-        #             else:
-        #                 if col - 1 >= 0 and col + 1 < self.cols:
-        #                     choices.append((self.cells[row][col-1], self.cells[row][col], self.cells[row][col+1]))
-
-        # total_cells = (self.rows - 1) * (self.cols - 1)
-        # while True:
-        #     if not self.active:
-        #         clock.tick(speed.value*100)
-        #         if all([len(cells) == total_cells for cells in sets.values()]) and not choices:
-        #             break
-        #         c1, c2, c3 = choices.pop(random.randrange(len(choices)))
-        #         if sets[c1] != sets[c3]:
-        #             c1.free()
-        #             c2.free()
-        #             c3.free()
-        #             new_set = sets[c1]
-        #             new_set.update(sets[c3])
-        #             sets[c1] = new_set.copy()
-        #             sets[c2] = new_set.copy()
-        #             sets[c3] = new_set.copy()
-        #     else:
-        #         return
-
-        # self.active = True
-
         for row in self.cells:
             for cell in row:
                 cell.block()
@@ -210,46 +132,40 @@ class Maze:
         self.active = False
         clock = pygame.time.Clock()
 
-        forest = []
+        trees = []
         for row in range(1, self.rows - 1, 2):
             for col in range(1, self.cols - 1, 2):
-                forest.append([(row, col)])
+                trees.append([(row, col)])
                 self.cells[row][col].free()
 
         edges = []
-        for row in range(2, self.rows - 1, 2):
-            for col in range(1, self.cols - 1, 2):
-                edges.append((row, col))
-        for row in range(1, self.rows - 1, 2):
-            for col in range(2, self.cols - 1, 2):
-                edges.append((row, col))
+        edges.extend((row, col) for row in range(2, self.rows - 1, 2) for col in range(1, self.cols - 1, 2))
+        edges.extend((row, col) for row in range(1, self.rows - 1, 2) for col in range(2, self.cols - 1, 2))
 
         random.shuffle(edges)
 
-        while len(forest) > 1:
+        while len(trees) > 1:
             if not self.active:
                 clock.tick(speed.value*100)
-                ce_row, ce_col = edges[0]
+                row, col = edges[0]
                 edges = edges[1:]
 
-                tree1 = -1
-                tree2 = -1
+                tree1 = tree2 = -1
 
-                if ce_row % 2 == 0:  # even-numbered row: vertical wall
-                    tree1 = sum([i if (ce_row - 1, ce_col) in j else 0 for i, j in enumerate(forest)])
-                    tree2 = sum([i if (ce_row + 1, ce_col) in j else 0 for i, j in enumerate(forest)])
-                else:  # odd-numbered row: horizontal wall
-                    tree1 = sum([i if (ce_row, ce_col - 1) in j else 0 for i, j in enumerate(forest)])
-                    tree2 = sum([i if (ce_row, ce_col + 1) in j else 0 for i, j in enumerate(forest)])
+                if row % 2:
+                    tree1 = sum([i if (row, col - 1) in j else 0 for i, j in enumerate(trees)])
+                    tree2 = sum([i if (row, col + 1) in j else 0 for i, j in enumerate(trees)])
+                else:
+                    tree1 = sum([i if (row - 1, col) in j else 0 for i, j in enumerate(trees)])
+                    tree2 = sum([i if (row + 1, col) in j else 0 for i, j in enumerate(trees)])
 
                 if tree1 != tree2:
-                    new_tree = forest[tree1] + forest[tree2]
-                    temp1 = list(forest[tree1])
-                    temp2 = list(forest[tree2])
-                    forest.remove(temp1)
-                    forest.remove(temp2)
-                    forest.append(new_tree)
-                    self.cells[ce_row][ce_col].free()
+                    t1, t2 = trees[tree1], trees[tree2]
+                    new_tree = t1 + t2
+                    trees.remove(t1)
+                    trees.remove(t2)
+                    trees.append(new_tree)
+                    self.cells[row][col].free()
             else:
                 return
 
