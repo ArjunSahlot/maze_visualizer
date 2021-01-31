@@ -170,7 +170,7 @@ class Maze:
         clock = pygame.time.Clock()
         self.active = False
         sets = {cell:{cell} for row in self.cell for cell in row}
-        choices = ((cell, dir) for row in self.cells for cell in row for dir in "vb")
+        choices = ((self.cells[row][col], dir) for row in range(0, self.rows, 2) for col in range(0, self.cols, 2) for dir in "vb")
         total_cells = (self.rows - 1) * (self.cols - 1)
         while True:
             if not self.active:
