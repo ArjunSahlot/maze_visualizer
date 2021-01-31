@@ -189,10 +189,14 @@ class Maze:
                     break
                 c1, c2, c3 = choices.pop(random.randrange(len(choices)))
                 if sets[c1] != sets[c3]:
+                    c1.free()
                     c2.free()
-                    sets[c1].update(sets[c3])
-                    sets[c3].update(sets[c1])
-                    sets[c2].update(sets[c1])
+                    c3.free()
+                    new_set = sets[c1]
+                    new_set.update(sets[c3])
+                    sets[c1] = new_set.copy()
+                    sets[c2] = new_set.copy()
+                    sets[c3] = new_set.copy()
             else:
                 return
 
