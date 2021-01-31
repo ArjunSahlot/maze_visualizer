@@ -25,9 +25,9 @@ class Maze:
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
-        self.start = self.cells[0][0]
+        self.start = self.cells[self.rows//5][self.cols//5]
         self.start.start()
-        self.end = self.cells[0][1]
+        self.end = self.cells[self.rows*4//5][self.cols*4//5]
         self.end.end()
         self.state = "READY"
         self.active = True
