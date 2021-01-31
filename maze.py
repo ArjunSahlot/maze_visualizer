@@ -21,7 +21,7 @@ class Maze:
     }
 
     def __init__(self, x, y, width, height, cell_size):
-        self.x, self.y, self.colsidth, self.height = x, y, width, height
+        self.x, self.y, self.width, self.height = x, y, width, height
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
         self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
@@ -356,7 +356,7 @@ class Maze:
             for cell in row:
                 cell.draw(window, self.x, self.y)
 
-        pygame.draw.rect(window, BLACK, (self.x, self.y, self.colsidth, self.height), 4)
+        pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
     
     def get_generation_neighbors(self, row, col, types=("block",)):
         neighbors = []
@@ -405,14 +405,14 @@ class Cell:
     }
 
     def __init__(self, row, col, width):
-        self.row, self.col, self.colsidth = row, col, width
+        self.row, self.col, self.width = row, col, width
         self.prev = None
         self.state = "free"
 
     def draw(self, window, x_off, y_off):
-        x = x_off + self.col*self.colsidth
-        y = y_off + self.row*self.colsidth
-        pygame.draw.rect(window, self.colors[self.state], (x, y, self.colsidth, self.colsidth))
+        x = x_off + self.col*self.width
+        y = y_off + self.row*self.width
+        pygame.draw.rect(window, self.colors[self.state], (x, y, self.width, self.width))
     
     def free(self):
         self.state = "free"
