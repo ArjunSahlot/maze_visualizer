@@ -89,7 +89,11 @@ class Button:
         }
         self.x, self.y, self.width, self.height = x, y, width, height
         self.text = text
-        self.font = pygame.font.SysFont("comicsans", height-10)
+        if layers == 1:
+            self.font = pygame.font.SysFont("comicsans", height-10)
+        else:
+            self.font = pygame.font.SysFont("comicsans", height*5//9)
+            self.padding = height/5
         self.border = border
         self.layers = layers
 
@@ -105,9 +109,16 @@ class Button:
     def draw(self, window):
         pygame.draw.rect(window, self.colors["highlight" if self.hovered() else "bg"], (self.x, self.y, self.width, self.height))
         if self.border: pygame.draw.rect(window, self.colors["border"], (self.x, self.y, self.width, self.height), self.border, border_radius=1)
-        text = self.font.render(self.text, 1, self.colors["text"])
-        loc = (self.x + self.width/2 - text.get_width()/2, self.y + self.height/2 - text.get_height()/2)
-        window.blit(text, loc)
+        if self.layers == 1:
+            text = self.font.render(self.text, 1, self.colors["text"])
+            loc = (self.x + self.width/2 - text.get_width()/2, self.y + self.height/2 - text.get_height()/2)
+            window.blit(text, loc)
+        else:
+            text1, text2 = self.text.split(" ", 1)
+            t1 = self.font.render(text1, 1, self.colors["text"])
+            t2 = self.font.render(text2, 1, self.colors["text"])
+            window.blit(t1, (self.x + self.width/2 - t1.get_width()/2, self.padding))
+            window.blit(t2, (self.x + self.width/2 - t2.get_width()/2, self.padding + t1.get_height()))
 
     def hovered(self):
         mx, my = pygame.mouse.get_pos()

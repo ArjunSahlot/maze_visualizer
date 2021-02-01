@@ -23,7 +23,8 @@ class Interface:
             4,
             2
         )
-        
+        self.clear_canvas.colors["border"] = self.clear_canvas.colors["text"] = (255, 140, 70)
+
         self.clear_path = Button(
             self.clear_canvas.x - self.clear_canvas.width - 5,
             self.clear_canvas.y,
@@ -33,7 +34,7 @@ class Interface:
             self.clear_canvas.border,
             2
         )
-        self.clear_canvas.colors["border"] = self.clear_canvas.colors["text"] = self.clear_path.colors["border"] = self.clear_path.colors["text"] = (255, 140, 70)
+        self.clear_path.colors["border"] = self.clear_path.colors["text"] = (255, 140, 70)
 
         self.stop = Button(
             self.clear_path.x,
@@ -67,7 +68,7 @@ class Interface:
         self.speed = Slider(
             self.find.x,
             self.find.y + self.find.height + 5,
-            self.find.width + (self.find.x + self.find.width - self.clear_path.x) + self.clear_path.width,
+            self.find.width + (self.find.x + self.find.width - self.stop.x) + self.stop.width,
             label="Speed",
             init_val=100,
             val_range=(1, 200)
