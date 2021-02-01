@@ -76,7 +76,7 @@ class Maze:
 
         while len(visited) != total:
             if not self.active:
-                pass
+                clock.tick(speed.value*100)
             else:
                 return
         
