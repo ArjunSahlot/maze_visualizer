@@ -109,7 +109,6 @@ class Maze:
         path = Stack(cell)
         clock = pygame.time.Clock()
         self.active = False
-        self.end = None
         for row in self.cells:
             for cell in row:
                 if cell not in ("start", "end"):
@@ -371,7 +370,7 @@ class Maze:
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
     
-    def get_generation_neighbors(self, row, col, types=("block",)):
+    def get_generation_neighbors(self, row, col, types=("block", "end")):
         neighbors = []
         if row > 1 and self.cells[row - 2][col] in types:
             neighbors.append((row - 2, col))
