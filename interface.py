@@ -14,24 +14,32 @@ class Interface:
     def __init__(self, height):
         self.height = height
 
-        self.clear = Button(
-            WIDTH - 180 - 5,
+        self.clear_canvas = Button(
+            WIDTH - 87.5 - 5,
             5,
-            180,
+            87.5,
             60,
-            "Clear",
+            "Clear Canvas",
             4
         )
-        self.clear.colors["border"] = (255, 140, 70)
-        self.clear.colors["text"] = (255, 140, 70)
+        
+        self.clear_path = Button(
+            self.clear_canvas.x - self.clear_canvas.width - 5,
+            self.clear_canvas.y,
+            self.clear_canvas.width,
+            self.clear_canvas.height,
+            "Clear Path",
+            self.clear_canvas.border
+        )
+        self.clear_canvas.colors["border"] = self.clear_canvas.colors["text"] = self.clear_path.colors["border"] = self.clear_path.colors["text"] = (255, 140, 70)
 
         self.stop = Button(
-            self.clear.x,
-            self.clear.y + self.clear.height + 5,
-            self.clear.width,
-            self.clear.height,
+            self.clear_path.x,
+            self.clear_path.y + self.clear_path.height + 5,
+            180,
+            self.clear_path.height,
             "Stop",
-            self.clear.border
+            self.clear_path.border
         )
         self.stop.colors["border"] = (255, 0, 0)
         self.stop.colors["text"] = (255, 0, 0)
@@ -57,7 +65,7 @@ class Interface:
         self.speed = Slider(
             self.find.x,
             self.find.y + self.find.height + 5,
-            self.find.width + (self.find.x + self.find.width - self.clear.x) + self.clear.width,
+            self.find.width + (self.find.x + self.find.width - self.clear_path.x) + self.clear_path.width,
             label="Speed",
             init_val=100,
             val_range=(1, 200)
@@ -90,7 +98,8 @@ class Interface:
         self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
 
     def update(self, window, events):
-        self.clear.update(window, events)
+        self.clear_canvas.update(window, events)
+        self.clear_path.update(window, events)
         self.stop.update(window, events)
         self.gen.update(window, events)
         self.find.update(window, events)
@@ -114,7 +123,7 @@ class Interface:
         elif self.stop.clicked(events):
             self.maze.stop()
         
-        elif self.clear.clicked(events):
+        elif self.clear_canvas.clicked(events):
             self.maze.clear()
 
     def quit(self):
