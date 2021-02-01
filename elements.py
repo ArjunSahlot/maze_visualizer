@@ -91,6 +91,7 @@ class Button:
         self.text = text
         self.font = pygame.font.SysFont("comicsans", height-10)
         self.border = border
+        self.layers = layers
 
     def update(self, window, events=None):
         self.draw(window)
