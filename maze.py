@@ -110,7 +110,7 @@ class Maze:
         self.end = None
         for row in self.cells:
             for cell in row:
-                if cell != "start":
+                if cell not in ("start", "end"):
                     cell.block()
 
         while path:
@@ -123,7 +123,8 @@ class Maze:
                         if (row, col) not in visited:
                             neighbor = self.cells[row][col]
                             path.push(cell)
-                            neighbor.free()
+                            if neighbor != "end":
+                                neighbor.free()
                             self.cells[(cell.get_pos()[0] + row)//2][(cell.get_pos()[1] + col)//2].free()
                             visited.append((row, col))
                             path.push(neighbor)
