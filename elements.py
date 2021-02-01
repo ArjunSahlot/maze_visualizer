@@ -79,7 +79,6 @@ class Slider:
 
 
 class Button:
-
     def __init__(self, x, y, width, height=50, text="Button", border=0, layers=1):
         self.colors = {
             "bg": (0,) * 3,
