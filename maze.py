@@ -61,7 +61,26 @@ class Maze:
             threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
 
     def aldous_broder(self, speed):
-        pass
+        for row in self.cells:
+            for cell in row:
+                if cell not in ("start", "end"):
+                    cell.free()
+
+        self.active = False
+        clock = pygame.time.Clock()
+        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        cell = self.start
+        visited = [cell]
+        total = self.rows * self.cols
+        neighbors = []
+
+        while len(visited) != total:
+            if not self.active:
+                pass
+            else:
+                return
+        
+        self.active = True
 
     def prim(self, speed):
         for row in self.cells:
@@ -69,7 +88,7 @@ class Maze:
                 if cell != "start":
                     cell.block()
         self.end = None
-        self.start = self.start if self.start is not None else self.cells[0][0]
+        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
 
         clock = pygame.time.Clock()
         frontiers = [(*self.start.get_pos(), *self.start.get_pos())]
@@ -103,7 +122,7 @@ class Maze:
         self.active = True
 
     def recursive_backtrack(self, speed):
-        self.start = self.start if self.start is not None else self.cells[0][0]
+        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
         cell = self.start
         visited = [cell.get_pos()]
         path = Stack(cell)
