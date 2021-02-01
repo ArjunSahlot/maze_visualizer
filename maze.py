@@ -13,6 +13,7 @@ class Maze:
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
         "Randomized Prim's": "prim",
+        "Aldous-Broder Alg": "aldous_broder"
     }
     path_algs = {
         "A* Search (Astar)": "astar",
@@ -56,6 +57,9 @@ class Maze:
             threading.Thread(target=getattr(self, self.path_algs[alg]), args=(speed,)).start()
         else:
             threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
+
+    def aldous_broder(self, speed):
+        pass
 
     def prim(self, speed):
         for row in self.cells:
