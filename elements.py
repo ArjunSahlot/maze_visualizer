@@ -139,7 +139,7 @@ class Dropdown:
                 border = 5,
                 pop_border = 3,
                 rounding=10,
-                text_padding=10,
+                text_padding=7,
                 textbox_padding=10,
                 tri_padding=15,
                 sensitivity=5,
