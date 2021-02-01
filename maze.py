@@ -39,6 +39,8 @@ class Maze:
             for cell in row:
                 cell.free()
 
+        self.start = self.end = None
+
     def clear_path(self):
         self.stop()
         for row in self.cells:
