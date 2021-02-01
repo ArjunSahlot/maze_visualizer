@@ -125,9 +125,12 @@ class Interface:
         
         elif self.stop.clicked(events):
             self.maze.stop()
-        
+
         elif self.clear_canvas.clicked(events):
-            self.maze.clear()
+            self.maze.clear_canvas()
+
+        elif self.clear_path.clicked(events):
+            self.maze.clear_path()
 
     def quit(self):
         self.maze.stop()

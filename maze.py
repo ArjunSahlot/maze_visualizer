@@ -32,11 +32,18 @@ class Maze:
         self.state = "READY"
         self.active = True
     
-    def clear(self):
+    def clear_canvas(self):
         self.stop()
         for row in self.cells:
             for cell in row:
                 if cell not in ("start", "end"):
+                    cell.free()
+
+    def clear_path(self):
+        self.stop()
+        for row in self.cells:
+            for cell in row:
+                if cell in ("closed", "open", "path"):
                     cell.free()
 
     def stop(self):
