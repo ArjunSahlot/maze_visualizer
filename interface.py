@@ -20,7 +20,8 @@ class Interface:
             87.5,
             60,
             "Clear Canvas",
-            4
+            4,
+            2
         )
         
         self.clear_path = Button(
@@ -29,7 +30,8 @@ class Interface:
             self.clear_canvas.width,
             self.clear_canvas.height,
             "Clear Path",
-            self.clear_canvas.border
+            self.clear_canvas.border,
+            2
         )
         self.clear_canvas.colors["border"] = self.clear_canvas.colors["text"] = self.clear_path.colors["border"] = self.clear_path.colors["text"] = (255, 140, 70)
 
