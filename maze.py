@@ -71,7 +71,7 @@ class Maze:
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
         row, col = self.start.get_pos()
         visited = 1
-        total = (self.rows - 1) * (self.cols - 1)
+        total = self.rows * self.cols
 
         while visited < total:
             if not self.active:
