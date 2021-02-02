@@ -69,22 +69,24 @@ class Maze:
         self.active = False
         clock = pygame.time.Clock()
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
-        cell = self.start.get_pos()
-        visited = [cell]
-        total = self.rows * self.cols
-        neighbors = set(self.get_generation_neighbors(*cell))
+        row, col = self.start.get_pos()
+        visited = 1
+        total = (self.rows - 1) * (self.cols - 1)
 
-        while len(visited) != total:
+        while visited < total:
             if not self.active:
-                clock.tick(speed.value*100)
-                row, col = random.choice(list(neighbors))
-                neighbors.update(self.get_generation_neighbors(row, col))
-                if (row, col) not in visited:
-                    visited.append((row, col))
-                self.cells[(cell[0] + row)//2][(cell[1] + col)//2].free()
-                if (c := self.cells[row][col]) != "end":
-                    c.free()
-                cell = (row, col)
+                clock.tick(speed.value**2/4)
+                if not (neighbors := self.get_generation_neighbors(row, col)):
+                    row, col = random.choice(self.get_generation_neighbors(row, col, types=("free",)))
+                    continue
+                for r, c in neighbors:
+                    if (cell := self.cells[r][c]) in ("block", "end"):
+                        if cell != "end":
+                            self.cells[(r + row) // 2][(c + col) // 2].free()
+                            cell.free()
+                        visited += 1
+                        row, col = r, c
+                        break
             else:
                 return
         
