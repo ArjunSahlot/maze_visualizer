@@ -72,7 +72,7 @@ class Maze:
         cell = self.start
         visited = [cell]
         total = self.rows * self.cols
-        neighbors = []
+        neighbors = {}
 
         while len(visited) != total:
             if not self.active:
