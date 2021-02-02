@@ -69,6 +69,7 @@ class Maze:
         self.active = False
         clock = pygame.time.Clock()
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start.start()
         row, col = self.start.get_pos()
         visited = 1
         total = self.rows * self.cols
@@ -99,6 +100,7 @@ class Maze:
                     cell.block()
         self.end = None
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start.start()
 
         clock = pygame.time.Clock()
         frontiers = [(*self.start.get_pos(), *self.start.get_pos())]
@@ -133,6 +135,7 @@ class Maze:
 
     def recursive_backtrack(self, speed):
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start.start()
         cell = self.start
         visited = [cell.get_pos()]
         path = Stack(cell)
