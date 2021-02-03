@@ -10,6 +10,7 @@ pygame.init()
 class Interface:
     maze_drop_text = "Maze Gen Algs"
     find_drop_text = "Path Finding Algs"
+    big_font = pygame.font.SysFont("comicsans", 100)
 
     def __init__(self, height):
         self.height = height
@@ -109,7 +110,12 @@ class Interface:
         self.speed.update(window, events)
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
-        self.maze.update(window, events, self.speed)
+        self.maze.update(window, events)
+
+        text = self.big_font.render(self.maze.state, 1, WHITE)
+        x = self.gen_drop.loc[0] / 2 - text.get_width() / 2
+        y = self.height - 5 - text.get_height()
+        window.blit(text, (x, y))
 
         if self.gen.clicked(events):
             if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
