@@ -283,7 +283,8 @@ class Maze:
                     self.reconstruct_path(path, speed)
                     self.end.end()
                     self.state = "PATH FOUND"
-                    break
+                    self.active = True
+                    return
 
                 temp_g = g_score[curr] + 1
                 for neighbor in self.get_pathfind_neighbors(curr):
@@ -324,7 +325,8 @@ class Maze:
                     self.reconstruct_path(path, speed)
                     self.end.end()
                     self.state = "PATH FOUND"
-                    break
+                    self.active = True
+                    return
 
                 temp_g = g_score[curr] + 1
                 for neighbor in self.get_pathfind_neighbors(curr):
