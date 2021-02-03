@@ -32,7 +32,7 @@ class Maze:
         self.end.end()
         self.state = "READY"
         self.active = True
-    
+
     def clear_canvas(self):
         self.stop()
         for row in self.cells:
@@ -254,7 +254,7 @@ class Maze:
                             count += 1
                             open.put((f_score[neighbor], count, neighbor))
                             neighbor.close()
-                
+
                 if curr != self.start:
                     curr.open()
             else:
@@ -334,7 +334,7 @@ class Maze:
                             count += 1
                             open.put((f_score[neighbor], count, neighbor))
                             neighbor.close()
-                
+
                 if curr != self.start:
                     curr.open()
             else:
@@ -410,7 +410,7 @@ class Maze:
                 cell.draw(window, self.x, self.y)
 
         pygame.draw.rect(window, BLACK, (self.x, self.y, self.width, self.height), 4)
-    
+
     def get_generation_neighbors(self, row, col, types=("block", "end")):
         neighbors = []
         if row > 1 and self.cells[row - 2][col] in types:
@@ -465,7 +465,7 @@ class Cell:
         x = x_off + self.col*self.width
         y = y_off + self.row*self.width
         pygame.draw.rect(window, self.colors[self.state], (x, y, self.width, self.width))
-    
+
     def free(self):
         self.state = "free"
 
