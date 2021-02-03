@@ -446,12 +446,10 @@ class Cell:
         "path": (0, 0, 255),
         "open": (255, 255, 120),
         "closed": (255, 140, 0),
-        "active": (200, 120, 255)
     }
 
     def __init__(self, row, col, width):
         self.row, self.col, self.width = row, col, width
-        self.prev = None
         self.state = "free"
 
     def draw(self, window, x_off, y_off):

@@ -109,7 +109,7 @@ class Interface:
         self.speed.update(window, events)
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
-        self.maze.update(window, events)
+        self.maze.update(window, events, self.speed)
 
         if self.gen.clicked(events):
             if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
