@@ -445,7 +445,8 @@ class Cell:
         "end": (255, 0, 0),
         "path": (0, 0, 255),
         "open": (255, 255, 120),
-        "closed": (255, 140, 0)
+        "closed": (255, 140, 0),
+        "active": (200, 120, 255)
     }
 
     def __init__(self, row, col, width):
