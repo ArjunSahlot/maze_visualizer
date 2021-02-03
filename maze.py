@@ -49,6 +49,7 @@ class Maze:
                     cell.free()
 
     def stop(self):
+        self.state = "STOPPED"
         self.active = True
 
     def finish(self):
@@ -94,7 +95,7 @@ class Maze:
                         break
             else:
                 return
-        
+
         self.active = True
 
     def prim(self, speed):
