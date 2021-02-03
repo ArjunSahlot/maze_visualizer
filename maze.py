@@ -65,6 +65,8 @@ class Maze:
         else:
             threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
 
+        self.state = "CALCULATING"
+
     def aldous_broder(self, speed):
         for row in self.cells:
             for cell in row:
