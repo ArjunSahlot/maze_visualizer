@@ -51,6 +51,10 @@ class Maze:
     def stop(self):
         self.active = True
 
+    def finish(self):
+        self.state = "FINISHED"
+        self.active = True
+
     def visualize(self, alg, speed):
         if alg in self.path_algs:
             if self.start is None or self.end is None:
