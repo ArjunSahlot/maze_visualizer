@@ -121,7 +121,8 @@ class Interface:
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
         self.cell_size.update(window, events)
-        self.maze.update_dim(self.cell_size.value)
+        if self.cell_size.dragging:
+            self.maze.update_dim(self.cell_size.value)
         self.maze.update(window, events)
 
         text = self.big_font.render(self.maze.state, 1, WHITE)
