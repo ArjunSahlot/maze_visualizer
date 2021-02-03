@@ -360,7 +360,7 @@ class Maze:
         curr = self.end
         clock = pygame.time.Clock()
         while curr in path:
-            clock.tick(speed.value*3)
+            clock.tick(speed.value*4)
             curr = path[curr]
             if curr != self.start:
                 curr.path()
