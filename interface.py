@@ -99,6 +99,16 @@ class Interface:
             border_col=self.find_drop.border_col
         )
 
+        self.cell_size = Slider(
+            10,
+            10,
+            self.gen_drop.loc[0] - 25,
+            50,
+            20,
+            (1, 200),
+            "Cell Size",
+        )
+
         self.maze = Maze(0, height, WIDTH, HEIGHT-height, 10)
 
     def update(self, window, events):
@@ -110,6 +120,7 @@ class Interface:
         self.speed.update(window, events)
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
+        self.cell_size.update(window, events)
         self.maze.update(window, events)
 
         text = self.big_font.render(self.maze.state, 1, WHITE)
