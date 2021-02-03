@@ -10,7 +10,7 @@ pygame.init()
 class Interface:
     maze_drop_text = "Maze Gen Algs"
     find_drop_text = "Path Finding Algs"
-    big_font = pygame.font.SysFont("comicsans", 100)
+    big_font = pygame.font.SysFont("comicsans", 80)
 
     def __init__(self, height):
         self.height = height

@@ -96,7 +96,7 @@ class Maze:
             else:
                 return
 
-        self.active = True
+        self.finish()
 
     def prim(self, speed):
         for row in self.cells:
@@ -136,7 +136,7 @@ class Maze:
             else:
                 return
 
-        self.active = True
+        self.finish()
 
     def recursive_backtrack(self, speed):
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
@@ -170,7 +170,7 @@ class Maze:
             else:
                 return
 
-        self.active = True
+        self.finish()
 
     def kruskal(self, speed):
         for row in self.cells:
@@ -218,7 +218,7 @@ class Maze:
             else:
                 return
 
-        self.active = True
+        self.finish()
 
     def astar(self, speed):
         self.active = False
@@ -237,10 +237,12 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
+                    self.state = "RETRACING"
                     self.reconstruct_path(path, speed)
                     self.end.end()
-                    self.status = "PATH FOUND"
-                    break
+                    self.state = "PATH FOUND"
+                    self.active = True
+                    return
 
                 temp_g = g_score[curr] + 1
                 for neighbor in self.get_pathfind_neighbors(curr):
@@ -258,7 +260,7 @@ class Maze:
             else:
                 return
 
-        self.status = "NO POSSIBLE PATH"
+        self.state = "NO POSSIBLE PATH"
         self.active = True
 
     def dijkstra(self, speed):
@@ -275,9 +277,10 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
+                    self.state = "RETRACING"
                     self.reconstruct_path(path, speed)
                     self.end.end()
-                    self.status = "PATH FOUND"
+                    self.state = "PATH FOUND"
                     break
 
                 temp_g = g_score[curr] + 1
@@ -295,7 +298,7 @@ class Maze:
             else:
                 return
 
-        self.status = "NO POSSIBLE PATH"
+        self.state = "NO POSSIBLE PATH"
         self.active = True
 
     def bestfirst(self, speed):
@@ -315,9 +318,10 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
+                    self.state = "RETRACING"
                     self.reconstruct_path(path, speed)
                     self.end.end()
-                    self.status = "PATH FOUND"
+                    self.state = "PATH FOUND"
                     break
 
                 temp_g = g_score[curr] + 1
@@ -336,7 +340,7 @@ class Maze:
             else:
                 return
 
-        self.status = "NO POSSIBLE PATH"
+        self.state = "NO POSSIBLE PATH"
         self.active = True
 
     def reconstruct_path(self, path, speed):
