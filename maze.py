@@ -34,7 +34,13 @@ class Maze:
         self.active = True
 
     def update_dim(self, cell_size):
-        pass
+        self.cell_size = cell_size
+        self.rows, self.cols = self.height // cell_size, self.width // cell_size
+        self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
+        self.start = self.cells[self.rows//5][self.cols//5]
+        self.start.start()
+        self.end = self.cells[self.rows*4//5][self.cols*4//5]
+        self.end.end()
 
     def clear_canvas(self):
         self.stop()
