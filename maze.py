@@ -33,6 +33,9 @@ class Maze:
         self.state = "READY"
         self.active = True
 
+    def update_dim(self, cell_size):
+        pass
+
     def clear_canvas(self):
         self.stop()
         for row in self.cells:
