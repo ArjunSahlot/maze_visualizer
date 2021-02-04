@@ -449,13 +449,19 @@ class Maze:
         self.active = True
 
     def reconstruct_path(self, path, speed):
-        curr = self.end
         clock = pygame.time.Clock()
-        while curr in path:
-            clock.tick(speed.value*4)
-            curr = path[curr]
-            if curr != self.start:
-                curr.path()
+        if isinstance(path, dict):
+            curr = self.end
+            while curr in path:
+                clock.tick(speed.value*4)
+                curr = path[curr]
+                if curr != self.start:
+                    curr.path()
+        elif isinstance(path, Stack):
+            for cell in reversed(path.get_list()):
+                clock.tick(speed.value*4)
+                if cell != self.start:
+                    cell.path()
 
     def update(self, window, events=None):
         self.draw(window)
