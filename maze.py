@@ -337,7 +337,7 @@ class Maze:
 
         while not open.empty():
             if not self.active:
-                clock.tick(speed.value*100)
+                clock.tick(speed.value*80)
                 if (curr := open.get()[2]) == self.end:
                     self.state = "RETRACING"
                     self.reconstruct_path(path, speed)
