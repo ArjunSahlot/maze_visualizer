@@ -78,7 +78,12 @@ class Maze:
         self.state = "CALCULATING"
 
     def recursive_division(self, speed):
-        pass
+        for row in range(self.rows):
+            for col in range(self.cols):
+                if row in (0, self.rows - 1) or col in (0, self.cols - 1):
+                    self.cells[row][col].block()
+                else:
+                    self.cells[row][col].free()
 
     def aldous_broder(self, speed):
         for row in self.cells:
