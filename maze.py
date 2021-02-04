@@ -523,6 +523,8 @@ class Maze:
         if col < self.cols - 1 and (cell := self.cells[row][col + 1]) != "block":
             neighbors.append(cell)
 
+        random.shuffle(neighbors)
+
         return neighbors
 
     def heuristic(self, cell):
