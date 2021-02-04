@@ -86,6 +86,9 @@ class Maze:
         while path:
             curr = path.pop()
             visited.add(curr)
+            for n in self.get_pathfind_neighbors(curr):
+                if n not in visited:
+                    pass
 
     def recursive_division(self, speed):
         for row in range(self.rows):
