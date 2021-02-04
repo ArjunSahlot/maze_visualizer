@@ -81,6 +81,8 @@ class Maze:
     def depth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
+        curr = self.start
+        path = Stack(curr)
 
     def recursive_division(self, speed):
         for row in range(self.rows):
