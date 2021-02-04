@@ -93,11 +93,7 @@ class Maze:
                     if n not in visited:
                         if n == self.end:
                             path.push(curr)
-                            self.state = "RETRACING"
-                            self.reconstruct_path(path, speed)
-                            self.end.end()
-                            self.state = "PATH FOUND"
-                            self.active = True
+                            self.reconstruct(path, speed)
                             return
                         else:
                             path.extend((curr, n))
