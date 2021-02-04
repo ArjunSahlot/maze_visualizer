@@ -103,8 +103,7 @@ class Maze:
             else:
                 return
 
-        self.state = "NO POSSIBLE PATH"
-        self.active = True
+        self.not_found()
 
     def not_found(self):
         self.state = "NO POSSIBLE PATH"
@@ -367,8 +366,7 @@ class Maze:
             else:
                 return
 
-        self.state = "NO POSSIBLE PATH"
-        self.active = True
+        self.not_found()
 
     def dijkstra(self, speed):
         self.active = False
@@ -406,8 +404,7 @@ class Maze:
             else:
                 return
 
-        self.state = "NO POSSIBLE PATH"
-        self.active = True
+        self.not_found()
 
     def bestfirst(self, speed):
         self.active = False
@@ -445,8 +442,7 @@ class Maze:
             else:
                 return
 
-        self.state = "NO POSSIBLE PATH"
-        self.active = True
+        self.not_found()
 
     def reconstruct(self, path, speed):
         self.state = "RETRACING"
