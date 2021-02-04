@@ -127,12 +127,12 @@ class Maze:
                         self.cells[min_y + cut_pos][col] = 1
                     self.cells[min_y + cut_pos][min_x + door_pos] = 0
 
-                if cut_direction == 0:
-                    region.push(((min_y, min_x), (max_y, min_x + cut_pos - 1)))
-                    region.push(((min_y, min_x + cut_pos + 1), (max_y, max_x)))
-                else:
+                if cut_direction:
                     region.push(((min_y, min_x), (min_y + cut_pos - 1, max_x)))
                     region.push(((min_y + cut_pos + 1, min_x), (max_y, max_x)))
+                else:
+                    region.push(((min_y, min_x), (max_y, min_x + cut_pos - 1)))
+                    region.push(((min_y, min_x + cut_pos + 1), (max_y, max_x)))
             else:
                 return
 
