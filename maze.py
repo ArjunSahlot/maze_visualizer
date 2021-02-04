@@ -87,7 +87,7 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 curr = path.pop()
-                curr.close()
+                curr.open()
                 visited.add(curr)
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
@@ -97,7 +97,7 @@ class Maze:
                             return
                         else:
                             path.extend((curr, n))
-                            n.open()
+                            n.close()
             else:
                 return
         
