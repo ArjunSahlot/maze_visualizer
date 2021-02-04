@@ -20,7 +20,7 @@ class Maze:
         "A* Search (Astar)": "astar",
         "Dijkstra's Alg": "dijkstra",
         "Best First Search": "bestfirst",
-        "Depth First Search (Left)": "depth_first"
+        "Depth First Search": "depth_first"
     }
 
     def __init__(self, x, y, width, height, cell_size):
