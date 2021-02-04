@@ -13,7 +13,8 @@ class Maze:
         "Recursive Backtracker": "recursive_backtrack",
         "Randomized Kruskal's": "kruskal",
         "Randomized Prim's": "prim",
-        "Aldous-Broder Alg": "aldous_broder"
+        "Aldous-Broder Alg": "aldous_broder",
+        "Recursive Division": "recursive_division",
     }
     path_algs = {
         "A* Search (Astar)": "astar",
