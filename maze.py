@@ -455,13 +455,13 @@ class Maze:
         if isinstance(path, dict):
             curr = self.end
             while curr in path:
-                clock.tick(speed.value*4)
+                clock.tick(speed.value*6)
                 curr = path[curr]
                 if curr != self.start:
                     curr.path()
         elif isinstance(path, Stack):
             for cell in reversed(path.get_list()):
-                clock.tick(speed.value*4)
+                clock.tick(speed.value*6)
                 if cell != self.start:
                     cell.path()
 
