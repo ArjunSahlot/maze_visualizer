@@ -120,12 +120,12 @@ class Maze:
                 door_pos = random.randrange(0, (height, width)[cut_direction], 2)
                 if cut_direction == 0:
                     for row in range(min_y, max_y + 1):
-                        self.cells[row, min_x + cut_pos] = 1
-                    self.cells[min_y + door_pos, min_x + cut_pos] = 0
+                        self.cells[row][min_x + cut_pos] = 1
+                    self.cells[min_y + door_pos][min_x + cut_pos] = 0
                 else:
                     for col in range(min_x, max_x + 1):
-                        self.cells[min_y + cut_pos, col] = 1
-                    self.cells[min_y + cut_pos, min_x + door_pos] = 0
+                        self.cells[min_y + cut_pos][col] = 1
+                    self.cells[min_y + cut_pos][min_x + door_pos] = 0
 
                 if cut_direction == 0:
                     region.push(((min_y, min_x), (max_y, min_x + cut_pos - 1)))
