@@ -85,7 +85,7 @@ class Maze:
                     self.cells[row][col].block()
                 else:
                     self.cells[row][col].free()
-        
+
         self.start = self.end = None
         region = Stack(((1, 1), (self.rows - 2, self.cols - 2)))
         self.active = False
