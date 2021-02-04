@@ -82,7 +82,7 @@ class Maze:
         self.active = False
         clock = pygame.time.Clock()
         path = Stack(self.start)
-        visited = {}
+        visited = set()
         while path:
             if not self.active:
                 clock.tick(speed.value*100)
