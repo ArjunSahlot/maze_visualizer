@@ -78,12 +78,7 @@ class Maze:
         self.state = "CALCULATING"
 
     def recursive_division(self, speed):
-        def choose(w, h):
-            if w < h:
-                return 1
-            elif h > w:
-                return 0
-            return random.choice((0, 1))
+        pass
 
     def aldous_broder(self, speed):
         for row in self.cells:
