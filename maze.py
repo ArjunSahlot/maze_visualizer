@@ -83,8 +83,10 @@ class Maze:
         clock = pygame.time.Clock()
         curr = self.start
         path = Stack(curr)
+        visited = {}
         while path:
-            pass
+            visited.add(curr)
+            
 
     def recursive_division(self, speed):
         for row in range(self.rows):
