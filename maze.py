@@ -118,7 +118,7 @@ class Maze:
 
                 cut_pos = random.randrange(1, cut_length, 2)
                 door_pos = random.randrange(0, (height, width)[cut_direction], 2)
-                if cut_direction == 0:
+                if cut_direction:
                     for col in range(min_x, max_x + 1):
                         self.cells[min_y + cut_pos][col] = 1
                     self.cells[min_y + cut_pos][min_x + door_pos] = 0
