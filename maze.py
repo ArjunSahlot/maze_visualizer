@@ -84,11 +84,26 @@ class Maze:
         path = Stack(self.start)
         visited = {}
         while path:
-            curr = path.pop()
-            visited.add(curr)
-            for n in self.get_pathfind_neighbors(curr):
-                if n not in visited:
-                    pass
+            if not self.active:
+                curr = path.pop()
+                visited.add(curr)
+                for n in self.get_pathfind_neighbors(curr):
+                    if n not in visited:
+                        if n == self.end:
+                            self.state = "RETRACING"
+                            path.push(curr)
+                            self.reconstruct_path(path, speed)
+                            self.end.end()
+                            self.state = "PATH FOUND"
+                            self.active = True
+                            return
+                        else:
+                            path.extend((curr, n))
+            else:
+                return
+        
+        self.state = "NO POSSIBLE PATH"
+        self.active = True
 
     def recursive_division(self, speed):
         for row in range(self.rows):
