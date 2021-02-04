@@ -84,6 +84,59 @@ class Maze:
                     self.cells[row][col].block()
                 else:
                     self.cells[row][col].free()
+        
+        region = Stack(((1, 1), (self.rows - 2, self.cols - 2)))
+        self.active = False
+        clock = pygame.time.Clock()
+
+        while region:
+            if not self.active:
+                clock.tick(speed.value*100)
+                current_region = region.pop()
+                min_y = current_region[0][0]
+                max_y = current_region[1][0]
+                min_x = current_region[0][1]
+                max_x = current_region[1][1]
+                height = max_y - min_y + 1
+                width = max_x - min_x + 1
+
+                if height <= 1 or width <= 1:
+                    continue
+
+                if width < height:
+                    cut_direction = 1  # with 100% chance
+                elif width > height:
+                    cut_direction = 0    # with 100% chance
+                else:
+                    if width == 2:
+                        continue
+                    cut_direction = random.randrange(2)
+
+                cut_length = (height, width)[(cut_direction + 1) % 2]
+                if cut_length < 3:
+                    continue
+
+                cut_pos = random.randrange(1, cut_length, 2)
+                door_pos = random.randrange(0, (height, width)[cut_direction], 2)
+                if cut_direction == 0:
+                    for row in range(min_y, max_y + 1):
+                        self.cells[row, min_x + cut_pos] = 1
+                    self.cells[min_y + door_pos, min_x + cut_pos] = 0
+                else:
+                    for col in range(min_x, max_x + 1):
+                        self.cells[min_y + cut_pos, col] = 1
+                    self.cells[min_y + cut_pos, min_x + door_pos] = 0
+
+                if cut_direction == 0:
+                    region.push(((min_y, min_x), (max_y, min_x + cut_pos - 1)))
+                    region.push(((min_y, min_x + cut_pos + 1), (max_y, max_x)))
+                else:
+                    region.push(((min_y, min_x), (min_y + cut_pos - 1, max_x)))
+                    region.push(((min_y + cut_pos + 1, min_x), (max_y, max_x)))
+            else:
+                return
+
+        self.finish()
 
     def aldous_broder(self, speed):
         for row in self.cells:
