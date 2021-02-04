@@ -104,9 +104,9 @@ class Maze:
                     continue
 
                 if width < height:
-                    cut_direction = 1  # with 100% chance
+                    cut_direction = 1
                 elif width > height:
-                    cut_direction = 0    # with 100% chance
+                    cut_direction = 0
                 else:
                     if width == 2:
                         continue
