@@ -91,7 +91,7 @@ class Maze:
 
         while region:
             if not self.active:
-                clock.tick(speed.value*100)
+                clock.tick(speed.value*10)
                 current_region = region.pop()
                 min_y = current_region[0][0]
                 max_y = current_region[1][0]
