@@ -92,8 +92,8 @@ class Maze:
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         if n == self.end:
-                            self.state = "RETRACING"
                             path.push(curr)
+                            self.state = "RETRACING"
                             self.reconstruct_path(path, speed)
                             self.end.end()
                             self.state = "PATH FOUND"
