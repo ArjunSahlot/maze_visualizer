@@ -126,6 +126,7 @@ class Maze:
                             return
                         else:
                             path[n] = curr
+                            open.push(n)
             else:
                 return
 
