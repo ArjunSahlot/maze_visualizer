@@ -119,6 +119,7 @@ class Maze:
                 curr = open.pop()
                 if curr not in ("start", "end"):
                     curr.open()
+                visited.add(curr)
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         path[n] = curr
