@@ -134,25 +134,24 @@ class Maze:
                 h = max_y - min_y + 1
                 w = max_x - min_x + 1
 
-                if h <= 1 or w <= 1:
-                    continue
+                if h <= 1 or w <= 1: continue
 
                 if w < h:
-                    cut_direction = 1
+                    cut_dir = 1
                 elif w > h:
-                    cut_direction = 0
+                    cut_dir = 0
                 else:
                     if w == 2:
                         continue
-                    cut_direction = random.randrange(2)
+                    cut_dir = random.randrange(2)
 
-                cut_length = (h, w)[(cut_direction + 1) % 2]
+                cut_length = (h, w)[(cut_dir + 1) % 2]
                 if cut_length < 3:
                     continue
 
                 cut_pos = random.randrange(1, cut_length, 2)
-                door_pos = random.randrange(0, (h, w)[cut_direction], 2)
-                if cut_direction:
+                door_pos = random.randrange(0, (h, w)[cut_dir], 2)
+                if cut_dir:
                     for col in range(min_x, max_x + 1):
                         self.cells[min_y + cut_pos][col].block()
                     self.cells[min_y + cut_pos][min_x + door_pos].free()
@@ -161,7 +160,7 @@ class Maze:
                         self.cells[row][min_x + cut_pos].block()
                     self.cells[min_y + door_pos][min_x + cut_pos].free()
 
-                if cut_direction:
+                if cut_dir:
                     region.push(((min_y, min_x), (min_y + cut_pos - 1, max_x)))
                     region.push(((min_y + cut_pos + 1, min_x), (max_y, max_x)))
                 else:
