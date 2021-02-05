@@ -119,7 +119,8 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 curr = open.pop()
-                neighbors = filter(lambda cell: cell not in visited, self.get_pathfind_neighbors(curr))
+                for n in self.get_pathfind_neighbors(curr):
+                    pass
             else:
                 return
 
