@@ -119,6 +119,7 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 curr = open.pop()
+                neighbors = self.get_pathfind_neighbors(curr)
             else:
                 return
 
