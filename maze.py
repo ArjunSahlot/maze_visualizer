@@ -110,7 +110,16 @@ class Maze:
         self.not_found()
 
     def breadth_first(self, speed):
-        pass
+        self.active = False
+        clock = pygame.time.Clock()
+        open = Stack(self.start)
+        visited = set()
+        path = {}
+        while open:
+            if not self.active:
+                clock.tick(speed.value*100)
+            else:
+                return
 
     def not_found(self):
         self.state = "NO POSSIBLE PATH"
