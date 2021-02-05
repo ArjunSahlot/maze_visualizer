@@ -127,6 +127,8 @@ class Maze:
                         else:
                             path[n] = curr
                             open.push(n)
+                            if n not in ("start", "end"):
+                                n.close()
             else:
                 return
 
