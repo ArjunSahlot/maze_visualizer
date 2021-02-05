@@ -121,7 +121,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
-                if (curr := open.get()[2]) == "end":
+                if (curr := open.get()[2]) == "end":  # move this into neighbors, check if neighbor = end if so asdf
                     self.reconstruct(path, speed)
                     return
 
