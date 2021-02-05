@@ -143,7 +143,7 @@ class Maze:
                 else:
                     if w == 2:
                         continue
-                    cut_dir = random.randrange(2)
+                    cut_dir = random.randint(0, 1)
 
                 cut_length = (h, w)[(cut_dir + 1) % 2]
                 if cut_length < 3:
