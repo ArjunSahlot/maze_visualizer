@@ -96,12 +96,11 @@ class Maze:
                     if n not in visited:
                         if n == self.end:
                             path[n] = curr
-                            open.push(curr)
                             self.reconstruct(path, speed)
                             return
                         else:
                             path[n] = curr
-                            open.extend((curr, n))
+                            open.push(n)
                             if n not in ("start", "end"):
                                 n.close()
             else:
