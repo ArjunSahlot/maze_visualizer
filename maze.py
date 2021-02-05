@@ -126,14 +126,14 @@ class Maze:
                     return
 
                 temp_g = g_score[curr] + 1
-                for neighbor in self.get_pathfind_neighbors(curr):
-                    if temp_g < g_score[neighbor]:
-                        path[neighbor] = curr
-                        g_score[neighbor] = temp_g
-                        if not any(neighbor == item[2] for item in open.queue):
+                for n in self.get_pathfind_neighbors(curr):
+                    if temp_g < g_score[n]:
+                        path[n] = curr
+                        g_score[n] = temp_g
+                        if not any(n == item[2] for item in open.queue):
                             count += 1
-                            open.put((g_score[neighbor], count, neighbor))
-                            neighbor.close()
+                            open.put((g_score[n], count, n))
+                            n.close()
 
                 if curr != self.start:
                     curr.open()
