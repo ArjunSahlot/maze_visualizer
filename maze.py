@@ -2,9 +2,10 @@ import pygame
 from constants import *
 import threading
 import random
-from random_utils.datatypes import Stack, Queue
-from queue import PriorityQueue
+from random_utils.datatypes import Stack
+from queue import PriorityQueue, SimpleQueue
 from tkinter import Tk, messagebox
+from time import time
 Tk().withdraw()
 
 
@@ -95,7 +96,7 @@ class Maze:
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         path[n] = curr
-                        if n == self.end:
+                        if n == "end":
                             self.reconstruct(path, speed)
                             return
                         else:
@@ -110,27 +111,36 @@ class Maze:
     def breadth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
-        open = Queue(self.start)
+        open = SimpleQueue()
+        open.put(self.start)
         visited = set()
         path = {}
+        a = time()
+        t1 = t2 = 0
         while open:
             if not self.active:
-                clock.tick(speed.value*100)
-                curr = open.pop()
+                # clock.tick(speed.value*100)
+                s = time()
+                curr = open.get()
+                t1 += time() - s
                 if curr not in ("start", "end"):
                     curr.open()
                 visited.add(curr)
                 for n in self.get_pathfind_neighbors(curr):
+                    s = time()
                     if n not in visited:
                         path[n] = curr
-                        if n == self.end:
+                        if n == "end":
                             self.reconstruct(path, speed)
                             return
                         else:
-                            open.push(n)
+                            open.put(n)
                             if n not in ("start", "end"):
                                 n.close()
+                    t2 += time() - s
             else:
+                print(time() - a, "while loop")
+                print(t1, t2)
                 return
 
         self.not_found()
@@ -366,7 +376,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*80)
-                if (curr := open.get()[2]) == self.end:
+                if (curr := open.get()[2]) == "end":
                     self.reconstruct(path, speed)
                     return
 
@@ -401,7 +411,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
-                if (curr := open.get()[2]) == self.end:
+                if (curr := open.get()[2]) == "end":
                     self.reconstruct(path, speed)
                     return
 
@@ -438,7 +448,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
-                if (curr := open.get()[2]) == self.end:
+                if (curr := open.get()[2]) == "end":
                     self.reconstruct(path, speed)
                     return
 
