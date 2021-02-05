@@ -482,54 +482,53 @@ class Maze:
     def update(self, window, events=None):
         self.draw(window)
 
-        if self.active:
-            mx, my = pygame.mouse.get_pos()
-            rel = pygame.mouse.get_rel()
-            if self.x < mx < self.x + self.cols*self.cell_size and self.y < my < self.y + self.rows*self.cell_size:
-                mouse_pressed = pygame.mouse.get_pressed()
-                if any(mouse_pressed):
-                    row = (my - self.y) // self.cell_size
-                    col = (mx - self.x) // self.cell_size
-                    cell = self.cells[row][col]
-                    if mouse_pressed[0]:
-                        if self.start is None and cell != "end":
-                            cell.start()
-                            self.start = cell
-                        if self.end is None and cell != "start":
-                            cell.end()
-                            self.end = cell
-                        if cell not in ("start", "end"):
-                            cell.block()
-                    if mouse_pressed[2]:
-                        diff = sum(map(abs, rel))
-                        if diff > 100:
-                            for r in range(row-3, row+4):
-                                for c in range(col-3, col+4):
-                                    r = min(max(r, 0), self.rows-1)
-                                    c = min(max(c, 0), self.cols-1)
-                                    if (cell := self.cells[r][c]) not in ("start", "end"):
-                                        cell.free()
-                        elif diff > 70:
-                            for r in range(row-2, row+3):
-                                for c in range(col-2, col+3):
-                                    r = min(max(r, 0), self.rows-1)
-                                    c = min(max(c, 0), self.cols-1)
-                                    if (cell := self.cells[r][c]) not in ("start", "end"):
-                                        cell.free()
-                        elif diff > 45:
-                            for r in range(row-1, row+2):
-                                for c in range(col-1, col+2):
-                                    r = min(max(r, 0), self.rows-1)
-                                    c = min(max(c, 0), self.cols-1)
-                                    if (cell := self.cells[r][c]) not in ("start", "end"):
-                                        cell.free()
-                        else:
-                            if cell == "start":
-                                self.start = None
-                            elif cell == "end":
-                                self.end = None
+        mx, my = pygame.mouse.get_pos()
+        rel = pygame.mouse.get_rel()
+        if self.x < mx < self.x + self.cols*self.cell_size and self.y < my < self.y + self.rows*self.cell_size:
+            mouse_pressed = pygame.mouse.get_pressed()
+            if any(mouse_pressed):
+                row = (my - self.y) // self.cell_size
+                col = (mx - self.x) // self.cell_size
+                cell = self.cells[row][col]
+                if mouse_pressed[0]:
+                    if self.start is None and cell != "end":
+                        cell.start()
+                        self.start = cell
+                    if self.end is None and cell != "start":
+                        cell.end()
+                        self.end = cell
+                    if cell not in ("start", "end"):
+                        cell.block()
+                if mouse_pressed[2]:
+                    diff = sum(map(abs, rel))
+                    if diff > 100:
+                        for r in range(row-3, row+4):
+                            for c in range(col-3, col+4):
+                                r = min(max(r, 0), self.rows-1)
+                                c = min(max(c, 0), self.cols-1)
+                                if (cell := self.cells[r][c]) not in ("start", "end"):
+                                    cell.free()
+                    elif diff > 70:
+                        for r in range(row-2, row+3):
+                            for c in range(col-2, col+3):
+                                r = min(max(r, 0), self.rows-1)
+                                c = min(max(c, 0), self.cols-1)
+                                if (cell := self.cells[r][c]) not in ("start", "end"):
+                                    cell.free()
+                    elif diff > 45:
+                        for r in range(row-1, row+2):
+                            for c in range(col-1, col+2):
+                                r = min(max(r, 0), self.rows-1)
+                                c = min(max(c, 0), self.cols-1)
+                                if (cell := self.cells[r][c]) not in ("start", "end"):
+                                    cell.free()
+                    else:
+                        if cell == "start":
+                            self.start = None
+                        elif cell == "end":
+                            self.end = None
 
-                            cell.free()
+                        cell.free()
 
     def draw(self, window):
         for row in self.cells:
