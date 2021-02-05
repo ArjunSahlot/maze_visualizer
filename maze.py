@@ -122,6 +122,7 @@ class Maze:
                     if n not in visited:
                         if n == self.end:
                             path[n] = curr
+                            self.reconstruct(path, speed)
             else:
                 return
 
