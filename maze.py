@@ -121,7 +121,7 @@ class Maze:
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         if n == self.end:
-                            pass
+                            path[n] = curr
             else:
                 return
 
