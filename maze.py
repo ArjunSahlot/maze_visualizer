@@ -367,11 +367,7 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*80)
                 if (curr := open.get()[2]) == self.end:
-                    self.state = "RETRACING"
-                    self.reconstruct_path(path, speed)
-                    self.end.end()
-                    self.state = "PATH FOUND"
-                    self.active = True
+                    self.reconstruct(path, speed)
                     return
 
                 temp_g = g_score[curr] + 1
@@ -406,11 +402,7 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*100)
                 if (curr := open.get()[2]) == self.end:
-                    self.state = "RETRACING"
-                    self.reconstruct_path(path, speed)
-                    self.end.end()
-                    self.state = "PATH FOUND"
-                    self.active = True
+                    self.reconstruct(path, speed)
                     return
 
                 temp_g = g_score[curr] + 1
