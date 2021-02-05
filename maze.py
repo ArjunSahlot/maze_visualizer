@@ -128,32 +128,32 @@ class Maze:
         while region:
             if not self.active:
                 clock.tick(speed.value*10)
-                current_region = region.pop()
-                min_y = current_region[0][0]
-                max_y = current_region[1][0]
-                min_x = current_region[0][1]
-                max_x = current_region[1][1]
-                height = max_y - min_y + 1
-                width = max_x - min_x + 1
+                curr = region.pop()
+                min_y = curr[0][0]
+                max_y = curr[1][0]
+                min_x = curr[0][1]
+                max_x = curr[1][1]
+                h = max_y - min_y + 1
+                w = max_x - min_x + 1
 
-                if height <= 1 or width <= 1:
+                if h <= 1 or w <= 1:
                     continue
 
-                if width < height:
+                if w < h:
                     cut_direction = 1
-                elif width > height:
+                elif w > h:
                     cut_direction = 0
                 else:
-                    if width == 2:
+                    if w == 2:
                         continue
                     cut_direction = random.randrange(2)
 
-                cut_length = (height, width)[(cut_direction + 1) % 2]
+                cut_length = (h, w)[(cut_direction + 1) % 2]
                 if cut_length < 3:
                     continue
 
                 cut_pos = random.randrange(1, cut_length, 2)
-                door_pos = random.randrange(0, (height, width)[cut_direction], 2)
+                door_pos = random.randrange(0, (h, w)[cut_direction], 2)
                 if cut_direction:
                     for col in range(min_x, max_x + 1):
                         self.cells[min_y + cut_pos][col].block()
