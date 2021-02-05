@@ -129,10 +129,8 @@ class Maze:
             if not self.active:
                 clock.tick(speed.value*10)
                 curr = region.pop()
-                min_y = curr[0][0]
-                max_y = curr[1][0]
-                min_x = curr[0][1]
-                max_x = curr[1][1]
+                min_y, max_y = curr[0][0], curr[1][0]
+                min_x , max_x = curr[0][1], curr[1][1]
                 h = max_y - min_y + 1
                 w = max_x - min_x + 1
 
