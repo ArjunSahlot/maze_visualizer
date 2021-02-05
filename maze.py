@@ -161,11 +161,9 @@ class Maze:
                     self.cells[min_y + door_pos][min_x + cut_pos].free()
 
                 if cut_dir:
-                    region.push(((min_y, min_x), (min_y + cut_pos - 1, max_x)))
-                    region.push(((min_y + cut_pos + 1, min_x), (max_y, max_x)))
+                    region.extend((((min_y, min_x), (min_y + cut_pos - 1, max_x)), ((min_y + cut_pos + 1, min_x), (max_y, max_x))))
                 else:
-                    region.push(((min_y, min_x), (max_y, min_x + cut_pos - 1)))
-                    region.push(((min_y, min_x + cut_pos + 1), (max_y, max_x)))
+                    region.push((((min_y, min_x), (max_y, min_x + cut_pos - 1)), ((min_y, min_x + cut_pos + 1), (max_y, max_x))))
             else:
                 return
 
