@@ -121,6 +121,8 @@ class Maze:
             else:
                 return
 
+        self.not_found()
+
     def not_found(self):
         self.state = "NO POSSIBLE PATH"
         self.active = True
