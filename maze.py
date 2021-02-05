@@ -3,7 +3,7 @@ from constants import *
 import threading
 import random
 from random_utils.datatypes import Stack
-from queue import PriorityQueue, SimpleQueue
+from queue import PriorityQueue, Queue
 from tkinter import Tk, messagebox
 from time import time
 Tk().withdraw()
@@ -111,36 +111,33 @@ class Maze:
     def breadth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
-        open = SimpleQueue()
-        open.put(self.start)
-        visited = set()
+        count = 0
+        open = Queue()
+        open.put((0, count, self.start))
         path = {}
-        a = time()
-        t1 = t2 = 0
-        while open:
+        g_score = {cell: float("inf") for row in self.cells for cell in row}
+        g_score[self.start] = 0
+
+        while not open.empty():
             if not self.active:
-                # clock.tick(speed.value*100)
-                s = time()
-                curr = open.get()
-                t1 += time() - s
-                if curr not in ("start", "end"):
+                clock.tick(speed.value*100)
+                if (curr := open.get()[2]) == "end":
+                    self.reconstruct(path, speed)
+                    return
+
+                temp_g = g_score[curr] + 1
+                for neighbor in self.get_pathfind_neighbors(curr):
+                    if temp_g < g_score[neighbor]:
+                        path[neighbor] = curr
+                        g_score[neighbor] = temp_g
+                        if not any(neighbor == item[2] for item in open.queue):
+                            count += 1
+                            open.put((g_score[neighbor], count, neighbor))
+                            neighbor.close()
+
+                if curr != self.start:
                     curr.open()
-                visited.add(curr)
-                for n in self.get_pathfind_neighbors(curr):
-                    s = time()
-                    if n not in visited:
-                        path[n] = curr
-                        if n == "end":
-                            self.reconstruct(path, speed)
-                            return
-                        else:
-                            open.put(n)
-                            if n not in ("start", "end"):
-                                n.close()
-                    t2 += time() - s
             else:
-                print(time() - a, "while loop")
-                print(t1, t2)
                 return
 
         self.not_found()
