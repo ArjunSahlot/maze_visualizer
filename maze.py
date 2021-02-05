@@ -81,23 +81,23 @@ class Maze:
     def depth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
-        path = Stack(self.start)
+        open = Stack(self.start)
         visited = set()
-        while path:
+        while open:
             if not self.active:
                 clock.tick(speed.value*100)
-                curr = path.pop()
+                curr = open.pop()
                 if curr not in ("start", "end"):
                     curr.open()
                 visited.add(curr)
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         if n == self.end:
-                            path.push(curr)
-                            self.reconstruct(path, speed)
+                            open.push(curr)
+                            self.reconstruct(open, speed)
                             return
                         else:
-                            path.extend((curr, n))
+                            open.extend((curr, n))
                             if n not in ("start", "end"):
                                 n.close()
             else:
