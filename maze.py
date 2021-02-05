@@ -2,7 +2,7 @@ import pygame
 from constants import *
 import threading
 import random
-from random_utils.datatypes import Stack
+from random_utils.datatypes import Stack, Queue
 from queue import PriorityQueue
 from tkinter import Tk, messagebox
 Tk().withdraw()
@@ -112,7 +112,7 @@ class Maze:
     def breadth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
-        open = Stack(self.start)
+        open = Queue(self.start)
         visited = set()
         path = {}
         while open:
