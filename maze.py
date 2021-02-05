@@ -109,6 +109,9 @@ class Maze:
 
         self.not_found()
 
+    def breadth_first(self, speed):
+        pass
+
     def not_found(self):
         self.state = "NO POSSIBLE PATH"
         self.active = True
