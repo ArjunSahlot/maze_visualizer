@@ -123,6 +123,9 @@ class Maze:
                         if n == self.end:
                             path[n] = curr
                             self.reconstruct(path, speed)
+                            return
+                        else:
+                            path[n] = curr
             else:
                 return
 
