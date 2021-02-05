@@ -83,6 +83,7 @@ class Maze:
         clock = pygame.time.Clock()
         open = Stack(self.start)
         visited = set()
+        path = {}
         while open:
             if not self.active:
                 clock.tick(speed.value*100)
@@ -93,10 +94,12 @@ class Maze:
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
                         if n == self.end:
+                            path[n] = curr
                             open.push(curr)
-                            self.reconstruct(open, speed)
+                            self.reconstruct(path, speed)
                             return
                         else:
+                            path[n] = curr
                             open.extend((curr, n))
                             if n not in ("start", "end"):
                                 n.close()
