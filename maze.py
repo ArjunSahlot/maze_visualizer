@@ -302,8 +302,7 @@ class Maze:
         while len(trees) > 1:
             if not self.active:
                 clock.tick(speed.value*100)
-                row, col = edges[0]
-                edges = edges[1:]
+                row, col = edges.pop(0)
 
                 tree1 = tree2 = -1
 
