@@ -120,7 +120,8 @@ class Maze:
                 curr = open.pop()
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
-                        pass
+                        if n == self.end:
+                            pass
             else:
                 return
 
