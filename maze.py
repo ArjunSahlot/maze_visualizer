@@ -118,6 +118,7 @@ class Maze:
         while open:
             if not self.active:
                 clock.tick(speed.value*100)
+                curr = open.pop()
             else:
                 return
 
