@@ -94,12 +94,11 @@ class Maze:
                 visited.add(curr)
                 for n in self.get_pathfind_neighbors(curr):
                     if n not in visited:
+                        path[n] = curr
                         if n == self.end:
-                            path[n] = curr
                             self.reconstruct(path, speed)
                             return
                         else:
-                            path[n] = curr
                             open.push(n)
                             if n not in ("start", "end"):
                                 n.close()
