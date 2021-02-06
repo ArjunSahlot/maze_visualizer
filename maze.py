@@ -450,7 +450,7 @@ class Maze:
 
         while not open.empty():
             if not self.active:
-                clock.tick(speed.value*100)
+                clock.tick(speed.value*80)
                 curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
