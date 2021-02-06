@@ -5,7 +5,6 @@ import random
 from random_utils.datatypes import Stack
 from queue import PriorityQueue, Queue
 from tkinter import Tk, messagebox
-from time import time
 Tk().withdraw()
 
 
