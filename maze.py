@@ -21,7 +21,7 @@ class Maze:
         "Dijkstra's Alg": "dijkstra",
         "Best First Search": "bestfirst",
         "Depth First Search": "depth_first",
-        "Breadth First Search": "breadth_first"
+        "Breadth First Search": "breadth_first",
     }
 
     def __init__(self, x, y, width, height, cell_size):
