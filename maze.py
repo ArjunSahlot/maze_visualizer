@@ -2,8 +2,8 @@ import pygame
 from constants import *
 import threading
 import random
-from random_utils.datatypes import Stack
-from queue import PriorityQueue, Queue
+from random_utils.datatypes import Stack, Queue
+from queue import PriorityQueue
 from tkinter import Tk, messagebox
 Tk().withdraw()
 
@@ -110,17 +110,16 @@ class Maze:
     def breadth_first(self, speed):
         self.active = False
         clock = pygame.time.Clock()
-        count = 0
         open = Queue()
-        open.put((0, count, self.start))
+        open.push((0, self.start))
         path = {}
         g_score = {cell: float("inf") for row in self.cells for cell in row}
         g_score[self.start] = 0
 
-        while not open.empty():
+        while open:
             if not self.active:
                 clock.tick(speed.value*100)
-                curr = open.get()[2]
+                curr = open.pop()[1]
 
                 temp_g = g_score[curr] + 1
                 for n in self.get_pathfind_neighbors(curr):
@@ -131,9 +130,8 @@ class Maze:
                     if temp_g < g_score[n]:
                         path[n] = curr
                         g_score[n] = temp_g
-                        if not any(n == item[2] for item in open.queue):
-                            count += 1
-                            open.put((g_score[n], count, n))
+                        if not any(n == item[1] for item in open.arr):
+                            open.push((g_score[n], n))
                             n.close()
 
                 if curr != self.start:
