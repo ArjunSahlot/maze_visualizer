@@ -121,12 +121,14 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*100)
-                if (curr := open.get()[2]) == "end":
-                    self.reconstruct(path, speed)
-                    return
+                curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
                 for n in self.get_pathfind_neighbors(curr):
+                    if n == "end":
+                        path[n] = curr
+                        self.reconstruct(path, speed)
+                        return
                     if temp_g < g_score[n]:
                         path[n] = curr
                         g_score[n] = temp_g
@@ -470,7 +472,6 @@ class Maze:
     def reconstruct(self, path, speed):
         self.state = "RETRACING"
         self.reconstruct_path(path, speed)
-        self.end.end()
         self.state = "PATH FOUND"
         self.active = True
 
