@@ -380,6 +380,7 @@ class Maze:
                 temp_g = g_score[curr] + 1
                 for n in self.get_pathfind_neighbors(curr):
                     if n == "end":
+                        path[n] = curr
                         self.reconstruct(path, speed)
                         return
                     if temp_g < g_score[n]:
