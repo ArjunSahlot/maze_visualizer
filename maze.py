@@ -299,13 +299,13 @@ class Maze:
                 if neighbors:
                     for row, col in neighbors:
                         if (row, col) not in visited:
-                            neighbor = self.cells[row][col]
+                            n = self.cells[row][col]
                             path.push(cell)
-                            if neighbor != "end":
-                                neighbor.free()
+                            if n != "end":
+                                n.free()
                             self.cells[(cell.get_pos()[0] + row)//2][(cell.get_pos()[1] + col)//2].free()
                             visited.append((row, col))
-                            path.push(neighbor)
+                            path.push(n)
                             break
             else:
                 return
@@ -375,20 +375,21 @@ class Maze:
         while not open.empty():
             if not self.active:
                 clock.tick(speed.value*80)
-                if (curr := open.get()[2]) == "end":
-                    self.reconstruct(path, speed)
-                    return
+                curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
-                for neighbor in self.get_pathfind_neighbors(curr):
-                    if temp_g < g_score[neighbor]:
-                        path[neighbor] = curr
-                        g_score[neighbor] = temp_g
-                        f_score[neighbor] = temp_g + self.heuristic(neighbor)
-                        if not any(neighbor == item[2] for item in open.queue):
+                for n in self.get_pathfind_neighbors(curr):
+                    if n == "end":
+                        self.reconstruct(path, speed)
+                        return
+                    if temp_g < g_score[n]:
+                        path[n] = curr
+                        g_score[n] = temp_g
+                        f_score[n] = temp_g + self.heuristic(n)
+                        if not any(n == item[2] for item in open.queue):
                             count += 1
-                            open.put((f_score[neighbor], count, neighbor))
-                            neighbor.close()
+                            open.put((f_score[n], count, n))
+                            n.close()
 
                 if curr != self.start:
                     curr.open()
