@@ -195,7 +195,8 @@ class Maze:
                 cut_length = (h, w)[(cut_dir + 1) % 2]
                 if cut_length < 3:
                     continue
-
+                
+                self.visited += cut_length
                 cut_pos = random.randrange(1, cut_length, 2)
                 door_pos = random.randrange(0, (h, w)[cut_dir], 2)
                 if cut_dir:
