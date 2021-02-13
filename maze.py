@@ -508,8 +508,9 @@ class Maze:
     def reconstruct(self, path, speed):
         self.state = "RETRACING"
         self.reconstruct_path(path, speed)
-        self.state = "PATH FOUND"
-        self.active = True
+        if not self.active:
+            self.state = "PATH FOUND"
+            self.active = True
 
     def reconstruct_path(self, path, speed):
         clock = pygame.time.Clock()
