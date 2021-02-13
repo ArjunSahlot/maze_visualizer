@@ -126,7 +126,15 @@ class Interface:
             self.maze.update_dim(self.cell_size.value)
         self.maze.update(window, events)
 
-        text = self.big_font.render(self.maze.state, 1, WHITE)
+        if (state := self.maze.state) in ("READY", "FINISHED", "PATH FOUND"):
+            col = GREEN
+        elif state in ("CALCULATING", "RETRACING"):
+            col = WHITE
+        elif state == "STOPPED":
+            col = RED
+        else:
+            col = (255, 140, 0)
+        text = self.big_font.render(state, 1, col)
         x = self.gen_drop.loc[0] / 2 - text.get_width() / 2
         y = self.height - 5 - text.get_height() - 50
         window.blit(text, (x, y))
