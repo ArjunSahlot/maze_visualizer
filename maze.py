@@ -36,6 +36,7 @@ class Maze:
         self.end.end()
         self.state = "READY"
         self.time = 0
+        self.visited = 0
         self.active = True
 
     def update_dim(self, cell_size):
