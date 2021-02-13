@@ -504,7 +504,6 @@ class Maze:
         curr = self.end
         while curr in path:
             if not self.active:
-                self.time = time.time() - start_time
                 clock.tick(speed.value*6)
                 curr = path[curr]
                 if curr != self.start:
