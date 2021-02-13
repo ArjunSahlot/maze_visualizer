@@ -138,7 +138,7 @@ class Interface:
 
         t1 = self.small_font.render(f"{self.maze.visited} cell visited", 1, (255,)*3)
         t2 = self.small_font.render(f"{round(self.maze.time, 3)} secs", 1, (255,)*3)
-        window.blit(t1, ())
+        window.blit(t1, (self.cell_size.x + self.cell_size.width/4 - t1.get_width()/2, self.height - 27 - t1.get_height()/2))
 
         if self.gen.clicked(events):
             if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
