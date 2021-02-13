@@ -103,7 +103,7 @@ class Interface:
             10,
             10,
             self.gen_drop.loc[0] - 25,
-            50,
+            40,
             20,
             (1, 200),
             "Cell Size",
