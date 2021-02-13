@@ -115,7 +115,7 @@ class Maze:
 
         self.not_found()
 
-    def breadth_first(self, speed):
+    def breadth_first(self, speed, start_time):
         self.active = False
         clock = pygame.time.Clock()
         open = Queue()
