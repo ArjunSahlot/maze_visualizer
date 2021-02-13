@@ -288,6 +288,7 @@ class Maze:
 
                     if col < self.cols - 2 and self.cells[row][col + 2] == "block":
                         frontiers.append((row, col + 1, row, col + 2))
+                self.visited += 1
             else:
                 return
 
