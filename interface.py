@@ -17,7 +17,7 @@ class Interface:
         "FINISHED": GREEN,
         "PATH FOUND": GREEN,
         "CALCULATING": WHITE,
-        "RETRACING": WHITE,
+        "RETRACING": BLUE,
         "STOPPED": RED,
         "PATH NOT FOUND": (255, 140, 0),
     }
