@@ -92,8 +92,8 @@ class Maze:
         visited = set()
         path = {}
         while open:
-            self.time = time.time() - start_time
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*100)
                 curr = open.pop()
                 if curr not in ("start", "end"):
