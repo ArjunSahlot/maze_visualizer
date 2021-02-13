@@ -440,7 +440,7 @@ class Maze:
 
         self.not_found()
 
-    def bestfirst(self, speed):
+    def bestfirst(self, speed, start_time):
         self.active = False
         clock = pygame.time.Clock()
         count = 0
