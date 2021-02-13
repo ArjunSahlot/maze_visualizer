@@ -243,7 +243,7 @@ class Maze:
 
         self.finish()
 
-    def prim(self, speed):
+    def prim(self, speed, start_time):
         for row in self.cells:
             for cell in row:
                 if cell != "start":
