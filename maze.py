@@ -72,20 +72,20 @@ class Maze:
         self.active = True
 
     def visualize(self, alg, speed):
+        start_time = time.time()
         if alg in self.path_algs:
             if self.start is None or self.end is None:
                 messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
                 return
-            threading.Thread(target=getattr(self, self.path_algs[alg]), args=(speed,)).start()
+            threading.Thread(target=getattr(self, self.path_algs[alg]), args=(speed, start_time)).start()
         else:
-            threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
+            threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed, start_time)).start()
 
         self.state = "CALCULATING"
         self.time = 0
         self.visited = 0
 
-    def depth_first(self, speed):
-        start_time = time.time()
+    def depth_first(self, speed, start_time):
         self.active = False
         clock = pygame.time.Clock()
         open = Stack(self.start)
