@@ -35,6 +35,7 @@ class Maze:
         self.end = self.cells[self.rows*4//5][self.cols*4//5]
         self.end.end()
         self.state = "READY"
+        self.time = 0
         self.active = True
 
     def update_dim(self, cell_size):
@@ -81,12 +82,14 @@ class Maze:
         self.state = "CALCULATING"
 
     def depth_first(self, speed):
+        start_time = time.time()
         self.active = False
         clock = pygame.time.Clock()
         open = Stack(self.start)
         visited = set()
         path = {}
         while open:
+            self.time = time.time() - start_time
             if not self.active:
                 clock.tick(speed.value*100)
                 curr = open.pop()
