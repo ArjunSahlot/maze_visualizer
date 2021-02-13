@@ -109,6 +109,7 @@ class Maze:
                             open.push(n)
                             if n not in ("start", "end"):
                                 n.close()
+                        self.visited += 1
             else:
                 return
 
