@@ -283,7 +283,7 @@ class Maze:
 
         self.finish()
 
-    def recursive_backtrack(self, speed):
+    def recursive_backtrack(self, speed, start_time):
         self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
         self.start.start()
         cell = self.start
