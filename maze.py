@@ -210,7 +210,7 @@ class Maze:
 
         self.finish()
 
-    def aldous_broder(self, speed):
+    def aldous_broder(self, speed, start_time):
         for row in self.cells:
             for cell in row:
                 if cell not in ("start", "end"):
