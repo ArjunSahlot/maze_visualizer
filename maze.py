@@ -153,7 +153,7 @@ class Maze:
         self.state = "NO POSSIBLE PATH"
         self.active = True
 
-    def recursive_division(self, speed):
+    def recursive_division(self, speed, start_time):
         for row in range(self.rows):
             for col in range(self.cols):
                 if row in (0, self.rows - 1) or col in (0, self.cols - 1):
