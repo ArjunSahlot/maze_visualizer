@@ -373,6 +373,7 @@ class Maze:
                     trees.remove(t2)
                     trees.append(new_tree)
                     self.cells[row][col].free()
+                self.visited += 1
             else:
                 return
 
