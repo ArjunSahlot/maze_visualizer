@@ -94,6 +94,7 @@ class Maze:
         while open:
             if not self.active:
                 self.time = time.time() - start_time
+                self.time = time.time() - start_time
                 clock.tick(speed.value*100)
                 curr = open.pop()
                 if curr not in ("start", "end"):
@@ -126,6 +127,7 @@ class Maze:
 
         while open:
             if not self.active:
+                self.time = time.time() - start_time
                 self.time = time.time() - start_time
                 clock.tick(speed.value*100)
                 curr = open.pop()[1]
@@ -169,6 +171,7 @@ class Maze:
 
         while region:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*10)
                 curr = region.pop()
                 min_y, max_y = curr[0][0], curr[1][0]
@@ -227,6 +230,7 @@ class Maze:
 
         while visited < total:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value**2/4)
                 if not (neighbors := self.get_generation_neighbors(row, col)):
                     row, col = random.choice(self.get_generation_neighbors(row, col, types=("free",)))
@@ -259,6 +263,7 @@ class Maze:
 
         while frontiers:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*100)
                 f = frontiers.pop(random.randrange(len(frontiers)))
                 row, col = f[2:]
@@ -299,6 +304,7 @@ class Maze:
 
         while path:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*10)
                 cell = path.pop()
                 neighbors = self.get_generation_neighbors(*cell.get_pos())
@@ -341,6 +347,7 @@ class Maze:
 
         while len(trees) > 1:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*100)
                 row, col = edges.pop(0)
 
@@ -380,6 +387,7 @@ class Maze:
 
         while not open.empty():
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*80)
                 curr = open.get()[2]
 
@@ -417,6 +425,7 @@ class Maze:
 
         while not open.empty():
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*80)
                 curr = open.get()[2]
 
@@ -456,6 +465,7 @@ class Maze:
 
         while not open.empty():
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*80)
                 curr = open.get()[2]
 
@@ -492,6 +502,7 @@ class Maze:
         curr = self.end
         while curr in path:
             if not self.active:
+                self.time = time.time() - start_time
                 clock.tick(speed.value*6)
                 curr = path[curr]
                 if curr != self.start:
