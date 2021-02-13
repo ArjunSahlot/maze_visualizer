@@ -324,6 +324,7 @@ class Maze:
                             visited.append((row, col))
                             path.push(n)
                             break
+                self.visited += 1
             else:
                 return
 
