@@ -110,7 +110,8 @@ class Maze:
                             open.push(n)
                             if n not in ("start", "end"):
                                 n.close()
-                        self.visited += 1
+
+                self.visited += 1
             else:
                 return
 
@@ -145,10 +146,10 @@ class Maze:
                             open.push((g_score[n], n))
                             n.close()
 
-                    self.visited += 1
-
                 if curr != self.start:
                     curr.open()
+
+                self.visited += 1
             else:
                 return
 
