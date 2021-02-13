@@ -364,7 +364,7 @@ class Maze:
 
         self.finish()
 
-    def astar(self, speed):
+    def astar(self, speed, start_time):
         self.active = False
         clock = pygame.time.Clock()
         count = 0
