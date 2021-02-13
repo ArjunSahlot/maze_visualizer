@@ -136,6 +136,9 @@ class Interface:
         pygame.draw.line(window, (255,)*3, (self.cell_size.x + self.cell_size.width/2, self.height - 5 - 50), (self.cell_size.x + self.cell_size.width/2, self.height), 5)
         pygame.draw.line(window, (255,)*3, (self.cell_size.x + self.cell_size.width, self.height - 5 - 50), (self.cell_size.x + self.cell_size.width, self.height), 5)
 
+        t1 = self.small_font.render(f"{self.maze.visited} cell visited")
+        t2 = self.small_font.render(f"{round(self.maze.time, 3)} secs")
+        window.blit(t1, ())
 
         if self.gen.clicked(events):
             if (selected := self.gen_drop.get_selection()) == self.maze_drop_text:
