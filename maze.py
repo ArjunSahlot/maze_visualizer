@@ -81,6 +81,8 @@ class Maze:
             threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed,)).start()
 
         self.state = "CALCULATING"
+        self.time = 0
+        self.visited = 0
 
     def depth_first(self, speed):
         start_time = time.time()
