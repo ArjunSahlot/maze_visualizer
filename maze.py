@@ -317,7 +317,7 @@ class Maze:
 
         self.finish()
 
-    def kruskal(self, speed):
+    def kruskal(self, speed, start_time):
         for row in self.cells:
             for cell in row:
                 cell.block()
