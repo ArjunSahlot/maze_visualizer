@@ -229,7 +229,7 @@ class Maze:
         self.start.start()
         row, col = self.start.get_pos()
         visited = 1
-        total = self.rows * self.cols
+        total = (self.rows - 1) * (self.cols - 1)
 
         while visited < total:
             if not self.active:
@@ -246,6 +246,7 @@ class Maze:
                         visited += 1
                         row, col = r, c
                         break
+                self.visited = visited
             else:
                 return
 
