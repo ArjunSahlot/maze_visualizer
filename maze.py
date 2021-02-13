@@ -145,6 +145,8 @@ class Maze:
                             open.push((g_score[n], n))
                             n.close()
 
+                    self.visited += 1
+
                 if curr != self.start:
                     curr.open()
             else:
