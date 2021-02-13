@@ -415,6 +415,8 @@ class Maze:
 
                 if curr != self.start:
                     curr.open()
+                
+                self.visited += 1
             else:
                 return
 
