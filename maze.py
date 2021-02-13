@@ -2,6 +2,7 @@ import pygame
 from constants import *
 import threading
 import random
+import time
 from random_utils.datatypes import Stack, Queue
 from queue import PriorityQueue
 from tkinter import Tk, messagebox
