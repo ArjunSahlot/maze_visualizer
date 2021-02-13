@@ -404,7 +404,7 @@ class Maze:
 
         self.not_found()
 
-    def dijkstra(self, speed):
+    def dijkstra(self, speed, start_time):
         self.active = False
         clock = pygame.time.Clock()
         count = 0
