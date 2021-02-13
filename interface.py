@@ -12,6 +12,15 @@ class Interface:
     find_drop_text = "Path Finding Algs"
     big_font = pygame.font.SysFont("comicsans", 80)
     small_font = pygame.font.SysFont("comicsans", 35)
+    color_map = {
+        "READY": GREEN,
+        "FINISHED": GREEN,
+        "PATH FOUND": GREEN,
+        "CALCULATING": WHITE,
+        "RETRACING": WHITE,
+        "STOPPED": RED,
+        "PATH NOT FOUND": (255, 140, 0),
+    }
 
     def __init__(self, height):
         self.height = height
@@ -126,15 +135,7 @@ class Interface:
             self.maze.update_dim(self.cell_size.value)
         self.maze.update(window, events)
 
-        if (state := self.maze.state) in ("READY", "FINISHED", "PATH FOUND"):
-            col = GREEN
-        elif state in ("CALCULATING", "RETRACING"):
-            col = WHITE
-        elif state == "STOPPED":
-            col = RED
-        else:
-            col = (255, 140, 0)
-        text = self.big_font.render(state, 1, col)
+        text = self.big_font.render(state := self.maze.state, 1, self.color_map[state])
         x = self.gen_drop.loc[0] / 2 - text.get_width() / 2
         y = self.height - 5 - text.get_height() - 50
         window.blit(text, (x, y))
