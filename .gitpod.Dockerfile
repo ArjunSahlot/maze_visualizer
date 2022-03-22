@@ -1,7 +1,7 @@
 FROM axonasif/gitpod-workspace-full-vnc:latest
 
 USER root
-RUN apt update && install_packages -y \
+RUN apt update && apt install -y \
         tk-dev \
         python3-tk \
         python-tk \
