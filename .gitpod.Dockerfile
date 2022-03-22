@@ -1,5 +1,8 @@
 FROM gitpod/workspace-full-vnc
 
-USER gitpod
-
-RUN sudo apt update && sudo apt install -y tk-dev
+USER root
+RUN apt-get update && apt-get install -y \
+        tk-dev \
+        python3-tk \
+        python-tk \
+    && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
