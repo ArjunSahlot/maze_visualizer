@@ -1,8 +1,9 @@
-FROM gitpod/workspace-full-vnc
+FROM axonasif/gitpod-workspace-full-vnc:latest
 
-RUN sudo install_packages -y \
+USER root
+RUN apt update && install_packages -y \
         tk-dev \
         python3-tk \
         python-tk \
-    && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+    && apt clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 RUN pip install -r https://raw.githubusercontent.com/ArjunSahlot/maze_visualizer/main/requirements.txt
