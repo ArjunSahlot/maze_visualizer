@@ -42,6 +42,7 @@ class Slider:
         self.range = val_range
         self.value = init_val
         self.dragging = False
+        self.clicked = False
         self.to_int = only_int
 
     def draw_arrows(self, window):
@@ -66,6 +67,7 @@ class Slider:
 
     def update(self, window, events):
         self.draw(window)
+        self.clicked = False
         mx, my = pygame.mouse.get_pos()
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -73,8 +75,10 @@ class Slider:
                     self.dragging = self.x + self.height <= mx <= self.x + self.width - self.height
                     if self.x <= mx <= self.x + self.height:
                         self.value = max(self.value - 1, self.range[0])
+                        self.clicked = True
                     elif self.x + self.width - self.height <= mx <= self.x + self.width:
                         self.value = min(self.value + 1, self.range[1])
+                        self.clicked = True
             if event.type == pygame.MOUSEBUTTONUP:
                 self.dragging = False
 

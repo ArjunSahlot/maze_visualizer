@@ -39,6 +39,7 @@ class Interface:
         "RETRACING": BLUE,
         "STOPPED": RED,
         "PATH NOT FOUND": (255, 140, 0),
+        "NO POSSIBLE PATH": (255, 140, 0)
     }
 
     def __init__(self, height):
@@ -150,7 +151,7 @@ class Interface:
         self.find_drop.update(window, events)
         self.gen_drop.update(window, events)
         self.cell_size.update(window, events)
-        if self.cell_size.dragging:
+        if self.cell_size.dragging or self.cell_size.clicked:
             self.maze.update_dim(self.cell_size.value)
         self.maze.update(window, events)
 
