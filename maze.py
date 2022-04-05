@@ -25,6 +25,7 @@ import time
 from random_utils.datatypes import Stack, Queue
 from queue import PriorityQueue
 from tkinter import Tk, messagebox
+
 Tk().withdraw()
 
 
@@ -48,10 +49,13 @@ class Maze:
         self.x, self.y, self.width, self.height = x, y, width, height
         self.cell_size = cell_size
         self.rows, self.cols = height // cell_size, width // cell_size
-        self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
-        self.start = self.cells[self.rows//5][self.cols//5]
+        self.cells = [
+            [Cell(row, col, cell_size) for col in range(self.cols)]
+            for row in range(self.rows)
+        ]
+        self.start = self.cells[self.rows // 5][self.cols // 5]
         self.start.start()
-        self.end = self.cells[self.rows*4//5][self.cols*4//5]
+        self.end = self.cells[self.rows * 4 // 5][self.cols * 4 // 5]
         self.end.end()
         self.state = "READY"
         self.time = 0
@@ -61,10 +65,13 @@ class Maze:
     def update_dim(self, cell_size):
         self.cell_size = cell_size
         self.rows, self.cols = self.height // cell_size, self.width // cell_size
-        self.cells = [[Cell(row, col, cell_size) for col in range(self.cols)] for row in range(self.rows)]
-        self.start = self.cells[self.rows//5][self.cols//5]
+        self.cells = [
+            [Cell(row, col, cell_size) for col in range(self.cols)]
+            for row in range(self.rows)
+        ]
+        self.start = self.cells[self.rows // 5][self.cols // 5]
         self.start.start()
-        self.end = self.cells[self.rows*4//5][self.cols*4//5]
+        self.end = self.cells[self.rows * 4 // 5][self.cols * 4 // 5]
         self.end.end()
 
     def clear_canvas(self):
@@ -94,11 +101,18 @@ class Maze:
         start_time = time.time()
         if alg in self.path_algs:
             if self.start is None or self.end is None:
-                messagebox.showerror("Maze Generator", "Please choose a start and end point to find the path.")
+                messagebox.showerror(
+                    "Maze Generator",
+                    "Please choose a start and end point to find the path.",
+                )
                 return
-            threading.Thread(target=getattr(self, self.path_algs[alg]), args=(speed, start_time)).start()
+            threading.Thread(
+                target=getattr(self, self.path_algs[alg]), args=(speed, start_time)
+            ).start()
         else:
-            threading.Thread(target=getattr(self, self.maze_algs[alg]), args=(speed, start_time)).start()
+            threading.Thread(
+                target=getattr(self, self.maze_algs[alg]), args=(speed, start_time)
+            ).start()
 
         self.state = "CALCULATING"
         self.time = 0
@@ -114,7 +128,7 @@ class Maze:
             if not self.active:
                 self.time = time.time() - start_time
                 self.time = time.time() - start_time
-                clock.tick(speed.value*100)
+                clock.tick(speed.value * 100)
                 curr = open.pop()
                 if curr not in ("start", "end"):
                     curr.open()
@@ -149,7 +163,7 @@ class Maze:
             if not self.active:
                 self.time = time.time() - start_time
                 self.time = time.time() - start_time
-                clock.tick(speed.value*100)
+                clock.tick(speed.value * 100)
                 curr = open.pop()[1]
 
                 temp_g = g_score[curr] + 1
@@ -194,14 +208,15 @@ class Maze:
         while region:
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*10)
+                clock.tick(speed.value * 10)
                 curr = region.pop()
                 min_y, max_y = curr[0][0], curr[1][0]
-                min_x , max_x = curr[0][1], curr[1][1]
+                min_x, max_x = curr[0][1], curr[1][1]
                 h = max_y - min_y + 1
                 w = max_x - min_x + 1
 
-                if h <= 1 or w <= 1: continue
+                if h <= 1 or w <= 1:
+                    continue
 
                 if w < h:
                     cut_dir = 1
@@ -215,7 +230,7 @@ class Maze:
                 cut_length = (h, w)[(cut_dir + 1) % 2]
                 if cut_length < 3:
                     continue
-                
+
                 self.visited += cut_length
                 cut_pos = random.randrange(1, cut_length, 2)
                 door_pos = random.randrange(0, (h, w)[cut_dir], 2)
@@ -229,9 +244,19 @@ class Maze:
                     self.cells[min_y + door_pos][min_x + cut_pos].free()
 
                 if cut_dir:
-                    region.extend((((min_y, min_x), (min_y + cut_pos - 1, max_x)), ((min_y + cut_pos + 1, min_x), (max_y, max_x))))
+                    region.extend(
+                        (
+                            ((min_y, min_x), (min_y + cut_pos - 1, max_x)),
+                            ((min_y + cut_pos + 1, min_x), (max_y, max_x)),
+                        )
+                    )
                 else:
-                    region.extend((((min_y, min_x), (max_y, min_x + cut_pos - 1)), ((min_y, min_x + cut_pos + 1), (max_y, max_x))))
+                    region.extend(
+                        (
+                            ((min_y, min_x), (max_y, min_x + cut_pos - 1)),
+                            ((min_y, min_x + cut_pos + 1), (max_y, max_x)),
+                        )
+                    )
             else:
                 return
 
@@ -245,7 +270,11 @@ class Maze:
 
         self.active = False
         clock = pygame.time.Clock()
-        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start = (
+            self.start
+            if self.start is not None
+            else self.cells[self.rows // 5][self.cols // 5]
+        )
         self.start.start()
         row, col = self.start.get_pos()
         visited = 1
@@ -254,9 +283,11 @@ class Maze:
         while visited < total:
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value**2/4)
+                clock.tick(speed.value**2 / 4)
                 if not (neighbors := self.get_generation_neighbors(row, col)):
-                    row, col = random.choice(self.get_generation_neighbors(row, col, types=("free",)))
+                    row, col = random.choice(
+                        self.get_generation_neighbors(row, col, types=("free",))
+                    )
                     continue
                 for r, c in neighbors:
                     if (cell := self.cells[r][c]) in ("block", "end"):
@@ -278,7 +309,11 @@ class Maze:
                 if cell != "start":
                     cell.block()
         self.end = None
-        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start = (
+            self.start
+            if self.start is not None
+            else self.cells[self.rows // 5][self.cols // 5]
+        )
         self.start.start()
 
         clock = pygame.time.Clock()
@@ -288,7 +323,7 @@ class Maze:
         while frontiers:
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*100)
+                clock.tick(speed.value * 100)
                 f = frontiers.pop(random.randrange(len(frontiers)))
                 row, col = f[2:]
                 if self.cells[row][col] in ("block", "start"):
@@ -315,7 +350,11 @@ class Maze:
         self.finish()
 
     def recursive_backtrack(self, speed, start_time):
-        self.start = self.start if self.start is not None else self.cells[self.rows//5][self.cols//5]
+        self.start = (
+            self.start
+            if self.start is not None
+            else self.cells[self.rows // 5][self.cols // 5]
+        )
         self.start.start()
         cell = self.start
         visited = [cell.get_pos()]
@@ -330,7 +369,7 @@ class Maze:
         while path:
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*10)
+                clock.tick(speed.value * 10)
                 cell = path.pop()
                 neighbors = self.get_generation_neighbors(*cell.get_pos())
                 if neighbors:
@@ -340,7 +379,9 @@ class Maze:
                             path.push(cell)
                             if n != "end":
                                 n.free()
-                            self.cells[(cell.get_pos()[0] + row)//2][(cell.get_pos()[1] + col)//2].free()
+                            self.cells[(cell.get_pos()[0] + row) // 2][
+                                (cell.get_pos()[1] + col) // 2
+                            ].free()
                             visited.append((row, col))
                             path.push(n)
                             break
@@ -366,25 +407,41 @@ class Maze:
                 self.cells[row][col].free()
 
         edges = []
-        edges.extend((row, col) for row in range(2, self.rows - 1, 2) for col in range(1, self.cols - 1, 2))
-        edges.extend((row, col) for row in range(1, self.rows - 1, 2) for col in range(2, self.cols - 1, 2))
+        edges.extend(
+            (row, col)
+            for row in range(2, self.rows - 1, 2)
+            for col in range(1, self.cols - 1, 2)
+        )
+        edges.extend(
+            (row, col)
+            for row in range(1, self.rows - 1, 2)
+            for col in range(2, self.cols - 1, 2)
+        )
 
         random.shuffle(edges)
 
         while len(trees) > 1:
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*100)
+                clock.tick(speed.value * 100)
                 row, col = edges.pop(0)
 
                 tree1 = tree2 = -1
 
                 if row % 2:
-                    tree1 = sum([i if (row, col - 1) in j else 0 for i, j in enumerate(trees)])
-                    tree2 = sum([i if (row, col + 1) in j else 0 for i, j in enumerate(trees)])
+                    tree1 = sum(
+                        [i if (row, col - 1) in j else 0 for i, j in enumerate(trees)]
+                    )
+                    tree2 = sum(
+                        [i if (row, col + 1) in j else 0 for i, j in enumerate(trees)]
+                    )
                 else:
-                    tree1 = sum([i if (row - 1, col) in j else 0 for i, j in enumerate(trees)])
-                    tree2 = sum([i if (row + 1, col) in j else 0 for i, j in enumerate(trees)])
+                    tree1 = sum(
+                        [i if (row - 1, col) in j else 0 for i, j in enumerate(trees)]
+                    )
+                    tree2 = sum(
+                        [i if (row + 1, col) in j else 0 for i, j in enumerate(trees)]
+                    )
 
                 if tree1 != tree2:
                     t1, t2 = trees[tree1], trees[tree2]
@@ -415,7 +472,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*80)
+                clock.tick(speed.value * 80)
                 curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
@@ -435,7 +492,7 @@ class Maze:
 
                 if curr != self.start:
                     curr.open()
-                
+
                 self.visited += 1
             else:
                 return
@@ -455,7 +512,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*80)
+                clock.tick(speed.value * 80)
                 curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
@@ -474,7 +531,7 @@ class Maze:
 
                 if curr != self.start:
                     curr.open()
-                
+
                 self.visited += 1
             else:
                 return
@@ -497,7 +554,7 @@ class Maze:
         while not open.empty():
             if not self.active:
                 self.time = time.time() - start_time
-                clock.tick(speed.value*80)
+                clock.tick(speed.value * 80)
                 curr = open.get()[2]
 
                 temp_g = g_score[curr] + 1
@@ -517,7 +574,7 @@ class Maze:
 
                 if curr != self.start:
                     curr.open()
-                
+
                 self.visited += 1
             else:
                 return
@@ -536,7 +593,7 @@ class Maze:
         curr = self.end
         while curr in path:
             if not self.active:
-                clock.tick(speed.value*6)
+                clock.tick(speed.value * 6)
                 curr = path[curr]
                 if curr != self.start:
                     curr.path()
@@ -548,7 +605,10 @@ class Maze:
 
         mx, my = pygame.mouse.get_pos()
         rel = pygame.mouse.get_rel()
-        if self.x < mx < self.x + self.cols*self.cell_size and self.y < my < self.y + self.rows*self.cell_size:
+        if (
+            self.x < mx < self.x + self.cols * self.cell_size
+            and self.y < my < self.y + self.rows * self.cell_size
+        ):
             mouse_pressed = pygame.mouse.get_pressed()
             if any(mouse_pressed):
                 row = (my - self.y) // self.cell_size
@@ -566,24 +626,24 @@ class Maze:
                 if mouse_pressed[2]:
                     diff = sum(map(abs, rel))
                     if diff > 100:
-                        for r in range(row-3, row+4):
-                            for c in range(col-3, col+4):
-                                r = min(max(r, 0), self.rows-1)
-                                c = min(max(c, 0), self.cols-1)
+                        for r in range(row - 3, row + 4):
+                            for c in range(col - 3, col + 4):
+                                r = min(max(r, 0), self.rows - 1)
+                                c = min(max(c, 0), self.cols - 1)
                                 if (cell := self.cells[r][c]) not in ("start", "end"):
                                     cell.free()
                     elif diff > 70:
-                        for r in range(row-2, row+3):
-                            for c in range(col-2, col+3):
-                                r = min(max(r, 0), self.rows-1)
-                                c = min(max(c, 0), self.cols-1)
+                        for r in range(row - 2, row + 3):
+                            for c in range(col - 2, col + 3):
+                                r = min(max(r, 0), self.rows - 1)
+                                c = min(max(c, 0), self.cols - 1)
                                 if (cell := self.cells[r][c]) not in ("start", "end"):
                                     cell.free()
                     elif diff > 45:
-                        for r in range(row-1, row+2):
-                            for c in range(col-1, col+2):
-                                r = min(max(r, 0), self.rows-1)
-                                c = min(max(c, 0), self.cols-1)
+                        for r in range(row - 1, row + 2):
+                            for c in range(col - 1, col + 2):
+                                r = min(max(r, 0), self.rows - 1)
+                                c = min(max(c, 0), self.cols - 1)
                                 if (cell := self.cells[r][c]) not in ("start", "end"):
                                     cell.free()
                     else:
@@ -633,7 +693,7 @@ class Maze:
     def heuristic(self, cell):
         x1, y1 = cell.get_pos()
         x2, y2 = self.end.get_pos()
-        return abs(x2-x1) + abs(y2-y1)
+        return abs(x2 - x1) + abs(y2 - y1)
 
 
 class Cell:
@@ -652,9 +712,11 @@ class Cell:
         self.state = "free"
 
     def draw(self, window, x_off, y_off):
-        x = x_off + self.col*self.width
-        y = y_off + self.row*self.width
-        pygame.draw.rect(window, self.colors[self.state], (x, y, self.width, self.width))
+        x = x_off + self.col * self.width
+        y = y_off + self.row * self.width
+        pygame.draw.rect(
+            window, self.colors[self.state], (x, y, self.width, self.width)
+        )
 
     def free(self):
         self.state = "free"
